@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("onCreate", "Activities in onCreate() method");
+        // On Create comment gaming
     }
 
     @Override
