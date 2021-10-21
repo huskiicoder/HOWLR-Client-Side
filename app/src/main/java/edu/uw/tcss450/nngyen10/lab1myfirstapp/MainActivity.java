@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d("onCreate", "Activities in onCreate() method");
         // On Create comment gaming - Justin
-        // Test 2 - Eddie
+        // Test 2 - Justin
         // Test 3 :) - Amir
         // Test 4 - Eddie
     }
