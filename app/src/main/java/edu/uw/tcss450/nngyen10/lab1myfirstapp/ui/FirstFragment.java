@@ -1,4 +1,4 @@
-//Program to create first fragement
+//Program to create first fragement - Natalie
 package edu.uw.tcss450.nngyen10.lab1myfirstapp.ui;
 
 import android.os.Bundle;
