@@ -1,3 +1,4 @@
+//Program to create first fragement
 package edu.uw.tcss450.nngyen10.lab1myfirstapp.ui;
 
 import android.os.Bundle;
