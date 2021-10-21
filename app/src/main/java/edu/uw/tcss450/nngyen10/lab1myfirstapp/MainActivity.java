@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("onCreate", "Activities in onCreate() method");
         // On Create comment gaming
         // Test 2
+        // Test 3 :) - Amir
     }
 
     @Override
