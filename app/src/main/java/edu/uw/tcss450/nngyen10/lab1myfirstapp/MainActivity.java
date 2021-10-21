@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d("onCreate", "Activities in onCreate() method");
         // On Create comment gaming
+        // Test 2
     }
 
     @Override
