@@ -34,7 +34,7 @@ public class FirstFragment extends Fragment {
     @Override
     public void onViewCreated (@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //Use a Lamda expression to add the OnClickListener
+        //Use a Lambda expression to add the OnClickListener
         mBinding.buttonSend.setOnClickListener(button -> processMessage());
     }
 
