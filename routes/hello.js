@@ -13,7 +13,7 @@ var router = express.Router()
  */
 router.get("/", (request, response) => {
     response.send({
-        message: "Hello, you sent a GET request"
+        message: "Hello, you sent a GET request!"
     })
 })
 
@@ -26,7 +26,7 @@ router.get("/", (request, response) => {
  */ 
 router.post("/", (request, response) => {
     response.send({
-        message: "Hello, you sent a POST request"
+        message: "Hello, you sent a POST request!"
     })
 })
 // "return" the router
