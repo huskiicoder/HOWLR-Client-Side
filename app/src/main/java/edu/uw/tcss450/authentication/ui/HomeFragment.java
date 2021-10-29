@@ -1,4 +1,4 @@
-package edu.uw.tcss450.lab3_authentication.ui;
+package edu.uw.tcss450.authentication.ui;
 
 import android.os.Bundle;
 
@@ -11,10 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edu.uw.tcss450.lab3_authentication.R;
-import edu.uw.tcss450.lab3_authentication.databinding.FragmentHomeBinding;
-import edu.uw.tcss450.lab3_authentication.databinding.FragmentRegisterBinding;
-import edu.uw.tcss450.lab3_authentication.model.UserInfoViewModel;
+import edu.uw.tcss450.authentication.R;
+import edu.uw.tcss450.authentication.databinding.FragmentHomeBinding;
+import edu.uw.tcss450.authentication.databinding.FragmentRegisterBinding;
+import edu.uw.tcss450.authentication.model.UserInfoViewModel;
 
 /**
  * A simple {@link Fragment} subclass.

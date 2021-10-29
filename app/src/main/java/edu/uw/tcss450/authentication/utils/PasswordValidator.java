@@ -1,4 +1,4 @@
-package edu.uw.tcss450.lab3_authentication.utils;
+package edu.uw.tcss450.authentication.utils;
 
 import java.util.Optional;
 import java.util.function.Consumer;

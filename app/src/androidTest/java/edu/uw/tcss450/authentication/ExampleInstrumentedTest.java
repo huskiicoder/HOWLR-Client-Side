@@ -1,4 +1,4 @@
-package edu.uw.tcss450.lab3_authentication;
+package edu.uw.tcss450.authentication;
 
 import android.content.Context;
 
