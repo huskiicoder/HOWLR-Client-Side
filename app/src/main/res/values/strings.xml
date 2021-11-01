@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lab 3 - Authentication</string>
+    <string name="app_name">Howlr</string>
 
     <string name="hint_first">First Name</string>
     <string name="hint_last">Last Name</string>
@@ -12,6 +12,7 @@
     <string name="image_description_logo">The Phish Logo</string>
 
     <string name="title_home">Home</string>
+    <string name="title_messages">Messages</string>
     <string name="title_friends">Friends</string>
 
     <!-- TODO: Remove or change this placeholder text -->

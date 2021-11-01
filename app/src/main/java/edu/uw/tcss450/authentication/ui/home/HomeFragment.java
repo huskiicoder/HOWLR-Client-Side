@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui;
+package edu.uw.tcss450.authentication.ui.home;
 
 import android.os.Bundle;
 
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import edu.uw.tcss450.authentication.R;
 import edu.uw.tcss450.authentication.databinding.FragmentHomeBinding;
-import edu.uw.tcss450.authentication.databinding.FragmentRegisterBinding;
 import edu.uw.tcss450.authentication.model.UserInfoViewModel;
 
 /**
@@ -21,10 +20,12 @@ import edu.uw.tcss450.authentication.model.UserInfoViewModel;
  */
 public class HomeFragment extends Fragment {
 
+    /**
+     * Require empty public constructor
+     */
     public HomeFragment() {
-        // Required empty public constructor
-    }
 
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +40,7 @@ public class HomeFragment extends Fragment {
         UserInfoViewModel model = new ViewModelProvider(getActivity())
                 .get(UserInfoViewModel.class);
 
-        FragmentHomeBinding.bind(getView()).textHello.setText("Hello " + model.getEmail());
+        FragmentHomeBinding.bind(getView()).textHello.setText("Hello " + model.getEmail() +
+                ". This is the Home Page!");
     }
 }
