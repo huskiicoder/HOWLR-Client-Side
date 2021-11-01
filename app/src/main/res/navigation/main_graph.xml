@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="edu.uw.tcss450.authentication.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_weather"
+            app:destination="@id/navigation_weather" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_friends"
         android:name="edu.uw.tcss450.authentication.ui.friends.FriendsFragment"
@@ -20,4 +24,9 @@
         android:name="edu.uw.tcss450.authentication.ui.messages.MessagesFragment"
         android:label="fragment_messages"
         tools:layout="@layout/fragment_messages" />
+    <fragment
+        android:id="@+id/navigation_weather"
+        android:name="edu.uw.tcss450.authentication.ui.weather.WeatherFragment"
+        android:label="fragment_weather"
+        tools:layout="@layout/fragment_weather" />
 </navigation>
