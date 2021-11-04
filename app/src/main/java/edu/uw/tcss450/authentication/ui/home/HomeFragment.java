@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,14 @@ import android.view.ViewGroup;
 import edu.uw.tcss450.authentication.R;
 import edu.uw.tcss450.authentication.databinding.FragmentHomeBinding;
 import edu.uw.tcss450.authentication.model.UserInfoViewModel;
+import edu.uw.tcss450.authentication.ui.auth.signin.SignInFragmentDirections;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
+
+    private FragmentHomeBinding mBinding;
 
     /**
      * Require empty public constructor
@@ -31,7 +35,10 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+//        return inflater.inflate(R.layout.fragment_home, container, false);
+        // Instantiate binding object and inflate layout
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
@@ -42,5 +49,10 @@ public class HomeFragment extends Fragment {
 
         FragmentHomeBinding.bind(getView()).textHello.setText("Hello " + model.getEmail() +
                 ". This is the Home Page!");
+
+        mBinding.buttonToWeather.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(
+                        HomeFragmentDirections.actionNavigationHomeToNavigationWeather()
+                ));
     }
 }
