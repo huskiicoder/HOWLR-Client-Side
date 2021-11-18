@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="edu.uw.tcss450.authentication.MainActivity"></activity>
+        <activity android:name="edu.uw.tcss450.authentication.ui.messages.MessagesPageActivity"></activity>
         <activity android:name="edu.uw.tcss450.authentication.AuthActivity"
             android:exported="true">
             <intent-filter>

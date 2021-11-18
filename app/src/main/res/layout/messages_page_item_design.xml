@@ -38,7 +38,7 @@
             android:layout_toRightOf="@id/profile_image"
             android:text="Charles Bryan"
             android:textColor="@color/black"
-            android:textSize="20dp">
+            android:textSize="20sp">
 
         </TextView>
 
@@ -51,7 +51,7 @@
             android:layout_toRightOf="@id/display_name"
             android:text="7:30 pm"
             android:textAlignment="textEnd"
-            android:textSize="12dp">
+            android:textSize="12sp">
 
         </TextView>
 
@@ -63,7 +63,7 @@
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/profile_image"
             android:text="Are you ready for your sprint review?"
-            android:textSize="12dp">
+            android:textSize="12sp">
 
         </TextView>
 
