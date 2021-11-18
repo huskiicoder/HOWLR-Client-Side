@@ -29,8 +29,4 @@
         android:name="edu.uw.tcss450.authentication.ui.weather.WeatherFragment"
         android:label="fragment_weather"
         tools:layout="@layout/fragment_weather" />
-    <activity
-        android:id="@+id/messagesPageActivity"
-        android:name="edu.uw.tcss450.authentication.ui.messages.MessagesPageActivity"
-        android:label="MessagesPageActivity" />
 </navigation>
