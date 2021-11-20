@@ -25,7 +25,7 @@
         android:label="fragment_weather"
         tools:layout="@layout/fragment_weather" />
     <fragment
-        android:id="@+id/navigation_friendsListFragment"
+        android:id="@+id/navigation_friends_list_fragment"
         android:name="edu.uw.tcss450.authentication.ui.friends.FriendsListFragment"
         android:label="FriendsListFragment"
         tools:layout="@layout/fragment_friends_list">
@@ -43,7 +43,7 @@
         tools:layout="@layout/fragment_friends_request_list" >
         <action
             android:id="@+id/action_friendsRequestFragment_to_navigation_friendsListFragment"
-            app:destination="@id/navigation_friendsListFragment" />
+            app:destination="@id/navigation_friends_list_fragment" />
     </fragment>
     <fragment
         android:id="@+id/friendsFragment"
