@@ -21,9 +21,9 @@
         tools:layout="@layout/fragment_friends" />
     <fragment
         android:id="@+id/navigation_messages"
-        android:name="edu.uw.tcss450.authentication.ui.messages.MessagesFragment"
+        android:name="edu.uw.tcss450.authentication.ui.messages.MessagesPageFragment"
         android:label="fragment_messages"
-        tools:layout="@layout/fragment_messages" />
+        tools:layout="@layout/fragment_messages_page" />
     <fragment
         android:id="@+id/navigation_weather"
         android:name="edu.uw.tcss450.authentication.ui.weather.WeatherFragment"
