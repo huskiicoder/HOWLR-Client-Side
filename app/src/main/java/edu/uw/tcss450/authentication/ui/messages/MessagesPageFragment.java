@@ -58,6 +58,12 @@ public class MessagesPageFragment extends Fragment {
                 "6:30 pm", "Are you ready for the sprint review"));
         mUserList.add(new MessageModel(R.drawable.shibalaptop, "Natalie Hong",
                 "7:30 pm", "Are you ready for the sprint review"));
+        mUserList.add(new MessageModel(R.drawable.shibalaptop, "James Bond",
+                "8:30 pm", "Are you ready for the sprint review"));
+        mUserList.add(new MessageModel(R.drawable.shibalaptop, "Chris Evans",
+                "9:30 pm", "Are you ready for the sprint review"));
+        mUserList.add(new MessageModel(R.drawable.shibalaptop, "Iron Man",
+                "10:30 pm", "Are you ready for the sprint review"));
 
 
         mAdapter = new MessageAdapter(mUserList);

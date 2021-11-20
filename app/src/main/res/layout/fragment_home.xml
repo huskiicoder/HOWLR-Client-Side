@@ -103,7 +103,7 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/colorCardInvis"
+        app:cardBackgroundColor="@android:color/transparent"
         card_view:cardElevation="0dp"
         card_view:cardCornerRadius="8dp">
 
