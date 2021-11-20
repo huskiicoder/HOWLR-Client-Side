@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_friends_icon_24"
         android:title="@string/title_friends" />
 
+    <item
+        android:id="@+id/navigation_weather"
+        android:icon="@drawable/ic_weather_icon_24dp"
+        android:title="Weather" />
+
 </menu>

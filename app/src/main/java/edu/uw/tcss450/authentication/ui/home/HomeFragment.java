@@ -47,12 +47,12 @@ public class HomeFragment extends Fragment {
         UserInfoViewModel model = new ViewModelProvider(getActivity())
                 .get(UserInfoViewModel.class);
 
-        FragmentHomeBinding.bind(getView()).textHello.setText("Hello " + model.getEmail() +
-                ". This is the Home Page!");
-
-        mBinding.buttonToWeather.setOnClickListener(button ->
-                Navigation.findNavController(getView()).navigate(
-                        HomeFragmentDirections.actionNavigationHomeToNavigationWeather()
-                ));
+//        FragmentHomeBinding.bind(getView()).textHello.setText("Hello " + model.getEmail() +
+//                ". This is the Home Page!");
+//
+//        mBinding.buttonToWeather.setOnClickListener(button ->
+//                Navigation.findNavController(getView()).navigate(
+//                        HomeFragmentDirections.actionNavigationHomeToNavigationWeather()
+//                ));
     }
 }
