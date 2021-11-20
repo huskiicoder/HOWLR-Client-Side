@@ -15,11 +15,6 @@
             app:destination="@id/navigation_weather" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_friends"
-        android:name="edu.uw.tcss450.authentication.ui.friends.FriendsFragment"
-        android:label="fragment_friends"
-        tools:layout="@layout/fragment_friends" />
-    <fragment
         android:id="@+id/navigation_messages"
         android:name="edu.uw.tcss450.authentication.ui.messages.MessagesFragment"
         android:label="fragment_messages"
@@ -29,4 +24,30 @@
         android:name="edu.uw.tcss450.authentication.ui.weather.WeatherFragment"
         android:label="fragment_weather"
         tools:layout="@layout/fragment_weather" />
+    <fragment
+        android:id="@+id/navigation_friendsListFragment"
+        android:name="edu.uw.tcss450.authentication.ui.friends.FriendsListFragment"
+        android:label="FriendsListFragment"
+        tools:layout="@layout/fragment_friends_list">
+        <action
+            android:id="@+id/action_navigation_friendsListFragment_to_friendsFragment"
+            app:destination="@id/friendsFragment" />
+        <action
+            android:id="@+id/action_navigation_friendsListFragment_to_friendsRequestFragment"
+            app:destination="@id/friendsRequestFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendsRequestFragment"
+        android:name="edu.uw.tcss450.authentication.ui.friends.FriendsRequestFragment"
+        android:label="fragment_friends_request_list"
+        tools:layout="@layout/fragment_friends_request_list" >
+        <action
+            android:id="@+id/action_friendsRequestFragment_to_navigation_friendsListFragment"
+            app:destination="@id/navigation_friendsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="edu.uw.tcss450.authentication.ui.friends.FriendsFragment"
+        android:label="fragment_friends"
+        tools:layout="@layout/fragment_friends" />
 </navigation>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keys_json_friends_response">response</string>
+    <string name="keys_json_friends_request">request</string>
+    <string name="keys_json_friends">friends</string>
+</resources>

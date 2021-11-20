@@ -15,4 +15,14 @@
     <string name="title_messages">Messages</string>
     <string name="title_friends">Friends</string>
     <string name="title_weather">Weather</string>
+    <string name="button_friends_delete">Delete</string>
+    <string name="textplain_friends_request">Request</string>
+    <string name="textplain_friends_search">Search</string>
+    <string name="button_friends_accept_request">Accept</string>
+    <string name="button_friends_decline_request">Decline</string>
+    <string name="enterText_searchUsername">Enter An Username</string>
+    <string name="dialog_friendsListRecycler_title">Delete Contact</string>
+    <string name="dialog_friendsListRecycler_message">Your contact is deleted.</string>
+    <string name="dialog_friendsListRecycler_confirm">Confirm</string>
+    <string name="dialog_friendsListRecycler_cancel">Cancel</string>
 </resources>
