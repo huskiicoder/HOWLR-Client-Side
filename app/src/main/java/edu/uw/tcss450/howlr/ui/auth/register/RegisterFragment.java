@@ -1,7 +1,7 @@
-package edu.uw.tcss450.authentication.ui.auth.register;
+package edu.uw.tcss450.howlr.ui.auth.register;
 
-import static edu.uw.tcss450.authentication.utils.PasswordValidator.*;
-import static edu.uw.tcss450.authentication.utils.PasswordValidator.checkClientPredicate;
+import static edu.uw.tcss450.howlr.utils.PasswordValidator.*;
+import static edu.uw.tcss450.howlr.utils.PasswordValidator.checkClientPredicate;
 
 import android.os.Bundle;
 
@@ -19,8 +19,8 @@ import android.view.ViewGroup;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.uw.tcss450.authentication.databinding.FragmentRegisterBinding;
-import edu.uw.tcss450.authentication.utils.PasswordValidator;
+import edu.uw.tcss450.howlr.databinding.FragmentRegisterBinding;
+import edu.uw.tcss450.howlr.utils.PasswordValidator;
 
 
 /**

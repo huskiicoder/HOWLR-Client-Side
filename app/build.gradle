@@ -9,7 +9,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "edu.uw.tcss450.lab3_authentication"
+        applicationId "edu.uw.tcss450.howlr"
         minSdkVersion 24
         targetSdkVersion 31
         versionCode 1
@@ -47,7 +47,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.3.5'
     apply plugin: "androidx.navigation.safeargs"
     implementation 'com.android.volley:volley:1.2.1'
-    implementation 'com.auth0.android:jwtdecode:2.0.0'
+    implementation 'com.auth0.android:jwtdecode:2.0.1'
 
 
 }

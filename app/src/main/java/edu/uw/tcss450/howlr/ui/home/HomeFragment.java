@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.home;
+package edu.uw.tcss450.howlr.ui.home;
 
 import android.os.Bundle;
 
@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,12 +17,11 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.uw.tcss450.authentication.R;
-import edu.uw.tcss450.authentication.databinding.FragmentHomeBinding;
-import edu.uw.tcss450.authentication.model.UserInfoViewModel;
-import edu.uw.tcss450.authentication.ui.auth.signin.SignInFragmentDirections;
-import edu.uw.tcss450.authentication.ui.messages.MessageAdapter;
-import edu.uw.tcss450.authentication.ui.messages.MessageModel;
+import edu.uw.tcss450.howlr.R;
+import edu.uw.tcss450.howlr.databinding.FragmentHomeBinding;
+import edu.uw.tcss450.howlr.model.UserInfoViewModel;
+import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
+import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 
 /**
  * A simple {@link Fragment} subclass.

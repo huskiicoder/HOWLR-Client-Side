@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.auth.register;
+package edu.uw.tcss450.howlr.ui.auth.register;
 
 import android.app.Application;
 import android.util.Log;

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="edu.uw.tcss450.authentication.ui.home.HomeFragment"
+        android:name="edu.uw.tcss450.howlr.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -16,17 +16,17 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_friends"
-        android:name="edu.uw.tcss450.authentication.ui.friends.FriendsFragment"
+        android:name="edu.uw.tcss450.howlr.ui.friends.FriendsFragment"
         android:label="fragment_friends"
         tools:layout="@layout/fragment_friends" />
     <fragment
         android:id="@+id/navigation_messages"
-        android:name="edu.uw.tcss450.authentication.ui.messages.MessagesPageFragment"
+        android:name="edu.uw.tcss450.howlr.ui.messages.MessagesPageFragment"
         android:label="fragment_messages"
         tools:layout="@layout/fragment_messages_page" />
     <fragment
         android:id="@+id/navigation_weather"
-        android:name="edu.uw.tcss450.authentication.ui.weather.WeatherFragment"
+        android:name="edu.uw.tcss450.howlr.ui.weather.WeatherFragment"
         android:label="fragment_weather"
         tools:layout="@layout/fragment_weather" />
 </navigation>

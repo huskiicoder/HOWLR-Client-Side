@@ -1,17 +1,15 @@
-package edu.uw.tcss450.authentication.ui.weather;
+package edu.uw.tcss450.howlr.ui.weather;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edu.uw.tcss450.authentication.R;
-import edu.uw.tcss450.authentication.databinding.FragmentWeatherBinding;
+import edu.uw.tcss450.howlr.R;
+import edu.uw.tcss450.howlr.databinding.FragmentWeatherBinding;
 
 /**
  * A simple {@link Fragment} subclass.
