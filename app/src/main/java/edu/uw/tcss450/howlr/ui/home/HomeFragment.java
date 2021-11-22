@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
                 .get(UserInfoViewModel.class);
         try {
             mBinding.textCity.setText((String)mWeatherModel.mResponse.getValue().get("city_name")
-            + ", " + (String) mWeatherModel.mResponse.getValue().get("state_code"));
+                    + ", " + (String) mWeatherModel.mResponse.getValue().get("state_code"));
 //            int temp = (int) mWeatherModel.mResponse.getValue().get("temp");
 //            temp = (9/5) * temp +32;
             mBinding.textTemp.setText(mWeatherModel.mResponse.getValue().get("temp") + "°");

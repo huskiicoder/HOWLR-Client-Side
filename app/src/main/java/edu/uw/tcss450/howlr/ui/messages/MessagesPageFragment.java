@@ -37,7 +37,7 @@ public class MessagesPageFragment extends Fragment {
                                 @Nullable Bundle savedInstancesState) {
 
         mBinding = inflater.inflate(R.layout.fragment_messages_page, container, false);
-        RecyclerView recyclerView = (RecyclerView) mBinding.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = mBinding.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 

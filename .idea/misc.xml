@@ -3,14 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="../../../../layout/custom_preview.xml" value="0.21543408360128619" />
+=======
+>>>>>>> origin/messages_daniel2
         <entry key="..\:/Users/12532/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_chat_notification.xml" value="0.2703125" />
         <entry key="..\:/Users/12532/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_dark_send_button.xml" value="0.2703125" />
         <entry key="..\:/Users/12532/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/12532/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_chat.xml" value="0.25226449275362317" />
         <entry key="..\:/Users/12532/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_chat_message.xml" value="0.25226449275362317" />
+<<<<<<< HEAD
         <entry key="..\:/Users/12532/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_friends.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/12532/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_friends_list.xml" value="0.2" />
+=======
+>>>>>>> origin/messages_daniel2
         <entry key="..\:/Users/12532/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_home.xml" value="0.25226449275362317" />
         <entry key="..\:/Users/12532/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_messages_page.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/12532/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_weather.xml" value="0.13020833333333334" />

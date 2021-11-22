@@ -21,4 +21,10 @@
         android:icon="@drawable/ic_weather_icon_24dp"
         android:title="Weather" />
 
+    <item
+        android:id="@+id/navigation_chat"
+        android:icon="@drawable/ic_chat_notification"
+        android:title="Chats" />
+
+
 </menu>

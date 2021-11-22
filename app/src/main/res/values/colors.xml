@@ -9,4 +9,15 @@
     <color name="light_gray">#D3D3D3</color>
     <color name="colorAccent">#956AA9</color>
     <color name="colorCardInvis">#A280A5</color>
+
+    <color name="primaryColor">#4527a0</color>
+    <color name="primaryLightColor">#7953d2</color>
+    <color name="primaryDarkColor">#000070</color>
+    <color name="secondaryColor">#b7a57a</color>
+    <color name="secondaryLightColor">#ead6a9</color>
+    <color name="secondaryDarkColor">#86764e</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+
+    <color name="secondaryTextColorFade">#222222</color>
 </resources>
