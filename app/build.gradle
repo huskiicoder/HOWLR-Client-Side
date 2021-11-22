@@ -9,7 +9,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "edu.uw.tcss450.lab3_authentication"
+        applicationId "edu.uw.tcss450.howlr"
         minSdkVersion 24
         targetSdkVersion 31
         versionCode 1
