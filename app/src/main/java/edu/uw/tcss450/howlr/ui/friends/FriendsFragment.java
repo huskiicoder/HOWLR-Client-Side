@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.friends;
+package edu.uw.tcss450.howlr.ui.friends;
 
 import android.os.Bundle;
 
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edu.uw.tcss450.authentication.R;
+import edu.uw.tcss450.howlr.R;
 
 /**
  * A simple {@link Fragment} subclass.

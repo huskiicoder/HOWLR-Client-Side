@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication;
+package edu.uw.tcss450.howlr;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -25,6 +25,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.authentication.model.LocationViewModel;
 import edu.uw.tcss450.authentication.model.UserInfoViewModel;
 
@@ -219,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                         getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
         prefs.edit().remove(getString(R.string.keys_prefs_jwt)).apply();
+
         //End the app completely
         finishAndRemoveTask();
     }

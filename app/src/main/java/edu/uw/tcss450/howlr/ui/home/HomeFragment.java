@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.home;
+package edu.uw.tcss450.howlr.ui.home;
 
 import static edu.uw.tcss450.authentication.R.id.recycler_view_friends;
 import static edu.uw.tcss450.authentication.R.id.recycler_view_messages;
@@ -24,13 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.uw.tcss450.authentication.MainActivity;
-import edu.uw.tcss450.authentication.R;
-import edu.uw.tcss450.authentication.databinding.FragmentHomeBinding;
+import edu.uw.tcss450.howlr.R;
+import edu.uw.tcss450.howlr.databinding.FragmentHomeBinding;
 import edu.uw.tcss450.authentication.model.LocationViewModel;
-import edu.uw.tcss450.authentication.model.UserInfoViewModel;
-import edu.uw.tcss450.authentication.ui.auth.signin.SignInFragmentDirections;
-import edu.uw.tcss450.authentication.ui.messages.MessageAdapter;
-import edu.uw.tcss450.authentication.ui.messages.MessageModel;
+import edu.uw.tcss450.howlr.model.UserInfoViewModel;
+import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
+import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 import edu.uw.tcss450.authentication.ui.weather.WeatherViewModel;
 
 /**

@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication;
+package edu.uw.tcss450.howlr;
 
 import androidx.appcompat.app.AppCompatActivity;
 

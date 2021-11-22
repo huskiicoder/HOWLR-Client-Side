@@ -1,6 +1,6 @@
-package edu.uw.tcss450.authentication.ui.auth.signin;
+package edu.uw.tcss450.howlr.ui.auth.signin;
 
-import static edu.uw.tcss450.authentication.utils.PasswordValidator.*;
+import static edu.uw.tcss450.howlr.utils.PasswordValidator.*;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,9 +22,9 @@ import com.auth0.android.jwt.JWT;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.uw.tcss450.authentication.R;
-import edu.uw.tcss450.authentication.databinding.FragmentSignInBinding;
-import edu.uw.tcss450.authentication.utils.PasswordValidator;
+import edu.uw.tcss450.howlr.R;
+import edu.uw.tcss450.howlr.databinding.FragmentSignInBinding;
+import edu.uw.tcss450.howlr.utils.PasswordValidator;
 
 /**
  * A simple {@link Fragment} subclass.

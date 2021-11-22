@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.model;
+package edu.uw.tcss450.howlr.model;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.io;
+package edu.uw.tcss450.howlr.io;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.utils;
+package edu.uw.tcss450.howlr.utils;
 
 import java.util.Optional;
 import java.util.function.Consumer;

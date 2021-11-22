@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.messages;
+package edu.uw.tcss450.howlr.ui.messages;
 
 import android.os.Bundle;
 
@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.uw.tcss450.authentication.R;
+import edu.uw.tcss450.howlr.R;
 
 
 /**

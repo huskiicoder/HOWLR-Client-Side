@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.auth.signin;
+package edu.uw.tcss450.howlr.ui.auth.signin;
 
 import android.app.Application;
 import android.util.Base64;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import edu.uw.tcss450.authentication.io.RequestQueueSingleton;
+import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 
 public class SignInViewModel extends AndroidViewModel {
 
