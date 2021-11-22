@@ -26,8 +26,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
-import edu.uw.tcss450.authentication.model.LocationViewModel;
-import edu.uw.tcss450.authentication.model.UserInfoViewModel;
+import edu.uw.tcss450.howlr.model.LocationViewModel;
+import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 public class MainActivity extends AppCompatActivity {
 

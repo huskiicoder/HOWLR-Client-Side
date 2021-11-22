@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.weather;
+package edu.uw.tcss450.howlr.ui.weather;
 
 import android.app.Application;
 import android.content.Context;
@@ -29,8 +29,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.IntFunction;
 
-import edu.uw.tcss450.authentication.MainActivity;
-import edu.uw.tcss450.authentication.R;
+import edu.uw.tcss450.howlr.MainActivity;
+import edu.uw.tcss450.howlr.R;
 
 public class WeatherViewModel extends AndroidViewModel {
     public MutableLiveData<JSONObject> mResponse;

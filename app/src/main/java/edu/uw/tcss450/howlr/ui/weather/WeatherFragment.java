@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.weather;
+package edu.uw.tcss450.howlr.ui.weather;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -20,11 +20,12 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
-import edu.uw.tcss450.authentication.R;
-import edu.uw.tcss450.authentication.databinding.FragmentSignInBinding;
-import edu.uw.tcss450.authentication.databinding.FragmentWeatherBinding;
-import edu.uw.tcss450.authentication.model.LocationViewModel;
-import edu.uw.tcss450.authentication.ui.auth.signin.SignInFragmentDirections;
+import edu.uw.tcss450.howlr.R;
+import edu.uw.tcss450.howlr.databinding.FragmentSignInBinding;
+import edu.uw.tcss450.howlr.databinding.FragmentWeatherBinding;
+import edu.uw.tcss450.howlr.model.LocationViewModel;
+import edu.uw.tcss450.howlr.ui.auth.signin.SignInFragmentDirections;
+import edu.uw.tcss450.howlr.ui.weather.WeatherViewModel;
 
 /**
  * A simple {@link Fragment} subclass.

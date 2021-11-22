@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.home;
+package edu.uw.tcss450.howlr.ui.home;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.uw.tcss450.authentication.R;
-import edu.uw.tcss450.authentication.ui.messages.MessageModel;
+import edu.uw.tcss450.howlr.R;
+import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 
 /**
  * Adapter class that connects the RecyclerView to the data.

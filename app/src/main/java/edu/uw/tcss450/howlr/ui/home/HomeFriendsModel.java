@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.home;
+package edu.uw.tcss450.howlr.ui.home;
 
 /**
  * The model of each message card in the messages page.

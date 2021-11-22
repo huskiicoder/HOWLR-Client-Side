@@ -1,7 +1,7 @@
 package edu.uw.tcss450.howlr.ui.home;
 
-import static edu.uw.tcss450.authentication.R.id.recycler_view_friends;
-import static edu.uw.tcss450.authentication.R.id.recycler_view_messages;
+import static edu.uw.tcss450.howlr.R.id.recycler_view_friends;
+import static edu.uw.tcss450.howlr.R.id.recycler_view_messages;
 
 import android.os.Bundle;
 
@@ -23,14 +23,14 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.uw.tcss450.authentication.MainActivity;
+import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentHomeBinding;
-import edu.uw.tcss450.authentication.model.LocationViewModel;
+import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
-import edu.uw.tcss450.authentication.ui.weather.WeatherViewModel;
+import edu.uw.tcss450.howlr.ui.weather.WeatherViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
