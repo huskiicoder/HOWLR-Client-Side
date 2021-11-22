@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="175dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/white">
+        android:layout_height="50dp"
+        android:background="@color/colorAccent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/profile_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="7dp"
             app:cardCornerRadius="70dp">
 
             <ImageView
                 android:id="@+id/picture"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/shibabone">
 
@@ -31,47 +31,49 @@
 
         <TextView
             android:id="@+id/display_name"
-            android:layout_width="210dp"
-            android:layout_height="26dp"
+            android:layout_width="110dp"
+            android:layout_height="13dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="13dp"
             android:layout_toRightOf="@id/profile_image"
             android:text="Charles Bryan"
-            android:textColor="@color/black"
-            android:textSize="20sp">
+            android:textColor="@color/colorPrimary"
+            android:textSize="10sp">
 
         </TextView>
 
         <TextView
             android:id="@+id/message_time"
-            android:layout_width="60dp"
-            android:layout_height="18dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="28dp"
+            android:layout_width="30dp"
+            android:layout_height="9dp"
+            android:layout_marginLeft="-30dp"
+            android:layout_marginTop="14dp"
             android:layout_toRightOf="@id/display_name"
             android:text="7:30 pm"
             android:textAlignment="textEnd"
-            android:textSize="12sp">
+            android:textSize="6sp">
 
         </TextView>
 
         <TextView
             android:id="@+id/message_content"
             android:layout_width="210dp"
-            android:layout_height="18dp"
+            android:layout_height="13dp"
             android:layout_below="@id/display_name"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/profile_image"
             android:text="Are you ready for your sprint review?"
-            android:textSize="12sp">
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimary">
 
         </TextView>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:background="@color/light_gray" />
+
     </RelativeLayout>
 
 </RelativeLayout>

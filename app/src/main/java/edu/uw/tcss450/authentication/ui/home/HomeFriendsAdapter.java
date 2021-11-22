@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.messages;
+package edu.uw.tcss450.authentication.ui.home;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,18 +16,18 @@ import edu.uw.tcss450.authentication.R;
 /**
  * Adapter class that connects the RecyclerView to the data.
  */
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
+public class HomeFriendsAdapter extends RecyclerView.Adapter<HomeFriendsAdapter.ViewHolder> {
 
     /**
      * The list of people who the user is messaging with.
      */
-    private List<MessageModel> mUserList;
+    private List<HomeFriendsModel> mUserList;
 
     /**
      * Constructor for the message adapter.
      * @param theUserList The list of people who the user is messaging with
      */
-    public MessageAdapter(List<MessageModel> theUserList) {
+    public HomeFriendsAdapter(List<HomeFriendsModel> theUserList) {
         this.mUserList = theUserList;
     }
 
@@ -39,8 +39,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      */
     @NonNull
     @Override
-    public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_messages_item_design, parent, false);
+    public HomeFriendsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_friends_item_design, parent, false);
         return new ViewHolder(view);
     }
 
@@ -50,13 +50,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      * @param position The position
      */
     @Override
-    public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HomeFriendsAdapter.ViewHolder holder, int position) {
         int picture = mUserList.get(position).getPicture();
         String displayName = mUserList.get(position).getDisplayName();
-        String messageTime = mUserList.get(position).getMessageTime();
-        String messageContent = mUserList.get(position).getMessageContent();
 
-        holder.setData(picture, displayName, messageTime, messageContent);
+        holder.setData(picture, displayName);
     }
 
     /**
@@ -94,23 +92,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
             mPicture = itemView.findViewById(R.id.picture);
             mDisplayName = itemView.findViewById(R.id.display_name);
-            mMessageTime = itemView.findViewById(R.id.message_time);
-            mMessageContent = itemView.findViewById(R.id.message_content);
         }
 
         /**
          * Sets the data for the message card.
          * @param thePicture The profile picture
          * @param theDisplayName The display name
-         * @param theMessageTime The message time
-         * @param theMessageContent The message content
          */
-        public void setData(int thePicture, String theDisplayName,
-                            String theMessageTime, String theMessageContent) {
+        public void setData(int thePicture, String theDisplayName) {
             mPicture.setImageResource(thePicture);
             mDisplayName.setText(theDisplayName);
-            mMessageTime.setText(theMessageTime);
-            mMessageContent.setText(theMessageContent);
         }
     }
 }

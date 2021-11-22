@@ -1,5 +1,8 @@
 package edu.uw.tcss450.authentication.ui.home;
 
+import static edu.uw.tcss450.authentication.R.id.recycler_view_friends;
+import static edu.uw.tcss450.authentication.R.id.recycler_view_messages;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,15 +18,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.uw.tcss450.authentication.MainActivity;
 import edu.uw.tcss450.authentication.R;
 import edu.uw.tcss450.authentication.databinding.FragmentHomeBinding;
+import edu.uw.tcss450.authentication.model.LocationViewModel;
 import edu.uw.tcss450.authentication.model.UserInfoViewModel;
 import edu.uw.tcss450.authentication.ui.auth.signin.SignInFragmentDirections;
 import edu.uw.tcss450.authentication.ui.messages.MessageAdapter;
 import edu.uw.tcss450.authentication.ui.messages.MessageModel;
+import edu.uw.tcss450.authentication.ui.weather.WeatherViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,12 +39,19 @@ import edu.uw.tcss450.authentication.ui.messages.MessageModel;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding mBinding;
+    private WeatherViewModel mWeatherModel;
 
     /* List of users with chat. */
     List<MessageModel> mUserList;
 
     /* Recycler view adapter */
-    MessageAdapter mAdapter;
+    MessageAdapter mAdapterMessages;
+
+    /* List of users */
+    List<HomeFriendsModel> mFriendsList;
+
+    /* Recycler view adapter for Friends */
+    HomeFriendsAdapter mAdapterFriends;
 
     View myBinding;
 
@@ -48,17 +63,40 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_home, container, false);
-        // Instantiate binding object and inflate layout
         mBinding = FragmentHomeBinding.inflate(inflater, container, false);
+        mWeatherModel.connectGetCurrent();
 
         // TESTING MESSAGES STUFF
         myBinding = inflater.inflate(R.layout.fragment_home, container, false);
-        RecyclerView recyclerView = (RecyclerView) myBinding.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        return myBinding;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        UserInfoViewModel model = new ViewModelProvider(getActivity())
+                .get(UserInfoViewModel.class);
+        try {
+            mBinding.textCity.setText((String)mWeatherModel.mResponse.getValue().get("city_name")
+            + ", " + (String) mWeatherModel.mResponse.getValue().get("state_code"));
+//            int temp = (int) mWeatherModel.mResponse.getValue().get("temp");
+//            temp = (9/5) * temp +32;
+            mBinding.textTemp.setText(mWeatherModel.mResponse.getValue().get("temp") + "°");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        RecyclerView recyclerViewMessages = myBinding.findViewById(recycler_view_messages);
+        recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
 
         /**
          * Creates template data for recycler view.
@@ -78,17 +116,29 @@ public class HomeFragment extends Fragment {
         mUserList.add(new MessageModel(R.drawable.shibalaptop, "Natalie Hong",
                 "7:30 pm", "Are you ready for the sprint review"));
 
-        mAdapter = new MessageAdapter(mUserList);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        mAdapterMessages = new MessageAdapter(mUserList);
+        recyclerViewMessages.setAdapter(mAdapterMessages);
+        recyclerViewMessages.setItemAnimator(new DefaultItemAnimator());
 
-        return mBinding.getRoot();
-    }
+        // FOR FRIENDS RECYCLERVIEW
+        RecyclerView recyclerViewFriends = myBinding.findViewById(recycler_view_friends);
+        recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getContext()));
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        UserInfoViewModel model = new ViewModelProvider(getActivity())
-                .get(UserInfoViewModel.class);
+        /**
+         * Creates template data for recycler view.
+         * TODO Delete after manual implementation of data is no longer needed.
+         */
+        mFriendsList = new ArrayList<>();
+        mFriendsList.add(new HomeFriendsModel(R.drawable.shibabone, "Charles Bryan"));
+        mFriendsList.add(new HomeFriendsModel(R.drawable.shibacoffee, "Charles Bryan"));
+        mFriendsList.add(new HomeFriendsModel(R.drawable.shibalaptop, "Charles Bryan"));
+        mFriendsList.add(new HomeFriendsModel(R.drawable.shibadab, "Charles Bryan"));
+        mFriendsList.add(new HomeFriendsModel(R.drawable.shibaheart, "Charles Bryan"));
+
+        mAdapterFriends = new HomeFriendsAdapter(mFriendsList);
+        recyclerViewFriends.setAdapter(mAdapterFriends);
+        recyclerViewFriends.setItemAnimator(new DefaultItemAnimator());
+
+
     }
 }
