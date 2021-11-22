@@ -1,4 +1,4 @@
-package edu.uw.tcss450.authentication.ui.messages;
+package edu.uw.tcss450.authentication.ui.home;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import edu.uw.tcss450.authentication.R;
+import edu.uw.tcss450.authentication.ui.messages.MessageModel;
 
 /**
  * Adapter class that connects the RecyclerView to the data.
  */
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
+public class HomeMessagesAdapter extends RecyclerView.Adapter<HomeMessagesAdapter.ViewHolder> {
 
     /**
      * The list of people who the user is messaging with.
@@ -27,7 +28,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      * Constructor for the message adapter.
      * @param theUserList The list of people who the user is messaging with
      */
-    public MessageAdapter(List<MessageModel> theUserList) {
+    public HomeMessagesAdapter(List<MessageModel> theUserList) {
         this.mUserList = theUserList;
     }
 
@@ -39,8 +40,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      */
     @NonNull
     @Override
-    public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.messages_page_item_design, parent, false);
+    public HomeMessagesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_messages_item_design, parent, false);
         return new ViewHolder(view);
     }
 
@@ -50,7 +51,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      * @param position The position
      */
     @Override
-    public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HomeMessagesAdapter.ViewHolder holder, int position) {
         int picture = mUserList.get(position).getPicture();
         String displayName = mUserList.get(position).getDisplayName();
         String messageTime = mUserList.get(position).getMessageTime();

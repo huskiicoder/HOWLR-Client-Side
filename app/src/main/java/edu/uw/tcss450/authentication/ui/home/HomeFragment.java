@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
     List<MessageModel> mUserList;
 
     /* Recycler view adapter */
-    MessageAdapter mAdapterMessages;
+    HomeMessagesAdapter mAdapterMessages;
 
     /* List of users */
     List<HomeFriendsModel> mFriendsList;
@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
         mUserList.add(new MessageModel(R.drawable.shibalaptop, "Natalie Hong",
                 "7:30 pm", "Are you ready for the sprint review"));
 
-        mAdapterMessages = new MessageAdapter(mUserList);
+        mAdapterMessages = new HomeMessagesAdapter(mUserList);
         recyclerViewMessages.setAdapter(mAdapterMessages);
         recyclerViewMessages.setItemAnimator(new DefaultItemAnimator());
 

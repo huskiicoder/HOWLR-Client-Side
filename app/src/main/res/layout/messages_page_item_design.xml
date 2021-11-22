@@ -64,7 +64,6 @@
             android:layout_toRightOf="@id/profile_image"
             android:text="Are you ready for your sprint review?"
             android:textSize="12sp">
-
         </TextView>
 
         <View
@@ -73,5 +72,4 @@
             android:layout_alignParentBottom="true"
             android:background="@color/light_gray" />
     </RelativeLayout>
-
 </RelativeLayout>
