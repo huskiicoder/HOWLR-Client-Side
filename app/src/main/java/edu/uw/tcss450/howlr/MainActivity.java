@@ -16,10 +16,14 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
+import edu.uw.tcss450.howlr.databinding.ActivityMainBinding;
+import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private UserInfoViewModel mUserInfoViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
 
-        new ViewModelProvider(this,
+        mUserInfoViewModel = new ViewModelProvider(this,
                 new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt())
                 ).get(UserInfoViewModel.class);
 
@@ -38,12 +42,18 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_messages, R.id.navigation_friends)
+                R.id.navigation_home, R.id.navigation_messages, R.id.navigation_friends_list)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 //        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+    }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 
     @Override
@@ -70,5 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
         //End the app completely
         finishAndRemoveTask();
+    }
+    public UserInfoViewModel getUserInfoViewModel() {
+        return mUserInfoViewModel;
     }
 }

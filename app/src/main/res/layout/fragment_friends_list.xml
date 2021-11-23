@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorCardInvis"
+    tools:context=".ui.friends.FriendsListFragment">
+
+    <TextView
+        android:id="@+id/textView_requestContact_friendsfragment"
+        android:layout_width="295dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:text="@string/textplain_friends_search"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_root"
+        android:name="edu.uw.tcss450.authentication.ui.friends.FriendsFragment"
+        android:layout_width="395dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/layout_root"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_addContact_friendsfragment"
+        tools:context="edu.uw.tcss450.authentication.ui.friends.FriendsListFragment"
+        tools:listitem="@layout/fragment_friends_card" />
+
+    <ImageButton
+        android:id="@+id/imageButton_requestContact_friendsfragment"
+        android:layout_width="86dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="305dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/button_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_friends_search_white_24dp" />
+
+    <TextView
+        android:id="@+id/textView_addContact_friendsfragment"
+        android:layout_width="295dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="5dp"
+        android:text="@string/textplain_friends_request"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_requestContact_friendsfragment" />
+
+    <ImageButton
+        android:id="@+id/imageButton_addContact_friendsfragment"
+        android:layout_width="86dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="305dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/button_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_requestContact_friendsfragment"
+        app:srcCompat="@drawable/ic_friends_add_button_white" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

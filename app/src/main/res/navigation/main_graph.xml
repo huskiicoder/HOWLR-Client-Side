@@ -15,18 +15,32 @@
             app:destination="@id/navigation_weather" />
     </fragment>
     <fragment
+        android:id="@+id/navigation_friends_list"
+        android:name="edu.uw.tcss450.howlr.ui.friends.FriendsListFragment"
+        android:label="FriendsListFragment"
+        tools:layout="@layout/fragment_friends_list">
+        <action
+            android:id="@+id/action_navigation_friends_list_to_navigation_friends"
+            app:destination="@id/navigation_friends" />
+        <action
+            android:id="@+id/action_navigation_friends_list_to_navigation_friends_request"
+            app:destination="@id/navigation_friends_request" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_friends_request"
+        android:name="edu.uw.tcss450.howlr.ui.friends.FriendsRequestFragment"
+        android:label="fragment_friends_request_list"
+        tools:layout="@layout/fragment_friends_request_list" >
+        <action
+            android:id="@+id/action_navigation_friends_request_to_navigation_friends_list"
+            app:destination="@id/navigation_friends_list" />
+    </fragment>
+    <fragment
         android:id="@+id/navigation_friends"
         android:name="edu.uw.tcss450.howlr.ui.friends.FriendsFragment"
-        android:label="fragment_friends"
-        tools:layout="@layout/fragment_friends" />
-    <fragment
-        android:id="@+id/navigation_messages"
-        android:name="edu.uw.tcss450.howlr.ui.messages.MessagesPageFragment"
-        android:label="fragment_messages"
-        tools:layout="@layout/fragment_messages_page" />
-    <fragment
-        android:id="@+id/navigation_weather"
-        android:name="edu.uw.tcss450.howlr.ui.weather.WeatherFragment"
-        android:label="fragment_weather"
-        tools:layout="@layout/fragment_weather" />
+        android:label="fragment_friends">
+    <argument
+        android:name="contact"
+        app:argType="edu.uw.tcss450.howlr.ui.friends.Friends"/>
+    </fragment>
 </navigation>
