@@ -2,7 +2,8 @@
 <resources>
     <string name="keys_json_messages_response">response</string>
     <string name="keys_json_messages_data">data</string>
-    <string name="keys_json_messages_time_stamp">pubdate</string>
-    <string name="keys_json_messages_participants">title</string>
-    <string name="keys_json_blogs_picture">teaser</string>
+    <string name="keys_json_messages_chatID">pubdate</string>
+    <string name="keys_json_messages_recent_name">title</string>
+    <string name="keys_json_messages_recent_message">teaser</string>
+    <string name="keys_json_messages_recent_timestamp">teaser</string>
 </resources>
