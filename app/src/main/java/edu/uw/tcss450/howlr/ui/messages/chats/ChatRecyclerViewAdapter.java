@@ -3,6 +3,7 @@ package edu.uw.tcss450.howlr.ui.messages.chats;
 import android.content.res.Resources;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.RoundedCorner;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -12,6 +13,7 @@ import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.shape.CornerFamily;
 
 import java.util.List;
 
@@ -88,14 +90,14 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                         200));
 
                 //Round the corners on the left side
-                /*card.setShapeAppearanceModel(
+                card.setShapeAppearanceModel(
                         card.getShapeAppearanceModel()
                                 .toBuilder()
                                 .setTopLeftCorner(CornerFamily.ROUNDED,standard * 2)
                                 .setBottomLeftCorner(CornerFamily.ROUNDED,standard * 2)
                                 .setBottomRightCornerSize(0)
                                 .setTopRightCornerSize(0)
-                                .build());*/
+                                .build());
 
                 card.requestLayout();
             } else {
@@ -125,14 +127,14 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                         res.getColor(R.color.secondaryTextColorFade, null));
 
                 //Round the corners on the right side
-                /*card.setShapeAppearanceModel(
+                card.setShapeAppearanceModel(
                         card.getShapeAppearanceModel()
                                 .toBuilder()
                                 .setTopRightCorner(CornerFamily.ROUNDED,standard * 2)
                                 .setBottomRightCorner(CornerFamily.ROUNDED,standard * 2)
                                 .setBottomLeftCornerSize(0)
                                 .setTopLeftCornerSize(0)
-                                .build());*/
+                                .build());
                 card.requestLayout();
             }
         }

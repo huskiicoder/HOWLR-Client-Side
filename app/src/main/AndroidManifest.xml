@@ -29,11 +29,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <!-- Pushy Declarations -->
 
         <!-- Pushy Notification Receiver -->
         <!-- Incoming push notifications will invoke the following BroadcastReceiver -->
-        <receiver android:name=".services.PushReceiver" android:exported="false">
+        <receiver android:name="edu.uw.tcss450.howlr.services.PushReceiver" android:exported="false">
             <intent-filter>
                 <!-- Do not modify this -->
                 <action android:name="pushy.me" />
@@ -67,6 +68,7 @@
             android:exported="true" />
 
         <!-- End Pushy Declarations -->
+
     </application>
 
 </manifest>
