@@ -1,6 +1,7 @@
 package edu.uw.tcss450.howlr;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        // Handles dark mode button in dropdown menu
+        // Button themeButton = findViewById(R.id.bt_switch);
+        //btn.setOnClickListener(v -> btn.setText("Light"));
     }
 
     @Override
@@ -57,9 +60,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_sign_out) {
             signOut();
+        } else if (id == R.id.bt_switch) {
+            switchColor();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void switchColor() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+    }
+
 
     private void signOut() {
         SharedPreferences prefs =

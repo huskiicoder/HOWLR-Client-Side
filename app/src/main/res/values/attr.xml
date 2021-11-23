@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<declare-styleable name="dark_theme"> not sure how this plays in but let's play with it-->
+        <attr name ="PrimaryTextColor" format="color"/>
+        <attr name="SecondaryTextColor" format="color"/>
+
+</resources>
