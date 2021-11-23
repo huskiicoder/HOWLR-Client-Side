@@ -12,8 +12,8 @@ import edu.uw.tcss450.howlr.ui.messages.chats.ChatMessage;
  */
 public class MessageModel implements Serializable {
 
-    /** Profile picture.
-    private int mPicture; */
+    /** Profile picture. */
+    private int mPicture;
 
     /** Chat ID */
     private int mChatId;
@@ -29,21 +29,24 @@ public class MessageModel implements Serializable {
 
     /**
      * Constructor for the message card in the messages page.
-     * @param theChatId The profile picture
-     * @param theRecentName The display name
-     * @param theMessageTime The message time
-     * @param theMessageContent The message content
+     * @param theChatId The chat ID
+     * @param theRecentName The recent message name
+     * @param theMessageTime The recent message time
+     * @param theMessageContent The recent message content
      */
-    public MessageModel(int theChatId, String theRecentName,
+    public MessageModel(int thePicture, int theChatId, String theRecentName,
                         String theMessageTime, String theMessageContent) {
+        this.mPicture = thePicture;
         this.mChatId = theChatId;
         this.mRecentName = theRecentName;
         this.mMessageTime = theMessageTime;
         this.mMessageContent = theMessageContent;
     }
 
+    public int getPicture() { return mPicture; }
+
     /**
-     * Getter for the profile picture.
+     * Getter for the chat ID.
      * @return The profile picture
      */
     public int getChatId() {
@@ -51,7 +54,7 @@ public class MessageModel implements Serializable {
     }
 
     /**
-     * Getter for the display name.
+     * Getter for the recent name.
      * @return The display name
      */
     public String getRecentName() {
@@ -59,7 +62,7 @@ public class MessageModel implements Serializable {
     }
 
     /**
-     * Getter for the message time.
+     * Getter for the recent message time.
      * @return The message time
      */
     public String getMessageTime() {
@@ -67,7 +70,7 @@ public class MessageModel implements Serializable {
     }
 
     /**
-     * Getter for the message content.
+     * Getter for the recent message content.
      * @return The message content
      */
     public String getMessageContent() {
@@ -75,9 +78,9 @@ public class MessageModel implements Serializable {
     }
 
     /**
-     * Provides equality solely based on MessageId.
+     * Provides equality solely based on ChatId.
      * @param other the other object to check for equality
-     * @return true if other message ID matches this message ID, false otherwise
+     * @return true if other chat ID matches this message ID, false otherwise
      */
     @Override
     public boolean equals(@Nullable Object other) {

@@ -51,7 +51,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      */
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
-        int picture = mUserList.get(position).getChatId();
+        int picture = mUserList.get(position).getPicture();
+        //int chatId = mUserList.get(position).getChatId();
         String displayName = mUserList.get(position).getRecentName();
         String messageTime = mUserList.get(position).getMessageTime();
         String messageContent = mUserList.get(position).getMessageContent();
@@ -76,6 +77,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         /** Profile picture. */
         private ImageView mPicture;
 
+        /** Chat Id. */
+        //private int mChatId;
+
         /** Display name. */
         private TextView mDisplayName;
 
@@ -93,6 +97,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             super(itemView);
 
             mPicture = itemView.findViewById(R.id.picture);
+            //mChatId = itemView.findViewById();
             mDisplayName = itemView.findViewById(R.id.display_name);
             mMessageTime = itemView.findViewById(R.id.message_time);
             mMessageContent = itemView.findViewById(R.id.message_content);

@@ -19,6 +19,7 @@ import java.util.List;
 
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
+import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 
 /**
@@ -28,6 +29,9 @@ public class MessagesPageFragment extends Fragment {
 
     /* Messages view model. */
     MessagesListViewModel mModel;
+
+    /* User view model. */
+    UserInfoViewModel mUserModel;
 
     /* List of users with chat. */
     List<MessageModel> mUserList;
@@ -41,25 +45,45 @@ public class MessagesPageFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
-        mModel.connectGet();
+        ViewModelProvider provider = new ViewModelProvider(getActivity());
+        mUserModel = provider.get(UserInfoViewModel.class);
+        mModel = new MessagesListViewModel(requireActivity().getApplication());
+        System.out.println("onCreate Size at constructor: " + mModel.mMessagesList.getValue().size());
+        //mModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
+        mModel.connectGet(mUserModel.getmJwt());
+        System.out.println("onCreate Size at connectGet: " + mModel.mMessagesList.getValue().size());
     }
+
+/*    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        mModel = new MessagesListViewModel(requireActivity().getApplication());
+        System.out.println("onCreate Size at constructor: " + mModel.mMessagesList.getValue().size());
+        //mModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
+        mModel.connectGet(mUserModel.getmJwt());
+        System.out.println("onCreate Size at connectGet: " + mModel.mMessagesList.getValue().size());
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              @Nullable Bundle savedInstancesState) {
-
         mBinding = inflater.inflate(R.layout.fragment_messages_page, container, false);
         RecyclerView recyclerView = mBinding.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        System.out.println("onCreate Size at onCreateView: " + mModel.mMessagesList.getValue().size());
+
+
+        mUserList = new ArrayList<>();
+        for (int i = 0; i < mModel.mMessagesList.getValue().size(); i++) {
+            mUserList.add(mModel.mMessagesList.getValue().get(i));
+        }
+        System.out.println(mModel);
 
         /**
          * Creates template data for recycler view.
          * TODO Delete after manual implementation of data is no longer needed.
          */
-      /*  mUserList = new ArrayList<>();
-        mUserList.add(new MessageModel(R.drawable.shibabone, "Charles Bryan",
+      /*  mUserList.add(new MessageModel(R.drawable.shibabone, "Charles Bryan",
                 "2:30 pm", "Are you ready for the sprint review"));
         mUserList.add(new MessageModel(R.drawable.shibacoffee, "Amir Almemar",
                 "3:30 pm", "Are you ready for the sprint review"));
