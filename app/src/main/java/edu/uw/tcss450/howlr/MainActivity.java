@@ -2,6 +2,7 @@ package edu.uw.tcss450.howlr;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -245,9 +246,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_sign_out) {
             signOut();
+        } else if (id == R.id.bt_switch) {
+            switchColor();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void switchColor() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+    }
+
 
     private void signOut() {
         SharedPreferences prefs =

@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/white">
+        android:background="@color/accent_color_light">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/profile_image"
@@ -37,7 +37,7 @@
             android:layout_marginTop="26dp"
             android:layout_toRightOf="@id/profile_image"
             android:text="Charles Bryan"
-            android:textColor="@color/black"
+            android:textColor="@color/text_color"
             android:textSize="20sp">
 
         </TextView>
@@ -51,6 +51,7 @@
             android:layout_toRightOf="@id/display_name"
             android:text="7:30 pm"
             android:textAlignment="textEnd"
+            android:textColor="@color/fill3"
             android:textSize="12sp">
 
         </TextView>
@@ -63,13 +64,17 @@
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/profile_image"
             android:text="Are you ready for your sprint review?"
+            android:textColor="@color/fill3"
             android:textSize="12sp">
+
         </TextView>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/light_gray" />
+            android:background="@color/background_color" />
+
     </RelativeLayout>
+
 </RelativeLayout>
