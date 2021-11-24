@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_color">#956AA9</color>
-    <color name="accent_color">#A280A5</color>
+    <color name="background_color">#A280A5</color>
+    <color name="accent_color_light">#956AA9</color>
+    <color name="accent_color_dark">#6200EE</color>
     <color name="text_color">#000000</color>
     <color name="text_accent_color">#6200EE</color>
     <color name="fill1">#808080</color>
-    <color name="fill2">#6200EE</color>
     <color name="fill3">#A280A5</color>
 </resources>
 
