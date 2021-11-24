@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -23,6 +24,7 @@ import java.util.Map;
 
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
+import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 public class MessagesListViewModel extends AndroidViewModel  {
 
@@ -53,8 +55,8 @@ public class MessagesListViewModel extends AndroidViewModel  {
                         R.drawable.shibabone,
                         jsonMessage.getInt("chatid"),
                         jsonMessage.getString("firstname"),
-                        jsonMessage.getString("message"),
-                        jsonMessage.getString("timestamp"));
+                        jsonMessage.getString("timestamp"),
+                        jsonMessage.getString("message"));
                 if (!mMessagesList.getValue().contains(cm)) {
                     mMessagesList.getValue().add(cm);
                 }
@@ -70,8 +72,8 @@ public class MessagesListViewModel extends AndroidViewModel  {
     }
 
 
-    public void connectGet(final String jwt) {
-        String url = "https://howlr-server-side.herokuapp.com/chats/88";
+    public void connectGet(final String jwt, final int memberId) {
+        String url = "https://howlr-server-side.herokuapp.com/chats/" + memberId;
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -82,6 +84,7 @@ public class MessagesListViewModel extends AndroidViewModel  {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
+                System.out.println(jwt);
                 headers.put("Authorization", jwt);
                 return headers;
             }

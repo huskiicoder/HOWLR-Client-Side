@@ -128,10 +128,10 @@ public class SignInFragment extends Fragment {
      * @param email users email
      * @param jwt the JSON Web Token supplied by the server
      */
-    private void navigateToSuccess(final String email, final String jwt) {
+    private void navigateToSuccess(final int memberId, String email, final String jwt) {
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
-                        .actionLoginFragmentToMainActivity(email, jwt));
+                        .actionLoginFragmentToMainActivity(email, memberId,  jwt));
     }
 
     /**
@@ -155,6 +155,7 @@ public class SignInFragment extends Fragment {
                     mUserViewModel = new ViewModelProvider(getActivity(),
                             new UserInfoViewModel.UserInfoViewModelFactory(
                                     binding.editEmail.getText().toString(),
+                                    88, //response.getInt("memberid"),
                                     response.getString("token")
                             )).get(UserInfoViewModel.class);
 
@@ -182,6 +183,7 @@ public class SignInFragment extends Fragment {
                         "Error Authenticating on Push Token. Please contact support");
             } else {
                 navigateToSuccess(
+                        mUserViewModel.getUserId(),
                         binding.editEmail.getText().toString(),
                         mUserViewModel.getmJwt()
                 );

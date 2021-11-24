@@ -20,9 +20,6 @@ import edu.uw.tcss450.howlr.model.UserInfoViewModel;
  */
 public class ChatFragment extends Fragment {
 
-    //The chat ID for "global" chat
-    private static final int HARD_CODED_CHAT_ID = 1;
-
     private ChatViewModel mChatModel;
     private UserInfoViewModel mUserModel;
 
@@ -38,7 +35,7 @@ public class ChatFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
-        mChatModel.getFirstMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
+        mChatModel.getFirstMessages(mUserModel.getChatRoom(), mUserModel.getmJwt());
 
         mSendModel = provider.get(ChatSendViewModel.class);
     }
@@ -63,17 +60,17 @@ public class ChatFragment extends Fragment {
         //Set the Adapter to hold a reference to the list FOR THIS chat ID that the ViewModel
         //holds.
         rv.setAdapter(new ChatRecyclerViewAdapter(
-                mChatModel.getMessageListByChatId(HARD_CODED_CHAT_ID),
+                mChatModel.getMessageListByChatId(mUserModel.getChatRoom()),
                 mUserModel.getEmail()));
 
 
         //When the user scrolls to the top of the RV, the swiper list will "refresh"
         //The user is out of messages, go out to the service and get more
         binding.swipeContainer.setOnRefreshListener(() -> {
-            mChatModel.getNextMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
+            mChatModel.getNextMessages(mUserModel.getChatRoom(), mUserModel.getmJwt());
         });
 
-        mChatModel.addMessageObserver(HARD_CODED_CHAT_ID, getViewLifecycleOwner(),
+        mChatModel.addMessageObserver(mUserModel.getChatRoom(), getViewLifecycleOwner(),
                 list -> {
                     /*
                      * This solution needs work on the scroll position. As a group,
@@ -89,7 +86,7 @@ public class ChatFragment extends Fragment {
 
         //Send button was clicked. Send the message via the SendViewModel
         binding.buttonSend.setOnClickListener(button -> {
-            mSendModel.sendMessage(HARD_CODED_CHAT_ID,
+            mSendModel.sendMessage(mUserModel.getChatRoom(),
                     mUserModel.getmJwt(),
                     binding.editMessage.getText().toString());
         });

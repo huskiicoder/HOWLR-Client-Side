@@ -16,10 +16,5 @@
         android:icon="@drawable/ic_friends_icon_24"
         android:title="@string/title_friends" />
 
-    <item
-        android:id="@+id/navigation_chat"
-        android:icon="@drawable/ic_chat_notification"
-        android:title="Chats" />
-
 
 </menu>
