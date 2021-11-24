@@ -1,8 +1,5 @@
 package edu.uw.tcss450.howlr.ui.weather;
-
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -16,7 +13,6 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.auth0.android.jwt.JWT;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,91 +20,112 @@ import org.json.JSONObject;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.IntFunction;
-
-import edu.uw.tcss450.howlr.MainActivity;
-import edu.uw.tcss450.howlr.R;
 
 public class WeatherViewModel extends AndroidViewModel {
-    public MutableLiveData<JSONObject> mResponse;
+
+    private MutableLiveData<List<Weather>> mWeather;
 
     public WeatherViewModel(@NonNull Application application) {
         super(application);
-        mResponse = new MutableLiveData<>();
-        mResponse.setValue(new JSONObject());
+        mWeather = new MutableLiveData<>();
     }
 
-    public void addResponseObserver(@NonNull LifecycleOwner owner,
-                                    @NonNull Observer<?super JSONObject> observer) {
-        mResponse.observe(owner, observer);
+    public void addWeatherObserver(@NonNull LifecycleOwner owner, @NonNull Observer<? super List<Weather>> observer) {
+        mWeather.observe(owner, observer);
     }
 
-    private void handleResult(final JSONObject result) {
-//        mResponse.setValue(result);
-        IntFunction<String> getString =
-                getApplication().getResources()::getString;
-        try {
-            JSONObject root = result;
-            JSONArray a = root.getJSONArray("data");
-            JSONObject obj = a.getJSONObject(0);
-            mResponse.setValue(obj);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("ERROR!", e.getMessage());
+    public void connectGet(final String jwt) {
+        if (jwt == null) {
+            throw new IllegalArgumentException("No UserInfoViewModel is assigned");
         }
-//        mBlogList.setValue(mBlogList.getValue());
-    }
+        String url = "https://howlr-server-side.herokuapp.com/weather/47/-122/";
 
-    private void handleError(final VolleyError error) {
-        if(Objects.isNull(error.networkResponse)) {
-            try {
-                mResponse.setValue(new JSONObject("{" + "error:\"" + error.getMessage() + "\"}"));
-            } catch(JSONException e) {
-                Log.e("JSON PARSE", "JSON Parse Error in handleError");
-            }
-        } else {
-            String data = new String(error.networkResponse.data, Charset.defaultCharset())
-                    .replace('\"','\'');
-            try {
-                mResponse.setValue(new JSONObject("{" + "code:" + error.networkResponse.statusCode
-                + ", data:\"" + data + "\"}"));
-            } catch (JSONException e) {
-                Log.e("JSON PARSE", "JSON Parse Error in handleError");
-            }
-        }
-    }
-
-    public void connectGetCurrent() {
-        String url = "https://howlr-server-side.herokuapp.com/weather/current";
-//        SharedPreferences prefs;
-//        prefs = MainActivity.this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-//        String token = prefs.getString();
-//        JWT jwt = new JWT(token);
-        Request request = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                this::handleResult,
-                this::handleError){
+        Request request = new JsonObjectRequest(Request.Method.GET, url, null,
+                //no body for this get request
+                this::handleResult, this::handleError) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                // headers <key, value>
-                headers.put("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imdyb3Vwc2NydWZmeUBnbWFpbC5jb20iLCJtZW1iZXJpZCI6ODgsImlhdCI6MTYzNzQ0NDM2NCwiZXhwIjoxNjM4NjUzOTY0fQ.cb5lvS9bboRbhQ_60GdkrdhvEUDF1kie5IAi_HubAdc");
+                // add headers <key,value>
+                headers.put("Authorization", "Bearer " + jwt);
                 return headers;
             }
         };
-
-        request.setRetryPolicy(new DefaultRetryPolicy(
-                10_000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        ));
-        // Instantiate the RequestQueue and add the request to the queue
+        request.setRetryPolicy(new DefaultRetryPolicy(10_000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
-        Log.d("VOLLEY", "I did the volley thing");
+    }
+
+    private void handleResult(final JSONObject result) {
+
+        if (!result.has("current")) {
+            throw new IllegalStateException("Unexpected response in WeatherViewModel: " + result);
+        }
+        try {
+            System.out.println(result);
+            JSONObject currentData = result.getJSONObject("current");
+
+            JSONArray hourArray = result.getJSONArray("hourly");
+
+            JSONArray dailyArray = result.getJSONArray("daily");
+
+            ArrayList<Weather> weatherDataList = new ArrayList<Weather>();
+            Calendar now = Calendar.getInstance();
+            String[] days = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+
+            weatherDataList.add(new Weather(currentData.getDouble("temp"),
+                    currentData.getJSONArray("weather").getJSONObject(0).getString("main"),
+                    days[now.get(Calendar.DAY_OF_WEEK)],
+                    "Tacoma",
+                    currentData.getJSONArray("weather").getJSONObject(0).getString("icon")));
+
+            now = Calendar.getInstance();
+            for (int i = 0; i < 24; i++) {
+                int hour = now.get(Calendar.HOUR_OF_DAY);
+                Weather someHour = new Weather(
+                        hour, hourArray.getJSONObject(i).getDouble("temp"),
+                        hourArray.getJSONObject(i).getJSONArray("weather")
+                                .getJSONObject(0).getString("main"),
+                        hourArray.getJSONObject(i).getJSONArray("weather")
+                                .getJSONObject(0).getString("icon"));
+                weatherDataList.add(someHour);
+                now.add(Calendar.HOUR, 1);
+            }
+            now = Calendar.getInstance();
+
+            for (int i = 0; i < 8; i++) {
+                Weather someDay = new Weather(
+                        dailyArray.getJSONObject(i).getJSONObject("temp").getDouble("max"),
+                        dailyArray.getJSONObject(i).getJSONObject("temp").getDouble("min"),
+                        days[now.get(Calendar.DAY_OF_WEEK)],
+                        dailyArray.getJSONObject(i).getJSONArray("weather")
+                                .getJSONObject(0).getString("icon"));
+                weatherDataList.add(someDay);
+                now.add(Calendar.DAY_OF_WEEK, 1);
+            }
+
+            mWeather.setValue(weatherDataList);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void handleError(final VolleyError error) {
+        if (Objects.isNull(error.networkResponse)) {
+            Log.e("NETWORK ERROR", error.getMessage());
+        } else {
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
+            Log.e("CLIENT ERROR",
+                    error.networkResponse.statusCode +
+                            " " +
+                            data);
+        }
     }
 }

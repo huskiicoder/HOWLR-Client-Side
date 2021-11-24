@@ -36,7 +36,12 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_messages.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_weather_card.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_weather_daily.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_weather_hourly.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_weather_list.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.12760416666666666" />
+        <entry key="app/src/main/res/menu/drop_down.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14427083333333332" />
       </map>
     </option>
