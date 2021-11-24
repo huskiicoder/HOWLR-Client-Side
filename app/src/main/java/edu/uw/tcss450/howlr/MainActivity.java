@@ -42,6 +42,7 @@ import edu.uw.tcss450.howlr.ui.messages.chats.ChatViewModel;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
      */
@@ -66,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
     private MainPushMessageReceiver mPushMessageReceiver;
     private NewMessageCountViewModel mNewMessageModel;
 
+    private UserInfoViewModel mUserInfoViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
 
-        new ViewModelProvider(this,
+        mUserInfoViewModel = new ViewModelProvider(this,
                 new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getMemberid(), args.getJwt())
                 ).get(UserInfoViewModel.class);
 
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_messages, R.id.navigation_friends, R.id.navigation_chat)
+                R.id.navigation_home, R.id.navigation_messages, R.id.navigation_friends, R.id.navigation_friends_list)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 //        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -229,6 +232,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.drop_down, menu);
         return true;
@@ -310,5 +320,8 @@ public class MainActivity extends AppCompatActivity {
         if (mPushMessageReceiver != null){
             unregisterReceiver(mPushMessageReceiver);
         }
+    }
+    public UserInfoViewModel getUserInfoViewModel() {
+        return mUserInfoViewModel;
     }
 }

@@ -7,4 +7,7 @@
     <string name="keys_json_precip">precip</string>
     <string name="keys_json_wind_speed">wind_spd</string>
     <string name="keys_json_wind_dir">wind_dir</string>
+    <string name="keys_json_friends_response">response</string>
+    <string name="keys_json_friends_request">request</string>
+    <string name="keys_json_friends">friends</string>
 </resources>

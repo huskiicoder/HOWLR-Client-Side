@@ -73,9 +73,9 @@ public class SignInFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonToRegister.setOnClickListener(button ->
-            Navigation.findNavController(getView()).navigate(
-                    SignInFragmentDirections.actionLoginFragmentToRegisterFragment()
-            ));
+                Navigation.findNavController(getView()).navigate(
+                        SignInFragmentDirections.actionLoginFragmentToRegisterFragment()
+                ));
 
         binding.buttonSignIn.setOnClickListener(this::attemptSignIn);
 
@@ -192,18 +192,18 @@ public class SignInFragment extends Fragment {
                 getActivity().getSharedPreferences(
                         getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
-        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
-            String token = prefs.getString(getString(R.string.keys_prefs_jwt), "");
-            JWT jwt = new JWT(token);
-            // Check to see if the web token is still valid or not. To make a JWT expire after a
-            // longer or shorter time period, change the expiration time when the JWT is
-            // created on the web service.
-            if(!jwt.isExpired(0)) {
-                String email = jwt.getClaim("email").asString();
-                navigateToSuccess(email, token);
-                return;
-            }
-        }
+//        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
+//            String token = prefs.getString(getString(R.string.keys_prefs_jwt), "");
+//            JWT jwt = new JWT(token);
+//            // Check to see if the web token is still valid or not. To make a JWT expire after a
+//            // longer or shorter time period, change the expiration time when the JWT is
+//            // created on the web service.
+//            if(!jwt.isExpired(0)) {
+//                String email = jwt.getClaim("email").asString();
+//                navigateToSuccess(email, token);
+//                return;
+//            }
+//        }
     }
 
     /**
