@@ -14,6 +14,11 @@
     <string name="title_friends">Friends</string>
     <string name="title_weather">Weather</string>
 
+    <!--Message Page-->
+    <string name="first_name_last_name">First Last</string>
+    <string name="message_content">Message Content</string>
+    <string name="time_of_last_message_sent_or_received">Time</string>
+
     <string name="switch_sign_in">Stay Signed in</string>
     <string name="keys_shared_prefs">My Auth App Shared Prefs</string>
     <string name="keys_prefs_jwt">Sharded Prefs JWT</string>

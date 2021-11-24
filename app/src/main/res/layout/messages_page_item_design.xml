@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="26dp"
             android:layout_toRightOf="@id/profile_image"
-            android:text="Charles Bryan"
+            android:text="@string/first_name_last_name"
             android:textColor="@color/text_color"
             android:textSize="20sp">
 
@@ -46,13 +46,14 @@
             android:id="@+id/message_time"
             android:layout_width="60dp"
             android:layout_height="18dp"
-            android:layout_marginLeft="20dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="28dp"
-            android:layout_toRightOf="@id/display_name"
-            android:text="7:30 pm"
+            android:layout_marginRight="15dp"
+            android:text="@string/time_of_last_message_sent_or_received"
             android:textAlignment="textEnd"
             android:textColor="@color/text_color"
-            android:textSize="12sp">
+            android:textSize="12sp"
+            tools:ignore="TextContrastCheck">
 
         </TextView>
 
@@ -63,7 +64,7 @@
             android:layout_below="@id/display_name"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/profile_image"
-            android:text="Are you ready for your sprint review?"
+            android:text="@string/message_content"
             android:textColor="@color/text_color"
             android:textSize="12sp">
 
