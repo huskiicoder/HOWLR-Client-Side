@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_sign_out"
+        android:orderInCategory="100"
+        android:title="@string/action_sign_out"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="never" />
+
+    <!-- consider using this button as a dark mode toggle to proc
+            the built-in android functionality-->
+    <item
+            android:id="@+id/bt_switch"
+            android:title = "Dark Mode"
+
+        />
+
+</menu>

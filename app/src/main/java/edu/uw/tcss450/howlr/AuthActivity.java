@@ -3,6 +3,8 @@ package edu.uw.tcss450.howlr;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import edu.uw.tcss450.howlr.model.PushyTokenViewModel;
@@ -19,6 +21,10 @@ public class AuthActivity extends AppCompatActivity {
         Pushy.listen(this);
 
         initiatePushyTokenRequest();
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        Uri data = intent.getData();
     }
 
     private void initiatePushyTokenRequest() {

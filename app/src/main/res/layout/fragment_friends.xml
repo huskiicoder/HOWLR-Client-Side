@@ -5,7 +5,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.friends.FriendsFragment" >
+    tools:context=".ui.friends.FriendsFragment"
+    android:background="@color/background_color2">
 
     <TextView
         android:id="@+id/friends"
