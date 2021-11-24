@@ -13,7 +13,7 @@
         android:layout_width="370dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/background_color"
+        app:cardBackgroundColor="@color/accent_color_light"
         card_view:cardCornerRadius="8dp">
 
         <!-- TextView for displaying account name -->
@@ -34,7 +34,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginLeft="25dp"
             app:cardCornerRadius="250dp"
-            app:cardBackgroundColor="@color/background_color">
+            app:cardBackgroundColor="@color/background_color2">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="80dp"
@@ -59,7 +59,7 @@
         android:layout_width="370dp"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/background_color"
+        app:cardBackgroundColor="@color/accent_color_light"
         card_view:cardCornerRadius="8dp">
 
         <TextView
@@ -87,13 +87,13 @@
             android:layout_height="130dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="220dp"
-            android:background="@color/background_color"
+            android:background="@color/background_color2"
             card_view:cardElevation="0dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/background_color"
+                android:background="@color/background_color2"
                 android:src="@drawable/sunny"/>
         </androidx.cardview.widget.CardView>
 
@@ -114,7 +114,7 @@
             android:layout_width="175dp"
             android:layout_height="200dp"
             android:layout_gravity="left"
-            app:cardBackgroundColor="@color/background_color"
+            app:cardBackgroundColor="@color/background_color2"
             card_view:cardCornerRadius="8dp">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -138,7 +138,7 @@
                 android:id="@+id/recycler_view_messages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/background_color">
+                android:background="@color/background_color2">
 
             </androidx.recyclerview.widget.RecyclerView>
 
