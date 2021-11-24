@@ -53,7 +53,7 @@ public class HomeMessagesAdapter extends RecyclerView.Adapter<HomeMessagesAdapte
     @Override
     public void onBindViewHolder(@NonNull HomeMessagesAdapter.ViewHolder holder, int position) {
         int picture = mUserList.get(position).getPicture();
-        String displayName = mUserList.get(position).getDisplayName();
+        String displayName = mUserList.get(position).getRecentName();
         String messageTime = mUserList.get(position).getMessageTime();
         String messageContent = mUserList.get(position).getMessageContent();
 

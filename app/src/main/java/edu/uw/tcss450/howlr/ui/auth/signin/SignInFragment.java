@@ -146,7 +146,7 @@ public class SignInFragment extends Fragment {
 
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
-                        .actionLoginFragmentToMainActivity(email, jwt));
+                        .actionLoginFragmentToMainActivity(email,88, jwt));
         getActivity().finish();
     }
 
@@ -171,6 +171,7 @@ public class SignInFragment extends Fragment {
                     mUserViewModel = new ViewModelProvider(getActivity(),
                             new UserInfoViewModel.UserInfoViewModelFactory(
                                     binding.editEmail.getText().toString(),
+                                    88,
                                     response.getString("token")
                             )).get(UserInfoViewModel.class);
 

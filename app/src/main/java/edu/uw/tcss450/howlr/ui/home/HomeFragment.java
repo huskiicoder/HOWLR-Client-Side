@@ -102,17 +102,17 @@ public class HomeFragment extends Fragment {
          * TODO Delete after manual implementation of data is no longer needed.
          */
         mUserList = new ArrayList<>();
-        mUserList.add(new MessageModel(R.drawable.shibabone, "Charles Bryan",
+        mUserList.add(new MessageModel(R.drawable.shibabone, 1, "Charles Bryan",
                 "2:30 pm", "Are you ready for the sprint review"));
-        mUserList.add(new MessageModel(R.drawable.shibacoffee, "Amir Almemar",
+        mUserList.add(new MessageModel(R.drawable.shibacoffee, 1, "Amir Almemar",
                 "3:30 pm", "Are you ready for the sprint review"));
-        mUserList.add(new MessageModel(R.drawable.shibadab, "Daniel Jiang",
+        mUserList.add(new MessageModel(R.drawable.shibadab, 1, "Daniel Jiang",
                 "4:30 pm", "Are you ready for the sprint review"));
-        mUserList.add(new MessageModel(R.drawable.shibadance, "Eddie Robinson",
+        mUserList.add(new MessageModel(R.drawable.shibadance, 1, "Eddie Robinson",
                 "5:30 pm", "Are you ready for the sprint review"));
-        mUserList.add(new MessageModel(R.drawable.shibaheart, "Justin Aschenbrenner",
+        mUserList.add(new MessageModel(R.drawable.shibaheart, 1, "Justin Aschenbrenner",
                 "6:30 pm", "Are you ready for the sprint review"));
-        mUserList.add(new MessageModel(R.drawable.shibalaptop, "Natalie Hong",
+        mUserList.add(new MessageModel(R.drawable.shibalaptop, 1, "Natalie Hong",
                 "7:30 pm", "Are you ready for the sprint review"));
 
         mAdapterMessages = new HomeMessagesAdapter(mUserList);
