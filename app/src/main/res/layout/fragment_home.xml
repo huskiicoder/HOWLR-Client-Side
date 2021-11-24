@@ -13,7 +13,7 @@
         android:layout_width="370dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/accent_color"
+        app:cardBackgroundColor="@color/background_color"
         card_view:cardCornerRadius="8dp">
 
         <!-- TextView for displaying account name -->
@@ -112,7 +112,7 @@
             android:layout_width="175dp"
             android:layout_height="200dp"
             android:layout_gravity="left"
-            app:cardBackgroundColor="@color/accent_color"
+            app:cardBackgroundColor="@color/background_color"
             card_view:cardCornerRadius="8dp">
 
 
