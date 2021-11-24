@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@drawable/howlrbg"
+    android:background="@drawable/howlrbg_dark"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -13,7 +13,7 @@
         android:layout_width="370dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/accent_color_light"
+        app:cardBackgroundColor="@color/background_color2"
         card_view:cardCornerRadius="8dp">
 
         <!-- TextView for displaying account name -->
@@ -59,7 +59,7 @@
         android:layout_width="370dp"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/accent_color_light"
+        app:cardBackgroundColor="@color/background_color2"
         card_view:cardCornerRadius="8dp">
 
         <TextView
