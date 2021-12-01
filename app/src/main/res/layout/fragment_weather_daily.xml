@@ -32,21 +32,21 @@
 
             <TextView
                 android:id="@+id/text_weather_daily_high_temp"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="11dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="High Temp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_weather_day"
+                app:layout_constraintStart_toEndOf="@+id/image_weatherview_day_conditon"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
                 android:id="@+id/text_weather_daily_low_temp"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="11dp"
@@ -57,13 +57,26 @@
                 app:layout_constraintStart_toEndOf="@+id/text_weather_daily_high_temp"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/text_weather_daily_humidity"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="11dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="Humidity"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/text_weather_daily_low_temp"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/image_weatherview_day_conditon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_weather_daily_low_temp"
+                app:layout_constraintStart_toEndOf="@+id/text_weather_day"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_weather_icon_24dp" />
 

@@ -1,5 +1,10 @@
 package edu.uw.tcss450.howlr.ui.weather;
 
+/**
+ * Implements Weather class to generate current weather, hourly weather, daily weather.
+ * @author Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
+ */
 public class Weather {
 
     private String typeTime;
@@ -20,9 +25,11 @@ public class Weather {
 
     private String icon;
 
+    private int humidity;
+
 
     public Weather(String typeTime, int time, double lowTemp, double highTemp, double currentTemp,
-                    String curentWeather, String date, String city, String icon) {
+                    String curentWeather, String date, String city, String icon, int humidity) {
         this.typeTime = typeTime;
         this.time = time;
         this.lowTemp = lowTemp;
@@ -32,9 +39,11 @@ public class Weather {
         this.date = date;
         this.city = city;
         this.icon = icon;
+        this.humidity = humidity;
     }
 
-    public Weather( double currentTemp, String curentWeather, String date, String city, String icon) {
+    public Weather( double currentTemp, String curentWeather, String date, String city, String icon,
+                    int humidity) {
         this.typeTime = "Current";
         this.time = 0;
         this.lowTemp = -1;
@@ -44,9 +53,10 @@ public class Weather {
         this.date = date;
         this.city = city;
         this.icon = icon;
+        this.humidity = humidity;
     }
 
-    public Weather(int time, double currentTemp, String curentWeather, String icon) {
+    public Weather(int time, double currentTemp, String curentWeather, String icon, int humidity) {
         this.typeTime = "Hourly";
         this.time = time;
         this.lowTemp = -1;
@@ -56,9 +66,10 @@ public class Weather {
         this.date = "";
         this.city = "";
         this.icon = icon;
+        this.humidity = humidity;
     }
 
-    public Weather(double lowTemp, double highTemp, String date, String icon) {
+    public Weather(double lowTemp, double highTemp, String date, String icon, int humidity) {
         this.typeTime = "Daily";
         this.time =0;
         this.lowTemp = lowTemp;
@@ -68,6 +79,7 @@ public class Weather {
         this.date = date;
         this.city = "";
         this.icon = icon;
+        this.humidity = humidity;
     }
 
     public String getTypeTime() {
@@ -104,5 +116,9 @@ public class Weather {
 
     public String getIcon() {
         return icon;
+    }
+
+    public int getHumidity() {
+        return humidity;
     }
 }

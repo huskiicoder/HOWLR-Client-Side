@@ -22,11 +22,20 @@ import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsBinding;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsListBinding;
 
+/**
+ * Implements FriendsListFragment to display a list of friends.
+ * @author Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
+ */
+
 public class FriendsListFragment extends Fragment {
     private FriendsListRecyclerViewAdapter mFriendAdapter;
     private FriendsListViewModel mFriendListModel;
     private FragmentFriendsListBinding binding;
 
+    /**
+     * An empty construct.
+     */
     public FriendsListFragment() {
 
     }
@@ -75,37 +84,11 @@ public class FriendsListFragment extends Fragment {
 
     }
 
+    /**
+     * Delete a friend in the friend list.
+     * @param memberId the member id.
+     */
     public void deleteFriend(final int memberId) {
         mFriendListModel.connectDeleteContact(memberId);
     }
-
-
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//
-////        binding = FragmentFriendsListBinding.inflate(inflater);
-//        mBinding = inflater.inflate(R.layout.fragment_friends_list, container, false);
-//        RecyclerView recyclerView = (RecyclerView) mBinding.findViewById(R.id.list_root);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        mFriendsList = new ArrayList<>();
-//        mFriendsList.add(new Friends(R.drawable.shibabone, 1, "cb3",
-//                "Charles", "Bryan"));
-//        mFriendsList.add(new Friends(R.drawable.shibacoffee, 2, "aa1",
-//                "Amir", "Almemar"));
-//        mFriendsList.add(new Friends(R.drawable.shibadab, 3, "dj5",
-//                "Daniel", "Jiang"));
-//        mFriendsList.add(new Friends(R.drawable.shibadance, 4, "er2",
-//                "Eddie", "Eddie"));
-//        mFriendsList.add(new Friends(R.drawable.shibaheart, 5, "ja7",
-//                "Justin", "Aschenbrenner"));
-//        mFriendsList.add(new Friends(R.drawable.shibalaptop, 6, "nat2",
-//                "Natalie", "Hong"));
-//
-//        mFriendAdapter = new edu.uw.tcss450.howlr.ui.friends.FriendsListRecyclerViewAdapter(mFriendsList);
-//        recyclerView.setAdapter(mFriendAdapter);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-////        return mBinding.getRoot();
-//        return mBinding;
-//    }
 }

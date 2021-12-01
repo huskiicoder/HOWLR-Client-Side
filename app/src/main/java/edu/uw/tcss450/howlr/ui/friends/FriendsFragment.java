@@ -15,6 +15,8 @@ import edu.uw.tcss450.howlr.databinding.FragmentFriendsBinding;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author Daniel Jiang, Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
  */
 public class FriendsFragment extends Fragment {
 

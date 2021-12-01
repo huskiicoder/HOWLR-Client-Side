@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserInfo = provider.get(UserInfoViewModel.class);
         mWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
-        mWeatherModel.connectGet(mUserInfo.getmJwt());
+        mWeatherModel.connectGet(47,-122, mUserInfo.getmJwt());
     }
 
     @Override

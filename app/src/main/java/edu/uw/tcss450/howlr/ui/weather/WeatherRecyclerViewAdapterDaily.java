@@ -14,6 +14,11 @@ import java.util.List;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentWeatherDailyBinding;
 
+/**
+ * Implements WeatherRecyclerViewAdapterDaily to generate daily weather.
+ * @author Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
+ */
 public class WeatherRecyclerViewAdapterDaily extends RecyclerView.Adapter<WeatherRecyclerViewAdapterDaily.WeatherViewHolder> {
         private final List<Weather> mWeather;
 
@@ -56,8 +61,9 @@ public class WeatherRecyclerViewAdapterDaily extends RecyclerView.Adapter<Weathe
 
         public void setWeather(final Weather weather) {
             binding.textWeatherDay.setText(String.valueOf(weather.getDate()));
-            binding.textWeatherDailyLowTemp.setText(String.valueOf(weather.getLowTemp()) + "°");
-            binding.textWeatherDailyHighTemp.setText(String.valueOf(weather.getHighTemp()) + "°") ;
+            binding.textWeatherDailyLowTemp.setText(Math.round(Float.parseFloat(String.valueOf(weather.getLowTemp()))) + "°");
+            binding.textWeatherDailyHighTemp.setText(Math.round(Float.parseFloat(String.valueOf(weather.getHighTemp()))) + "°") ;
+            binding.textWeatherDailyHumidity.setText(String.valueOf(weather.getHumidity()) + "%");
             Picasso.get().load("https://openweathermap.org/img/wn/" + weather.getIcon() + "@2x.png").into(binding.imageWeatherviewDayConditon);
 
         }

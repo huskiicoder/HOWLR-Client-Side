@@ -14,6 +14,11 @@ import java.util.List;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentWeatherHourlyBinding;
 
+/**
+ * Implements WeatherRecyclerViewAdapterHourly to generate hourly weather.
+ * @author Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
+ */
 public class WeatherRecyclerViewAdapterHourly extends RecyclerView.Adapter<WeatherRecyclerViewAdapterHourly.WeatherViewHolder> {
     private final List<Weather> mWeather;
     private boolean singleMode;
@@ -60,7 +65,8 @@ public class WeatherRecyclerViewAdapterHourly extends RecyclerView.Adapter<Weath
 
         void setWeather(final Weather weather){
             binding.textWeatherTime.setText((String.valueOf(weather.getTime()) + ":00"));
-            binding.textWeatherTemperature.setText(String.valueOf(weather.getCurrentTemp()) + "°");
+            binding.textWeatherTemperature.setText(Math.round(Float.parseFloat(String.valueOf(weather.getCurrentTemp()))) + "°");
+            binding.textWeatherHumidity.setText(String.valueOf(weather.getHumidity()) + "%");
             Picasso.get().load("https://openweathermap.org/img/wn/"+ weather.getIcon()+ "@2x.png").into(binding.imageWeatherIcon);
         }
     }

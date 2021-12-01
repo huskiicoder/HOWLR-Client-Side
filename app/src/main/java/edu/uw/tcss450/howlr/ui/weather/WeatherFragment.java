@@ -1,28 +1,18 @@
 package edu.uw.tcss450.howlr.ui.weather;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -31,11 +21,11 @@ import edu.uw.tcss450.howlr.databinding.FragmentSignInBinding;
 import edu.uw.tcss450.howlr.databinding.FragmentWeatherBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
-import edu.uw.tcss450.howlr.ui.auth.signin.SignInFragmentDirections;
-import edu.uw.tcss450.howlr.ui.weather.WeatherViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author Edward Robinson, Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
  */
 public class WeatherFragment extends Fragment {
     private UserInfoViewModel mUserModel;
@@ -52,7 +42,7 @@ public class WeatherFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mWeatherModel = provider.get(WeatherViewModel.class);
-        mWeatherModel.connectGet(mUserModel.getmJwt());
+        mWeatherModel.connectGet(47, -122, mUserModel.getmJwt());
     }
 
     @Override
@@ -76,10 +66,10 @@ public class WeatherFragment extends Fragment {
             if (!list.isEmpty()){
                 List<Weather> hourly_list = list.subList(1,25);
                 List<Weather> daily_list = list.subList(26,33);
-                binding.textCurrentTemp.setText(String.valueOf(list.get(0).getCurrentTemp()) + "°");
+                binding.textCurrentTemp.setText(Math.round(Float.parseFloat(String.valueOf(list.get(0).getCurrentTemp()))) + "°");
                 binding.textViewLocation.setText(String.valueOf(list.get(0).getCity()));
                 binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurentWeather()));
-//                Picasso.get().load("https://openweathermap.org/img/wn/"+ list.get(0).getIcon()+ "@2x.png").into(binding.imageView);
+                binding.textViewHumidity.setText("Hunidity " + String.valueOf(list.get(0).getHumidity()) + "%");
                 Picasso.get().load("https://openweathermap.org/img/wn/"+ "04d" + "@2x.png").into(binding.imageView);
 
                 hourly_rv.setAdapter(new WeatherRecyclerViewAdapterHourly(hourly_list));

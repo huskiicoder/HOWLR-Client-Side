@@ -13,6 +13,11 @@ import java.util.List;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsCardBinding;
 
+/**
+ * Implements FriendsListRecyclerViewAdapter
+ * @author Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
+ */
 public class FriendsListRecyclerViewAdapter extends
         RecyclerView.Adapter<FriendsListRecyclerViewAdapter.FriendsListViewHolder> {
 

@@ -26,6 +26,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Implements Weather class to generate current weather, hourly weather, daily weather.
+ * @author Edward Robinson, Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
+ */
 public class WeatherViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Weather>> mWeather;
@@ -39,11 +44,12 @@ public class WeatherViewModel extends AndroidViewModel {
         mWeather.observe(owner, observer);
     }
 
-    public void connectGet(final String jwt) {
+    public void connectGet(final double lat, final double lon, final String jwt) {
         if (jwt == null) {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
         }
-        String url = "https://howlr-server-side.herokuapp.com/weather/47/-122/";
+//        String url = "https://howlr-server-side.herokuapp.com/weather/47/-122/";
+        String url = "https://howlr-server-side.herokuapp.com/weather/" + lat + "/" + lon;
 
         Request request = new JsonObjectRequest(Request.Method.GET, url, null,
                 //no body for this get request
@@ -70,46 +76,48 @@ public class WeatherViewModel extends AndroidViewModel {
             System.out.println(result);
             JSONObject currentData = result.getJSONObject("current");
 
-            JSONArray hourArray = result.getJSONArray("hourly");
+            JSONArray hourlyArray = result.getJSONArray("hourly");
 
             JSONArray dailyArray = result.getJSONArray("daily");
 
-            ArrayList<Weather> weatherDataList = new ArrayList<Weather>();
-            Calendar now = Calendar.getInstance();
+            ArrayList<Weather> weatherList = new ArrayList<Weather>();
+            Calendar currentTime = Calendar.getInstance();
             String[] days = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
-            weatherDataList.add(new Weather(currentData.getDouble("temp"),
+            weatherList.add(new Weather(currentData.getDouble("temp"),
                     currentData.getJSONArray("weather").getJSONObject(0).getString("main"),
-                    days[now.get(Calendar.DAY_OF_WEEK)],
+                    days[currentTime.get(Calendar.DAY_OF_WEEK)],
                     "Tacoma",
-                    currentData.getJSONArray("weather").getJSONObject(0).getString("icon")));
+                    currentData.getJSONArray("weather").getJSONObject(0).getString("icon"),
+                    currentData.getInt("humidity")));
 
-            now = Calendar.getInstance();
             for (int i = 0; i < 24; i++) {
-                int hour = now.get(Calendar.HOUR_OF_DAY);
+                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
                 Weather someHour = new Weather(
-                        hour, hourArray.getJSONObject(i).getDouble("temp"),
-                        hourArray.getJSONObject(i).getJSONArray("weather")
+                        hour, hourlyArray.getJSONObject(i).getDouble("temp"),
+                        hourlyArray.getJSONObject(i).getJSONArray("weather")
                                 .getJSONObject(0).getString("main"),
-                        hourArray.getJSONObject(i).getJSONArray("weather")
-                                .getJSONObject(0).getString("icon"));
-                weatherDataList.add(someHour);
-                now.add(Calendar.HOUR, 1);
+                        hourlyArray.getJSONObject(i).getJSONArray("weather")
+                                .getJSONObject(0).getString("icon"),
+                        hourlyArray.getJSONObject(i).getInt("humidity"));
+                weatherList.add(someHour);
+                currentTime.add(Calendar.HOUR, 1);
             }
-            now = Calendar.getInstance();
 
+            currentTime = Calendar.getInstance();
             for (int i = 0; i < 8; i++) {
                 Weather someDay = new Weather(
                         dailyArray.getJSONObject(i).getJSONObject("temp").getDouble("max"),
                         dailyArray.getJSONObject(i).getJSONObject("temp").getDouble("min"),
-                        days[now.get(Calendar.DAY_OF_WEEK)],
+                        days[currentTime.get(Calendar.DAY_OF_WEEK)],
                         dailyArray.getJSONObject(i).getJSONArray("weather")
-                                .getJSONObject(0).getString("icon"));
-                weatherDataList.add(someDay);
-                now.add(Calendar.DAY_OF_WEEK, 1);
+                                .getJSONObject(0).getString("icon"),
+                        dailyArray.getJSONObject(i).getInt("humidity"));
+                weatherList.add(someDay);
+                currentTime.add(Calendar.DAY_OF_WEEK, 1);
             }
 
-            mWeather.setValue(weatherDataList);
+            mWeather.setValue(weatherList);
 
         } catch (JSONException e) {
             e.printStackTrace();

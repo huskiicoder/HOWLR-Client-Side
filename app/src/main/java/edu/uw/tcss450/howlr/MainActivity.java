@@ -33,6 +33,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.uw.tcss450.howlr.databinding.ActivityMainBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
+import edu.uw.tcss450.howlr.model.NewFriendCountViewModel;
 import edu.uw.tcss450.howlr.model.NewMessageCountViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.services.PushReceiver;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MainPushMessageReceiver mPushMessageReceiver;
     private NewMessageCountViewModel mNewMessageModel;
+    private NewFriendCountViewModel mNewFriendModel;
 
     private UserInfoViewModel mUserInfoViewModel;
 
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
+        mNewFriendModel = new ViewModelProvider(this).get(NewFriendCountViewModel.class);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.navigation_chat) {
@@ -101,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
                 //This will need some extra logic for your project as it should have
                 //multiple chat rooms.
                 mNewMessageModel.reset();
+            } else if (destination.getId() == R.id.navigation_friends_request) {
+                mNewFriendModel.reset();
             }
         });
 
@@ -113,6 +118,20 @@ public class MainActivity extends AppCompatActivity {
                 badge.setVisible(true);
             } else {
                 //user did some action to clear the new messages, remove the badge
+                badge.clearNumber();
+                badge.setVisible(false);
+            }
+        });
+
+        mNewFriendModel.addFriendCountObserver(this, count -> {
+            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_friends_request);
+            badge.setMaxCharacterCount(2);
+            if (count > 0) {
+                //new friends request! update and show the notification badge.
+                badge.setNumber(count);
+                badge.setVisible(true);
+            } else {
+                //user did some action to clear the new friend request, remove the badge
                 badge.clearNumber();
                 badge.setVisible(false);
             }
@@ -189,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Createa nd configure a Location Request used when retrieving location updates
+     * Created configure a Location Request used when retrieving location updates
      */
     private void createLocationRequest() {
         mLocationRequest = LocationRequest.create();
