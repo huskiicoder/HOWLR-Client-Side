@@ -89,8 +89,12 @@ public class ChatViewModel extends AndroidViewModel {
      * @param jwt the users signed JWT
      */
     public void getFirstMessages(final int chatId, final String jwt) {
-        String url = getApplication().getResources().getString(R.string.base_url) +
+        // TODO------------------------------------------------------------------------------------
+        String url = "http://10.0.2.2:8080/" +
                 "messages/" + chatId;
+
+//        String url = getApplication().getResources().getString(R.string.base_url) +
+//                "messages/" + chatId;
 
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -132,11 +136,18 @@ public class ChatViewModel extends AndroidViewModel {
      * @param jwt the users signed JWT
      */
     public void getNextMessages(final int chatId, final String jwt) {
-        String url = getApplication().getResources().getString(R.string.base_url) +
+        // TODO------------------------------------------------------------------------------------
+        String url = "http://10.0.2.2:8080/" +
                 "messages/" +
                 chatId +
                 "/" +
                 mMessages.get(chatId).getValue().get(0).getMessageId();
+
+//        String url = getApplication().getResources().getString(R.string.base_url) +
+//                "messages/" +
+//                chatId +
+//                "/" +
+//                mMessages.get(chatId).getValue().get(0).getMessageId();
 
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -187,10 +198,12 @@ public class ChatViewModel extends AndroidViewModel {
             JSONArray messages = response.getJSONArray("rows");
             for(int i = 0; i < messages.length(); i++) {
                 JSONObject message = messages.getJSONObject(i);
+                // TODO------------------------------------------------------------------------------------
                 ChatMessage cMessage = new ChatMessage(
                         message.getInt("messageid"),
                         message.getString("message"),
-                        message.getString("email"),
+                        message.getString("firstname") +
+                        " " + message.getString("lastname"),
                         message.getString("timestamp")
                 );
                 if (!list.contains(cMessage)) {
