@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/background_color2">
+        android:background="@color/purple_default">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/profile_image"
@@ -49,7 +49,7 @@
             android:layout_marginLeft="-30dp"
             android:layout_marginTop="14dp"
             android:layout_toRightOf="@id/display_name"
-            android:textColor="@color/accent_color_light"
+            android:textColor="@color/accent_purple_default"
             android:text="7:30 pm"
             android:textAlignment="textEnd"
             android:textSize="6sp">
@@ -73,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/accent_color_light" />
+            android:background="@color/accent_purple_default" />
 
     </RelativeLayout>
 

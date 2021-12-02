@@ -8,6 +8,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_settings"
+        android:title="Settings"/>
+
     <!-- consider using this button as a dark mode toggle to proc
             the built-in android functionality-->
     <item

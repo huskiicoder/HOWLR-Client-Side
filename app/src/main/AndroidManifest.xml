@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/howlr_icon_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/DefaultAppTheme">
         <activity android:name="edu.uw.tcss450.howlr.MainActivity"></activity>
         <activity android:name="edu.uw.tcss450.howlr.AuthActivity"
             android:exported="true">
