@@ -1,5 +1,6 @@
 package edu.uw.tcss450.howlr.ui.home;
 
+import static edu.uw.tcss450.howlr.R.id.recycler_home_weather;
 import static edu.uw.tcss450.howlr.R.id.recycler_view_friends;
 import static edu.uw.tcss450.howlr.R.id.recycler_view_messages;
 
@@ -19,9 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import edu.uw.tcss450.howlr.MainActivity;
@@ -70,6 +75,10 @@ public class HomeFragment extends Fragment {
     View myBinding;
 
     private FriendsListViewModel mFriendListModel;
+    private TextView dateTimeDisplay;
+    private Calendar calendar;
+    private SimpleDateFormat dateFormat;
+    private String date;
 
     /**
      * Require empty public constructor
@@ -95,6 +104,8 @@ public class HomeFragment extends Fragment {
             mFriendListModel.setUserInfoViewModel(activity.getUserInfoViewModel());
         }
         mFriendListModel.connectGetAll();
+
+//        dateTimeDisplay.setText(date);
     }
 
     @Override
@@ -117,27 +128,36 @@ public class HomeFragment extends Fragment {
         FragmentHomeBinding binding = FragmentHomeBinding.bind(getView());
         binding.accountName.setText(model.getEmail());
 
+        // weather card building
+
+        calendar = Calendar.getInstance();
+        dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+        date = dateFormat.format(calendar.getTime());
+        binding.textWeatherDateHome.setText(date + " | ");
+        // Recycler view set up for home weather card
+        RecyclerView recyclerViewWeather = myBinding.findViewById(recycler_home_weather);
+        recyclerViewWeather.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewWeather.setLayoutManager(new LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+
         mWeatherModel.addWeatherObserver(getViewLifecycleOwner(), list->{
             if (!list.isEmpty()){
-                List<Weather> hourly_list = list.subList(1,25);
-                List<Weather> daily_list = list.subList(26,33);
+                List<Weather> daily_list = list.subList(26,31);
                 int temp = (int) list.get(0).getCurrentTemp();
                 binding.textTempHome.setText(temp + "°F");
                 binding.textCityHome.setText(String.valueOf(list.get(0).getCity()));
+                Picasso.get().load("https://openweathermap.org/img/wn/"+
+                        list.get(0).getIcon()+ "@2x.png").into(binding.imageHomeCurrWeather);
+                recyclerViewWeather.setAdapter(new HomeWeatherAdapter(daily_list));
             }
         });
 
+
+
+
+
         RecyclerView recyclerViewMessages = myBinding.findViewById(recycler_view_messages);
         recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        /**
-         * Creates template data for recycler view.
-         * TODO Delete after manual implementation of data is no longer needed.
-         */
-//        mUserList.add(new MessageModel(R.drawable.shibabone, 1, "Charles Bryan",
-//                "2:30 pm", "Are you ready for the sprint review"));
-
-
         int messagesCount = 0;
         mUserList = new ArrayList<>();
         for (int i = 0; i < mMessagesModel.mMessagesList.getValue().size(); i++) {

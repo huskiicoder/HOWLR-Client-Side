@@ -68,18 +68,43 @@
             android:layout_height="match_parent"
             android:background="@color/purple_default">
 
+            <TextClock
+                android:id="@+id/text_weather_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:id="@+id/text_weather_date_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sat, Dec 4 |"
+                android:textColor="@color/text_color"
+                card_view:layout_constraintTop_toBottomOf="@id/text_weather_time"
+                card_view:layout_constraintStart_toStartOf="@id/text_weather_time"/>
+
+            <TextView
+                android:id="@+id/text_weather_high_low_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="46°,35°"
+                android:textColor="@color/text_color"
+                card_view:layout_constraintTop_toBottomOf="@id/text_temp_home"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="5dp"/>
+
             <TextView
                 android:id="@+id/text_city_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="City"
-                android:visibility="visible"
                 android:textColor="@color/text_color"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="15dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textSize="18dp"/>
+                card_view:layout_constraintStart_toEndOf="@id/text_weather_date_home"
+                card_view:layout_constraintTop_toBottomOf="@id/text_weather_time"/>
 
             <TextView
                 android:id="@+id/text_temp_home"
@@ -87,24 +112,30 @@
                 android:layout_height="wrap_content"
                 android:text="85*"
                 android:textColor="@color/text_color"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"
-                app:layout_constraintTop_toBottomOf="@+id/text_city_home"
-                app:layout_constraintStart_toStartOf="parent"
-                android:textSize="90dp" />
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                android:textSize="35dp"
+                android:layout_marginRight="5dp"/>
 
             <ImageView
-                android:layout_width="170dp"
-                android:layout_height="133dp"
-                android:layout_marginTop="32dp"
-                android:background="@color/purple_default"
-                android:maxWidth="40dp"
-                android:maxHeight="40dp"
-                android:src="@drawable/sunny"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.98"
-                card_view:layout_constraintStart_toStartOf="parent" />
+                android:id="@+id/image_home_curr_weather"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintEnd_toStartOf="@id/text_temp_home"
+                android:src="@drawable/ic_weather_icon_24dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_home_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                card_view:layout_constraintTop_toBottomOf="@id/text_weather_date_home"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent">
+            </androidx.recyclerview.widget.RecyclerView>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
