@@ -1,5 +1,6 @@
 package edu.uw.tcss450.howlr.ui.home;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,9 +117,14 @@ public class HomeWeatherAdapter extends RecyclerView.Adapter<HomeWeatherAdapter.
                 binding.textWeatherForecastDayHome.setText(String.valueOf(weather.getDate()));
                 binding.textWeatherForecastTempHome.setText(String.valueOf((int) weather.getLowTemp() +
                         "°/"  + String.valueOf((int) weather.getHighTemp() + "°")));
-                String a = weather.getIcon();
-                Picasso.get().load("https://openweathermap.org/img/wn/" + weather.getIcon() +
-                        "@2x.png").into(binding.imageWeatherForecastHome);
+                String a = "a" + weather.getIcon();
+                Context context = binding.imageWeatherForecastHome.getContext();
+                int id = context.getResources().getIdentifier(a, "drawable", context.getPackageName());
+                binding.imageWeatherForecastHome.setImageResource(id);
+
+
+//                Picasso.get().load("https://openweathermap.org/img/wn/" + weather.getIcon() +
+//                        "@2x.png").into(binding.imageWeatherForecastHome);
             }
         }
     }
