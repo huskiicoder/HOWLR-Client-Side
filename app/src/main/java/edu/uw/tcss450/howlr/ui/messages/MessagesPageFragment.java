@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +45,9 @@ public class MessagesPageFragment extends Fragment {
 
     /* Recycler view adapter */
     MessageAdapter mAdapter;
+
+    /* Button for creating a chat room. */
+    FloatingActionButton mCreateChatButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +83,16 @@ public class MessagesPageFragment extends Fragment {
                 Navigation.findNavController(getView())
                         .navigate(MessagesPageFragmentDirections
                                 .actionNavigationMessagesToNavigationChat(mUserList.get(itemClicked).getChatId()));
+            }
+        });
+
+        mCreateChatButton = (FloatingActionButton) mBinding.findViewById(R.id.createChatActionButton);
+        mCreateChatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(getView())
+                        .navigate(MessagesPageFragmentDirections
+                                .actionNavigationMessagesToNavigationCreateChat());
             }
         });
 

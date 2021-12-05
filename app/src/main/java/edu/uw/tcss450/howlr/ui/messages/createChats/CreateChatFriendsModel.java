@@ -1,14 +1,12 @@
-package edu.uw.tcss450.howlr.ui.friends;
+package edu.uw.tcss450.howlr.ui.messages.createChats;
 
-import androidx.annotation.Nullable;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 
-public class Friends implements Serializable {
-//    private int mPicture;
+public class CreateChatFriendsModel implements Serializable {
+
+    //    private int mPicture;
     private final int mMemberId;
     private final String mUserName;
     private final String mFirstName;
@@ -21,14 +19,14 @@ public class Friends implements Serializable {
 //        this.mLastName = lastName;
 //    }
 
-    public Friends(int memberId, String userName, String firstName, String lastName) {
+    public CreateChatFriendsModel(int memberId, String userName, String firstName, String lastName) {
         this.mMemberId = memberId;
         this.mUserName = userName;
         this.mFirstName = firstName;
         this.mLastName = lastName;
     }
 
-    public Friends(JSONObject json) throws Exception {
+    public CreateChatFriendsModel(JSONObject json) throws Exception {
         mMemberId = json.getInt("memberid");
         mUserName = json.getString("username");
         mFirstName = json.getString("firstname");

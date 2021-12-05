@@ -37,7 +37,6 @@ public class MessagesListViewModel extends AndroidViewModel  {
     }
 
     private void handleError(final VolleyError error) {
-        System.out.println("in error");
         // you should add much better error handling in a production release.
         // i.e. YOUR PROJECT
         Log.e("CONNECTION ERROR", error.getLocalizedMessage());
@@ -45,7 +44,6 @@ public class MessagesListViewModel extends AndroidViewModel  {
     }
 
     private void handleResult(final JSONObject result) {
-        System.out.println("in result");
         try {
             JSONArray messages = result.getJSONArray("rows");
             for (int i = 0; i < messages.length(); i++) {
@@ -65,10 +63,7 @@ public class MessagesListViewModel extends AndroidViewModel  {
             e.printStackTrace();
             Log.e("ERROR!", e.getMessage());
         }
-
-        System.out.println("size: " + this.mMessagesList.getValue().size());
         mMessagesList.setValue(mMessagesList.getValue());
-        System.out.println("size after: " + this.mMessagesList.getValue().size());
     }
 
 
@@ -84,7 +79,6 @@ public class MessagesListViewModel extends AndroidViewModel  {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                System.out.println(jwt);
                 headers.put("Authorization", jwt);
                 return headers;
             }
@@ -99,9 +93,6 @@ public class MessagesListViewModel extends AndroidViewModel  {
                 .addToRequestQueue(request);
     }
 
-/*    public MutableLiveData<List<MessageModel>> getMessagesList() {
-        return mMessagesList;
-    }*/
 
 
 }

@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_navigation_messages_to_navigation_chat"
             app:destination="@id/navigation_chat" />
+        <action
+            android:id="@+id/action_navigation_messages_to_navigation_create_chat"
+            app:destination="@id/navigation_create_chat" />
     </fragment>
     <fragment
         android:id="@+id/navigation_weather"
@@ -67,4 +70,8 @@
         app:argType="edu.uw.tcss450.howlr.ui.friends.Friends"/>
 
     </fragment>
+    <fragment
+        android:id="@+id/navigation_create_chat"
+        android:name="edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatFragment"
+        android:label="CreateChatFragment" />
 </navigation>
