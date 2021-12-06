@@ -74,7 +74,6 @@ public class WeatherFragment extends Fragment {
 
                 hourly_rv.setAdapter(new WeatherRecyclerViewAdapterHourly(hourly_list));
                 daily_rv.setAdapter(new WeatherRecyclerViewAdapterDaily(daily_list));
-                System.out.println(list.size());
             }
         });
     }

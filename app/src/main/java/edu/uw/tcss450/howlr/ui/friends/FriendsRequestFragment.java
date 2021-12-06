@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsRequestCardBinding;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsRequestListBinding;
 
@@ -32,6 +33,11 @@ public class FriendsRequestFragment extends Fragment implements View.OnClickList
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFriendsListModel = new ViewModelProvider(getActivity()).get(FriendsListViewModel.class);
+        if (getActivity() instanceof MainActivity) {
+            MainActivity activity = (MainActivity) getActivity();
+            mFriendsListModel.setUserInfoViewModel(activity.getUserInfoViewModel());
+        }
+        mFriendsListModel.connectGetAll();
     }
 
     @Override
@@ -49,7 +55,7 @@ public class FriendsRequestFragment extends Fragment implements View.OnClickList
         FragmentFriendsRequestListBinding binding = FragmentFriendsRequestListBinding.bind(getView());
 
         mFriendsListModel.addRequestListObserver(getViewLifecycleOwner(), requestList -> {
-            binding.recyclerViewRequests.setAdapter(new edu.uw.tcss450.howlr.ui.friends.FriendsRequestRecyclerViewAdapter(requestList, this));
+            binding.recyclerViewRequests.setAdapter(new FriendsRequestRecyclerViewAdapter(requestList, this));
         });
     }
 
@@ -59,7 +65,7 @@ public class FriendsRequestFragment extends Fragment implements View.OnClickList
 
     }
 
-    public void deleteContact(final int memberId) {
+    public void declineContact(final int memberId) {
         mFriendsListModel.connectDeleteContact(memberId);
     }
 

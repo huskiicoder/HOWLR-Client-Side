@@ -29,8 +29,8 @@
                 <ImageView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_centerVertical="true"
                     android:scaleType="centerCrop"
+                    android:layout_centerVertical="true"
                     app:srcCompat="@drawable/ic_friends_icon_24" />
             </androidx.cardview.widget.CardView>
 
@@ -83,13 +83,13 @@
                 android:src="@drawable/ic_messages_icon_24" />
 
             <ImageView
-                android:id="@+id/button_delete"
+                android:id="@+id/button_add_friend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="360dp"
                 android:layout_marginTop="50dp"
                 android:gravity="end"
-                android:src="@drawable/ic_delete_icon_24" />
+                android:src="@drawable/ic_friend_add_button_24" />
 
 
         </RelativeLayout>

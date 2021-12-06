@@ -20,11 +20,14 @@
         android:label="FriendsListFragment"
         tools:layout="@layout/fragment_friends_list">
         <action
-            android:id="@+id/action_navigation_friends_list_to_navigation_friends"
-            app:destination="@id/navigation_friends" />
-        <action
             android:id="@+id/action_navigation_friends_list_to_navigation_friends_request"
             app:destination="@id/navigation_friends_request" />
+        <action
+            android:id="@+id/action_navigation_friends_list_to_navigation_friends_add"
+            app:destination="@id/navigation_friends_add" />
+        <action
+            android:id="@+id/action_navigation_friends_list_to_navigation_friends_search"
+            app:destination="@id/navigation_friends_search" />
     </fragment>
     <fragment
         android:id="@+id/navigation_messages"
@@ -59,12 +62,21 @@
             app:destination="@id/navigation_friends_list" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_friends"
-        android:name="edu.uw.tcss450.howlr.ui.friends.FriendsFragment"
-        android:label="fragment_friends">
-    <argument
-        android:name="contact"
-        app:argType="edu.uw.tcss450.howlr.ui.friends.Friends"/>
-
+        android:id="@+id/navigation_friends_add"
+        android:name="edu.uw.tcss450.howlr.ui.friends.FriendsAddFragment"
+        android:label="fragment_friends_add_list"
+        tools:layout="@layout/fragment_friends_add_list">
+        <action
+            android:id="@+id/action_navigation_friends_add_to_navigation_friends_list"
+            app:destination="@id/navigation_friends_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_friends_search"
+        android:name="edu.uw.tcss450.howlr.ui.friends.FriendsSearchFragment"
+        android:label="fragment_friends_search_list"
+        tools:layout="@layout/fragment_friends_search_list" >
+        <action
+            android:id="@+id/action_navigation_friends_search_to_navigation_friends_list"
+            app:destination="@id/navigation_friends_list" />
     </fragment>
 </navigation>

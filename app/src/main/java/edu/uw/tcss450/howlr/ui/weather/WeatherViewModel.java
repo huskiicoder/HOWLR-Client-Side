@@ -48,8 +48,7 @@ public class WeatherViewModel extends AndroidViewModel {
         if (jwt == null) {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
         }
-//        String url = "https://howlr-server-side.herokuapp.com/weather/47/-122/";
-        String url = "https://howlr-server-side.herokuapp.com/weather/" + lat + "/" + lon;
+        String url = "https://howlr-server-side.herokuapp.com/weather?lat=" + lat + "&lon=" + lon;
 
         Request request = new JsonObjectRequest(Request.Method.GET, url, null,
                 //no body for this get request
@@ -73,7 +72,6 @@ public class WeatherViewModel extends AndroidViewModel {
             throw new IllegalStateException("Unexpected response in WeatherViewModel: " + result);
         }
         try {
-            System.out.println(result);
             JSONObject currentData = result.getJSONObject("current");
 
             JSONArray hourlyArray = result.getJSONArray("hourly");
