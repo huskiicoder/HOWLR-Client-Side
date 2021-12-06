@@ -31,13 +31,15 @@ public final class ChatMessage implements Serializable {
      * @return a ChatMessage Object with the details contained in the JSON String.
      * @throws JSONException when cmAsString cannot be parsed into a ChatMessage.
      */
-    public static ChatMessage createFromJsonString(final String cmAsJson) throws JSONException {
+    public static ChatMessage createFromJsonString(final String cmAsJson, String firstName,
+                                                   String lastName) throws JSONException {
         final JSONObject msg = new JSONObject(cmAsJson);
         // TODO------------------------------------------------------------------------------------
+
         return new ChatMessage(msg.getInt("messageid"),
                 msg.getString("message"),
-                msg.getString("firstname") +
-                " " + msg.getString("lastname"),
+                firstName +
+                " " + lastName,
                 msg.getString("timestamp"));
     }
 
