@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,11 +38,15 @@ public class FriendsListViewModel extends AndroidViewModel {
     private final MutableLiveData<JSONObject> mResponse;
     private UserInfoViewModel userInfoViewModel;
     private MutableLiveData<String[]> searchResult;
+    private MutableLiveData<List<String>> mUsername;
 
     public  FriendsListViewModel(@NonNull Application application) {
         super(application);
         mFriends = new MutableLiveData<>();
         mFriends.setValue(new ArrayList<>());
+
+        mUsername = new MutableLiveData<>();
+        mUsername.setValue(new ArrayList<>());
 
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
@@ -49,10 +54,12 @@ public class FriendsListViewModel extends AndroidViewModel {
         searchResult = new MutableLiveData<>();
         searchResult.setValue(new String[]{"null"});
     }
+
     public  void addFriendObserver(@NonNull LifecycleOwner owner,
                                    @NonNull Observer<? super  List<Friends>> observer) {
         mFriends.observe(owner, observer);
     }
+
     public void addRequestListObserver(@NonNull LifecycleOwner owner,
                                        @NonNull Observer<? super List<Friends>> observer) {
         mRequestList.observe(owner, observer);
@@ -63,22 +70,7 @@ public class FriendsListViewModel extends AndroidViewModel {
                 getApplication().getResources()::getString;
         try {
             JSONObject root = result;
-
-//                if (response.has(getString.apply(R.string.keys_json_friends_request))) {
-//                    JSONArray request = root.getJSONArray(
-//                            getString.apply(R.string.keys_json_friends_request));
-//                    ArrayList<Friends> listOfInvites = new ArrayList<>();
-//                    for(int i = 0; i < request.length(); i++) {
-//                        JSONObject jsonFriends = request.getJSONObject(i);
-//                        try {
-//                            Friends friends = new Friends(jsonFriends);
-//                            listOfInvites.add(friends);
-//                        } catch (Exception ex) {
-//                            ex.printStackTrace();
-//                        }
-//                    }
-
-                    JSONArray friends = root.getJSONArray("rows");
+                    JSONArray friends = root.getJSONArray("invitation");
                     ArrayList<Friends> listOfFriends = new ArrayList<>();
                     for (int i = 0; i < friends.length(); i++) {
                         JSONObject jsonFriends = friends.getJSONObject(i);
@@ -87,7 +79,6 @@ public class FriendsListViewModel extends AndroidViewModel {
                             listOfFriends.add(contact);
                         } catch (Exception ex) {
                             ex.printStackTrace();
-                            ;
                         }
                     }
                     mFriends.setValue(listOfFriends);
@@ -228,6 +219,7 @@ public class FriendsListViewModel extends AndroidViewModel {
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
     }
+
     public void connectAcceptFriends(final int memberId) {
         if (userInfoViewModel == null) {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
@@ -249,6 +241,7 @@ public class FriendsListViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
+
     public void connectDeleteContact(final int memberId) {
         String url = "https://howlr-server-side.herokuapp.com/contacts" +
                 "?memberId=" + memberId;
@@ -274,6 +267,63 @@ public class FriendsListViewModel extends AndroidViewModel {
             throw new IllegalStateException("Unexpected response in FriendsListViewModel: " + result);
         }
     }
+
+    // THIS IS JUST TO GET THE CURRENT USERS FIRST AND LAST NAME
+    public void connectGetFirstLast() {
+        if (userInfoViewModel == null) {
+            throw new IllegalArgumentException("No UserInfoViewModel is assigned");
+        }
+        String url = "https://howlr-server-side.herokuapp.com/contacts/name/" +
+                userInfoViewModel.getEmail();
+        Request request = new JsonObjectRequest(Request.Method.GET,
+                url,
+                null, //no body for this get request
+                this::handleFirstLastResult,
+                this::handleError) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", "Bearer " + userInfoViewModel.getmJwt());
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
+    }
+
+    private void handleFirstLastResult(final JSONObject result) {
+        try {
+            JSONObject root = result;
+            JSONArray name = root.getJSONArray("rows");
+            ArrayList<String> fullName = new ArrayList<>();
+            try {
+                JSONObject firstJSON = name.getJSONObject(0);
+//                JSONObject lastJSON = name.getJSONObject(1);
+                String firstName = (String) firstJSON.get("firstname");
+                String lastName = (String)firstJSON.get("lastname");
+                fullName.add(firstName);
+                fullName.add(lastName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            mUsername.setValue(fullName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("ERROR!", e.getMessage());
+        }
+        mUsername.setValue(mUsername.getValue());
+    }
+
+    public  void addFirstLastObserver(@NonNull LifecycleOwner owner,
+                                   @NonNull Observer<? super  List<String>> observer) {
+        mUsername.observe(owner, observer);
+    }
+
 
     public void setUserInfoViewModel(UserInfoViewModel viewModel) {
         userInfoViewModel = viewModel;

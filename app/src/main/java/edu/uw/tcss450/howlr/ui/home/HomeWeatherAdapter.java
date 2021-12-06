@@ -106,14 +106,10 @@ public class HomeWeatherAdapter extends RecyclerView.Adapter<HomeWeatherAdapter.
             /**
              * Sets the data for the weather card.
              *
-             * @param theWeatherIcon    The weather icon
-             * @param theTemperature    The temperature
-             * @param theDay            The day
+             * @param weather List of Weather objects that contain all info for current weather and
+             *                the forecast
              */
             public void setData(final Weather weather) {
-                /*Picasso.get().load("https://openweathermap.org/img/wn/"+ theWeatherIcon + "@2x.png").into(mWeatherIcon);
-                mTemperature.setText(theTemperature);
-                mDay.setText(theDay);*/
                 binding.textWeatherForecastDayHome.setText(String.valueOf(weather.getDate()));
                 binding.textWeatherForecastTempHome.setText(String.valueOf((int) weather.getLowTemp() +
                         "°/"  + String.valueOf((int) weather.getHighTemp() + "°")));
@@ -121,10 +117,6 @@ public class HomeWeatherAdapter extends RecyclerView.Adapter<HomeWeatherAdapter.
                 Context context = binding.imageWeatherForecastHome.getContext();
                 int id = context.getResources().getIdentifier(a, "drawable", context.getPackageName());
                 binding.imageWeatherForecastHome.setImageResource(id);
-
-
-//                Picasso.get().load("https://openweathermap.org/img/wn/" + weather.getIcon() +
-//                        "@2x.png").into(binding.imageWeatherForecastHome);
             }
         }
     }

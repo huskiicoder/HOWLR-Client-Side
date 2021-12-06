@@ -12,12 +12,4 @@
         android:id="@+id/action_settings"
         android:title="Settings"/>
 
-    <!-- consider using this button as a dark mode toggle to proc
-            the built-in android functionality-->
-    <item
-            android:id="@+id/bt_switch"
-            android:title = "Dark Mode"
-
-        />
-
 </menu>

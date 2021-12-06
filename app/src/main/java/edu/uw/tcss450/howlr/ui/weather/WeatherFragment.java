@@ -1,5 +1,6 @@
 package edu.uw.tcss450.howlr.ui.weather;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,7 +55,7 @@ public class WeatherFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mWeatherModel = provider.get(WeatherViewModel.class);
-        mWeatherModel.connectGet(mUserModel.getmJwt());
+        mWeatherModel.connectGet(mUserModel.getmJwt(), 47, -122);
     }
 
     @Override
@@ -83,8 +84,12 @@ public class WeatherFragment extends Fragment {
                 binding.textCurrentTemp.setText(String.valueOf(list.get(0).getCurrentTemp()) + "°");
                 binding.textViewLocation.setText(String.valueOf(list.get(0).getCity()));
                 binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurentWeather()));
-                Picasso.get().load("https://openweathermap.org/img/wn/"+ list.get(0).getIcon()+ "@2x.png").into(binding.imageView);
-                Picasso.get().load("https://openweathermap.org/img/wn/"+ "04d" + "@2x.png").into(binding.imageView);
+                String a = "a" + list.get(0).getIcon();
+                Context context = binding.imageView.getContext();
+                int id = context.getResources().getIdentifier(a, "drawable", context.getPackageName());
+                binding.imageView.setImageResource(id);
+//                Picasso.get().load("https://openweathermap.org/img/wn/"+ list.get(0).getIcon()+ "@2x.png").into(binding.imageView);
+//                Picasso.get().load("https://openweathermap.org/img/wn/"+ "04d" + "@2x.png").into(binding.imageView);
 
                 hourly_rv.setAdapter(new WeatherRecyclerViewAdapterHourly(hourly_list));
                 daily_rv.setAdapter(new WeatherRecyclerViewAdapterDaily(daily_list));

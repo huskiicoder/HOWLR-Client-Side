@@ -4,6 +4,7 @@ import static edu.uw.tcss450.howlr.R.id.recycler_home_weather;
 import static edu.uw.tcss450.howlr.R.id.recycler_view_friends;
 import static edu.uw.tcss450.howlr.R.id.recycler_view_messages;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +95,7 @@ public class HomeFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserInfo = provider.get(UserInfoViewModel.class);
         mWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
-        mWeatherModel.connectGet(mUserInfo.getmJwt());
+        mWeatherModel.connectGet(mUserInfo.getmJwt(), 47, -122);
         mUserModel = provider.get(UserInfoViewModel.class);
         mMessagesModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
         mMessagesModel.connectGet(mUserModel.getmJwt(), mUserModel.getUserId());
@@ -104,8 +106,7 @@ public class HomeFragment extends Fragment {
             mFriendListModel.setUserInfoViewModel(activity.getUserInfoViewModel());
         }
         mFriendListModel.connectGetAll();
-
-//        dateTimeDisplay.setText(date);
+        mFriendListModel.connectGetFirstLast();
     }
 
     @Override
@@ -124,9 +125,20 @@ public class HomeFragment extends Fragment {
         UserInfoViewModel model = new ViewModelProvider(getActivity())
                 .get(UserInfoViewModel.class);
 
+        // get the users account name
+        String email = model.getEmail();
+
+
 
         FragmentHomeBinding binding = FragmentHomeBinding.bind(getView());
-        binding.accountName.setText(model.getEmail());
+        mFriendListModel.addFirstLastObserver(getViewLifecycleOwner(), nameList -> {
+            Log.d("observer", "I entered firstLastObserver");
+            if (!nameList.isEmpty()) {
+                String first = nameList.get(0);
+                String last = nameList.get(1);
+                binding.accountName.setText(first + " " + last);
+            }
+        });
 
         // weather card building
 
@@ -146,8 +158,10 @@ public class HomeFragment extends Fragment {
                 int temp = (int) list.get(0).getCurrentTemp();
                 binding.textTempHome.setText(temp + "°F");
                 binding.textCityHome.setText(String.valueOf(list.get(0).getCity()));
-                Picasso.get().load("https://openweathermap.org/img/wn/"+
-                        list.get(0).getIcon()+ "@2x.png").into(binding.imageHomeCurrWeather);
+                String a = "a" + list.get(0).getIcon();
+                Context context = binding.imageHomeCurrWeather.getContext();
+                int id = context.getResources().getIdentifier(a, "drawable", context.getPackageName());
+                binding.imageHomeCurrWeather.setImageResource(id);
                 recyclerViewWeather.setAdapter(new HomeWeatherAdapter(daily_list));
             }
         });
@@ -194,6 +208,8 @@ public class HomeFragment extends Fragment {
                 binding.recyclerViewFriends.setAdapter(new HomeFriendsAdapter(friendsList, this));
             }
         });
+
+
 
         recyclerViewFriends.setAdapter(mAdapterFriends);
         recyclerViewFriends.setItemAnimator(new DefaultItemAnimator());

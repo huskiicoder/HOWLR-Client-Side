@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_messages, R.id.navigation_friends, R.id.navigation_friends_list)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
 
@@ -257,8 +256,6 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_sign_out) {
             signOut();
-        } else if (id == R.id.bt_switch) {
-            switchColor();
         } else if (id == R.id.action_settings) {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment); // replace "nav_host_fragment" with the id of your navHostFragment in activity layout
             navController.navigate(R.id.navigation_settings);

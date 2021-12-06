@@ -39,11 +39,11 @@ public class WeatherViewModel extends AndroidViewModel {
         mWeather.observe(owner, observer);
     }
 
-    public void connectGet(final String jwt) {
+    public void connectGet(final String jwt, final double lat, final double lon) {
         if (jwt == null) {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
         }
-        String url = "https://howlr-server-side.herokuapp.com/weather/47/-122/";
+        String url = "https://howlr-server-side.herokuapp.com/weather?lat=" + lat + "&lon=" + lon;
 
         Request request = new JsonObjectRequest(Request.Method.GET, url, null,
                 //no body for this get request
