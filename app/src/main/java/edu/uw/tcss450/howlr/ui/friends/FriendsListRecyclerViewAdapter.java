@@ -28,7 +28,6 @@ public class FriendsListRecyclerViewAdapter extends
     @NonNull
     @Override
     public FriendsListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         return new FriendsListViewHolder(LayoutInflater
                 .from(parent.getContext()).inflate(R.layout.fragment_friends_card, parent, false));
     }

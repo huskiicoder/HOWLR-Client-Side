@@ -1,5 +1,7 @@
 package edu.uw.tcss450.howlr.ui.messages.createChats;
 
+import android.widget.ImageView;
+
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -45,11 +47,9 @@ public class CreateChatFriendsModel implements Serializable {
     {
         return mFirstName;
     }
-
     public String getUserName() {
         return mUserName;
     }
-
     public String getLastName() {
         return mLastName;
     }

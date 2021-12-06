@@ -59,12 +59,10 @@ public class CreateChatViewModel extends AndroidViewModel {
     }
 
     private void handleResult(final JSONObject result) {
-        IntFunction<String> getString =
-                getApplication().getResources()::getString;
         try {
             JSONObject root = result;
 
-            JSONArray CreateChatFriendsModel = root.getJSONArray("rows");
+            JSONArray CreateChatFriendsModel = root.getJSONArray("invitation");
             ArrayList<CreateChatFriendsModel> listOfFriends = new ArrayList<>();
             for (int i = 0; i < CreateChatFriendsModel.length(); i++) {
                 JSONObject jsonFriends = CreateChatFriendsModel.getJSONObject(i);
@@ -73,7 +71,6 @@ public class CreateChatViewModel extends AndroidViewModel {
                     listOfFriends.add(contact);
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    ;
                 }
             }
             mFriendsList.setValue(listOfFriends);
@@ -86,12 +83,10 @@ public class CreateChatViewModel extends AndroidViewModel {
 
 
     public void connectGet() {
-        System.out.println("CONNECTGET");
         if (mUserModel == null) {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
         }
         String url = "https://howlr-server-side.herokuapp.com/contacts/" + mUserModel.getEmail();
-        System.out.println(url);
         Request request = new JsonObjectRequest(Request.Method.GET,
                 url,
                 null,

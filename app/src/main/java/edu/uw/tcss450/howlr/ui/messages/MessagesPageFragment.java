@@ -19,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
@@ -31,22 +32,22 @@ import edu.uw.tcss450.howlr.ui.auth.signin.SignInFragmentDirections;
  */
 public class MessagesPageFragment extends Fragment {
 
-    /* Messages view model. */
+    /** Messages view model. */
     MessagesListViewModel mModel;
 
-    /* User view model. */
+    /** User view model. */
     UserInfoViewModel mUserModel;
 
-    /* List of users with chat. */
+    /** List of users with chat. */
     List<MessageModel> mUserList;
 
-    /* Binding to root */
+    /** Binding to root */
     View mBinding;
 
-    /* Recycler view adapter */
+    /** Recycler view adapter */
     MessageAdapter mAdapter;
 
-    /* Button for creating a chat room. */
+    /** Button for creating a chat room. */
     FloatingActionButton mCreateChatButton;
 
     @Override
@@ -76,6 +77,7 @@ public class MessagesPageFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        /* Click listener for navigating to chat from recycler view item. */
         mAdapter.setOnItemClickListener(new MessageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int itemClicked) {
@@ -86,6 +88,7 @@ public class MessagesPageFragment extends Fragment {
             }
         });
 
+        /* Click listener for navigating to CreateChatFragment using floating action button. */
         mCreateChatButton = (FloatingActionButton) mBinding.findViewById(R.id.createChatActionButton);
         mCreateChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
