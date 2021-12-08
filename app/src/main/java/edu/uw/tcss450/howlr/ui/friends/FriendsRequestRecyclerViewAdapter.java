@@ -16,6 +16,11 @@ import java.util.List;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsRequestCardBinding;
 
+/**
+ * Implements FriendsRequestRecyclerViewAdapter
+ * @author Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
+ */
 public class FriendsRequestRecyclerViewAdapter
         extends RecyclerView.Adapter<FriendsRequestRecyclerViewAdapter.FriendsRequestViewHolder> {
     private final FriendsRequestFragment mParent;
@@ -56,10 +61,7 @@ public class FriendsRequestRecyclerViewAdapter
         public FriendsRequestViewHolder(View view) {
             super(view);
             mView = view;
-
             binding = FragmentFriendsRequestCardBinding.bind(view);
-
-
         }
 
         void setRequest(final Friends friends) {

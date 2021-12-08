@@ -1,12 +1,14 @@
 package edu.uw.tcss450.howlr.ui.friends;
 
-import androidx.annotation.Nullable;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 
+/**
+ * Implements Friends with memberId, username, lastname, firstname.
+ * @author Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
+ */
 public class Friends implements Serializable {
 //    private int mPicture;
     private final int mMemberId;

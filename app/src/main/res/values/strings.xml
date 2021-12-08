@@ -39,5 +39,8 @@
     <string name="dialog_friendsListRecycler_message">Your contact is deleted.</string>
     <string name="dialog_friendsListRecycler_confirm">Confirm</string>
     <string name="dialog_friendsListRecycler_cancel">Cancel</string>
+    <string name="label_location">Current location</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="keys_prefs_memberid">sharded pref memberid</string>
 
 </resources>

@@ -18,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -30,6 +32,9 @@ import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
+import edu.uw.tcss450.howlr.ui.weather.Weather;
+import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterDaily;
+import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterHourly;
 import edu.uw.tcss450.howlr.ui.weather.WeatherViewModel;
 
 /**
@@ -39,6 +44,7 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding mBinding;
     private WeatherViewModel mWeatherModel;
+    private UserInfoViewModel mUserInfo;
 
     /* List of users with chat. */
     List<MessageModel> mUserList;
@@ -64,14 +70,16 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ViewModelProvider provider = new ViewModelProvider(getActivity());
+        mUserInfo = provider.get(UserInfoViewModel.class);
         mWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
+//        mWeatherModel.connectGet(47,-122, mUserInfo.getmJwt());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false);
-        mWeatherModel.connectGetCurrent();
 
         // TESTING MESSAGES STUFF
         myBinding = inflater.inflate(R.layout.fragment_home, container, false);
@@ -83,15 +91,15 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         UserInfoViewModel model = new ViewModelProvider(getActivity())
                 .get(UserInfoViewModel.class);
-        try {
-            mBinding.textCity.setText((String)mWeatherModel.mResponse.getValue().get("city_name")
-                    + ", " + (String) mWeatherModel.mResponse.getValue().get("state_code"));
-//            int temp = (int) mWeatherModel.mResponse.getValue().get("temp");
-//            temp = (9/5) * temp +32;
-            mBinding.textTemp.setText(mWeatherModel.mResponse.getValue().get("temp") + "°");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        mWeatherModel.addWeatherObserver(getViewLifecycleOwner(), list->{
+            if (!list.isEmpty()){
+                List<Weather> hourly_list = list.subList(1,25);
+                List<Weather> daily_list = list.subList(26,33);
+                mBinding.textTemp.setText(String.valueOf(list.get(0).getCurrentTemp()));
+                mBinding.textCity.setText(String.valueOf(list.get(0).getCity()) + "°");
+            }
+        });
 
 
         RecyclerView recyclerViewMessages = myBinding.findViewById(recycler_view_messages);

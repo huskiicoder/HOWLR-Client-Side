@@ -42,7 +42,19 @@
         android:id="@+id/navigation_weather"
         android:name="edu.uw.tcss450.howlr.ui.weather.WeatherFragment"
         android:label="fragment_weather"
-        tools:layout="@layout/fragment_weather" />
+        tools:layout="@layout/fragment_weather" >
+        <action
+            android:id="@+id/action_navigation_weather_to_navigation_map"
+            app:destination="@id/navigation_map" />
+        <argument
+            android:name="lat"
+            app:argType="string"
+            android:defaultValue="default" />
+        <argument
+            android:name="lng"
+            app:argType="string"
+            android:defaultValue="default" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_chat"
         android:name="edu.uw.tcss450.howlr.ui.messages.chats.ChatFragment"
@@ -69,6 +81,15 @@
         android:name="contact"
         app:argType="edu.uw.tcss450.howlr.ui.friends.Friends"/>
 
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="edu.uw.tcss450.howlr.ui.weather.LocationFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_navigation_map_to_navigation_weather"
+            app:destination="@id/navigation_weather" />
     </fragment>
     <fragment
         android:id="@+id/navigation_create_chat"

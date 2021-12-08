@@ -13,6 +13,11 @@ import androidx.lifecycle.ViewModelProvider;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsRequestCardBinding;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsRequestListBinding;
 
+/**
+ * Implements FriendsRequestFragment.
+ * @author Natalie Nguyen Hong
+ * @version TCSS 450 Fall 2021
+ */
 public class FriendsRequestFragment extends Fragment implements View.OnClickListener{
 
     private FriendsListViewModel mFriendsListModel;

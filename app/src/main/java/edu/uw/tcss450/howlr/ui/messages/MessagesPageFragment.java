@@ -19,7 +19,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
@@ -32,19 +31,19 @@ import edu.uw.tcss450.howlr.ui.auth.signin.SignInFragmentDirections;
  */
 public class MessagesPageFragment extends Fragment {
 
-    /** Messages view model. */
+    /* Messages view model. */
     MessagesListViewModel mModel;
 
-    /** User view model. */
+    /* User view model. */
     UserInfoViewModel mUserModel;
 
-    /** List of users with chat. */
+    /* List of users with chat. */
     List<MessageModel> mUserList;
 
-    /** Binding to root */
+    /* Binding to root */
     View mBinding;
 
-    /** Recycler view adapter */
+    /* Recycler view adapter */
     MessageAdapter mAdapter;
 
     /** Button for creating a chat room. */
@@ -56,8 +55,8 @@ public class MessagesPageFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
-        System.out.println(mUserModel.getUserId());
-        mModel.connectGet(mUserModel.getmJwt(), mUserModel.getUserId());
+        mModel.connectGet(mUserModel.getmJwt(), mUserModel.getmMemberId());
+        System.out.println(mUserModel.getmMemberId());
     }
 
     @Override

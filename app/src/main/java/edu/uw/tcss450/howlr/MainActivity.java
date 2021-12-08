@@ -1,6 +1,7 @@
 package edu.uw.tcss450.howlr;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.badge.BadgeDrawable;
@@ -33,6 +35,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.uw.tcss450.howlr.databinding.ActivityMainBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
+import edu.uw.tcss450.howlr.model.NewFriendCountViewModel;
 import edu.uw.tcss450.howlr.model.NewMessageCountViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.services.PushReceiver;
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MainPushMessageReceiver mPushMessageReceiver;
     private NewMessageCountViewModel mNewMessageModel;
+    private NewFriendCountViewModel mNewFriendModel;
 
     private UserInfoViewModel mUserInfoViewModel;
 
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
+        mNewFriendModel = new ViewModelProvider(this).get(NewFriendCountViewModel.class);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.navigation_chat) {
@@ -101,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
                 //This will need some extra logic for your project as it should have
                 //multiple chat rooms.
                 mNewMessageModel.reset();
+            } else if (destination.getId() == R.id.navigation_friends_request) {
+                mNewFriendModel.reset();
             }
         });
 
@@ -113,6 +120,20 @@ public class MainActivity extends AppCompatActivity {
                 badge.setVisible(true);
             } else {
                 //user did some action to clear the new messages, remove the badge
+                badge.clearNumber();
+                badge.setVisible(false);
+            }
+        });
+
+        mNewFriendModel.addFriendCountObserver(this, count -> {
+            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_friends_request);
+            badge.setMaxCharacterCount(2);
+            if (count > 0) {
+                //new friends request! update and show the notification badge.
+                badge.setNumber(count);
+                badge.setVisible(true);
+            } else {
+                //user did some action to clear the new friend request, remove the badge
                 badge.clearNumber();
                 badge.setVisible(false);
             }
@@ -134,8 +155,29 @@ public class MainActivity extends AppCompatActivity {
             //The user has already allowed the use of Locations. Get the current location.
             requestLocation();
         }
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    // Update UI with location data
+                    // ...
+                    Log.d("LOCATION UPDATE!", location.toString());
+                    if (mLocationModel == null) {
+                        mLocationModel = new ViewModelProvider(MainActivity.this)
+                                .get(LocationViewModel.class);
+                    }
+                    mLocationModel.setLocation(location);
+                }
+            };
+        };
+
+        createLocationRequest();
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -189,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Createa nd configure a Location Request used when retrieving location updates
+     * Created configure a Location Request used when retrieving location updates
      */
     private void createLocationRequest() {
         mLocationRequest = LocationRequest.create();
@@ -312,6 +354,7 @@ public class MainActivity extends AppCompatActivity {
         }
         IntentFilter iFilter = new IntentFilter(PushReceiver.RECEIVED_NEW_MESSAGE);
         registerReceiver(mPushMessageReceiver, iFilter);
+//        startLocationUpdates();
     }
 
     @Override
@@ -320,6 +363,7 @@ public class MainActivity extends AppCompatActivity {
         if (mPushMessageReceiver != null){
             unregisterReceiver(mPushMessageReceiver);
         }
+//        stopLocationUpdates();
     }
     public UserInfoViewModel getUserInfoViewModel() {
         return mUserInfoViewModel;
