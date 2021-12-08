@@ -14,6 +14,7 @@ import java.util.List;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentWeatherDailyBinding;
 
+
 /**
  * Implements WeatherRecyclerViewAdapterDaily to generate daily weather.
  * @author Natalie Nguyen Hong

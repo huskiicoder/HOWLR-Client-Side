@@ -50,7 +50,8 @@ public class MessagesPageFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
-        mModel.connectGet(mUserModel.getmJwt(), mUserModel.getUserId());
+        mModel.connectGet(mUserModel.getmJwt(), mUserModel.getmMemberId());
+        System.out.println(mUserModel.getmMemberId());
     }
 
     @Override

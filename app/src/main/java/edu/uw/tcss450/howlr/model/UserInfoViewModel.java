@@ -17,14 +17,16 @@ public class UserInfoViewModel extends ViewModel {
         mJwt = jwt;
     }
 
-    public int getUserId() { return mMemberId; }
-
     public String getEmail() {
         return mEmail;
     }
 
     public String getmJwt() {
         return mJwt;
+    }
+
+    public int getmMemberId() {
+        return mMemberId;
     }
 
     public void setChatRoom(int newRoom) { chatRoom = newRoom; }

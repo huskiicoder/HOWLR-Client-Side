@@ -81,7 +81,7 @@ public class FriendsListViewModel extends AndroidViewModel {
 //                }
 //            }
 
-            JSONArray friends = root.getJSONArray("rows");
+            JSONArray friends = root.getJSONArray("contact");
             ArrayList<Friends> listOfFriends = new ArrayList<>();
             for (int i = 0; i < friends.length(); i++) {
                 JSONObject jsonFriends = friends.getJSONObject(i);

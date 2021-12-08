@@ -34,6 +34,7 @@ import java.util.Objects;
 public class WeatherViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Weather>> mWeather;
+    private List<String> mLocation;
 
     public WeatherViewModel(@NonNull Application application) {
         super(application);
@@ -49,7 +50,29 @@ public class WeatherViewModel extends AndroidViewModel {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
         }
 //        String url = "https://howlr-server-side.herokuapp.com/weather/47/-122/";
-        String url = "https://howlr-server-side.herokuapp.com/weather/" + lat + "/" + lon;
+        String url = "https://howlr-server-side.herokuapp.com/weather?lat=" + lat + "&lon=" + lon;
+
+        Request request = new JsonObjectRequest(Request.Method.GET, url, null,
+                //no body for this get request
+                this::handleResult, this::handleError) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", "Bearer " + jwt);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(10_000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
+    }
+    public void connectZipGet(final int zip, final String jwt) {
+        if (jwt == null) {
+            throw new IllegalArgumentException("No UserInfoViewModel is assigned");
+        }
+//        String url = "https://howlr-server-side.herokuapp.com/weather/47/-122/";
+        String url = "https://howlr-server-side.herokuapp.com/weather/zip?" + zip;
 
         Request request = new JsonObjectRequest(Request.Method.GET, url, null,
                 //no body for this get request
@@ -74,12 +97,12 @@ public class WeatherViewModel extends AndroidViewModel {
         }
         try {
             System.out.println(result);
+
             JSONObject currentData = result.getJSONObject("current");
 
             JSONArray hourlyArray = result.getJSONArray("hourly");
 
             JSONArray dailyArray = result.getJSONArray("daily");
-
             ArrayList<Weather> weatherList = new ArrayList<Weather>();
             Calendar currentTime = Calendar.getInstance();
             String[] days = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};

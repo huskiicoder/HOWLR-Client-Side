@@ -134,7 +134,7 @@ public class SignInFragment extends Fragment {
      * @param email users email
      * @param jwt the JSON Web Token supplied by the server
      */
-    private void navigateToSuccess(final String email, final String jwt) {
+    private void navigateToSuccess(final String email, final int memberid, final String jwt) {
         if (binding.switchSignin.isChecked()) {
             SharedPreferences prefs =
                     getActivity().getSharedPreferences(
@@ -142,11 +142,12 @@ public class SignInFragment extends Fragment {
                             Context.MODE_PRIVATE);
             //Store the credentials in SharedPrefs
             prefs.edit().putString(getString(R.string.keys_prefs_jwt), jwt).apply();
+            prefs.edit().putInt(getString(R.string.keys_prefs_memberid), memberid).apply();
         }
 
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
-                        .actionLoginFragmentToMainActivity(email,88, jwt));
+                        .actionLoginFragmentToMainActivity(email,memberid, jwt));
         getActivity().finish();
     }
 
@@ -171,7 +172,7 @@ public class SignInFragment extends Fragment {
                     mUserViewModel = new ViewModelProvider(getActivity(),
                             new UserInfoViewModel.UserInfoViewModelFactory(
                                     binding.editEmail.getText().toString(),
-                                    88,
+                                    response.getInt("memberid"),
                                     response.getString("token")
                             )).get(UserInfoViewModel.class);
 
@@ -221,6 +222,7 @@ public class SignInFragment extends Fragment {
             } else {
                 navigateToSuccess(
                         binding.editEmail.getText().toString(),
+                        mUserViewModel.getmMemberId(),
                         mUserViewModel.getmJwt()
                 );
             }
