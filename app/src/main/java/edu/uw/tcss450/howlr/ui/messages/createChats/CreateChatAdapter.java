@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import edu.uw.tcss450.howlr.R;
+import me.pushy.sdk.model.api.PushyPushDeliveryRequest;
 
 /**
  * Adapter Class that connects recycler view to the data.

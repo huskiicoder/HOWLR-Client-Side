@@ -92,6 +92,7 @@ public class ChatViewModel extends AndroidViewModel {
         String url = getApplication().getResources().getString(R.string.base_url) +
                 "messages/" + chatId;
 
+        System.out.println(url);
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,

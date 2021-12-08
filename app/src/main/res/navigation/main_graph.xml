@@ -73,5 +73,9 @@
     <fragment
         android:id="@+id/navigation_create_chat"
         android:name="edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatFragment"
-        android:label="CreateChatFragment" />
+        android:label="CreateChatFragment" >
+        <action
+            android:id="@+id/action_navigation_create_chat_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
+    </fragment>
 </navigation>
