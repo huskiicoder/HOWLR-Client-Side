@@ -44,6 +44,7 @@ public class ChatSendViewModel extends AndroidViewModel {
     public void sendMessage(final int chatId, final String jwt, final String message) {
         String url = getApplication().getResources().getString(R.string.base_url) +
                 "messages";
+        System.out.println("chatId: " + chatId);
 
         JSONObject body = new JSONObject();
         try {

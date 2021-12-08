@@ -122,7 +122,7 @@ public class CreateChatFragment extends Fragment {
                     mCreateChatConfirmButton.setImageResource(R.drawable.ic_create_chat_floatbutton_cancel_24);
                     mCreateChatConfirmButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
                 }
-                System.out.println(mUserModel.getUserId() + " " + mFriendsAddToChatList);
+                System.out.println(mUserModel.getmMemberId() + " " + mFriendsAddToChatList);
             }
         });
 
@@ -142,7 +142,7 @@ public class CreateChatFragment extends Fragment {
 
     private void createChatRoom() {
 
-        mFriendsAddToChatList.add(mUserModel.getUserId());
+        mFriendsAddToChatList.add(mUserModel.getmMemberId());
         JSONArray list = new JSONArray();
         for (int i = 0; i < mFriendsAddToChatList.size(); i++) {
             list.put(mFriendsAddToChatList.get(i));

@@ -36,6 +36,7 @@ public class ChatFragment extends Fragment {
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
         mChatModel.getFirstMessages(mUserModel.getChatRoom(), mUserModel.getmJwt());
+        System.out.println(mUserModel.getChatRoom());
 
         mSendModel = provider.get(ChatSendViewModel.class);
     }
