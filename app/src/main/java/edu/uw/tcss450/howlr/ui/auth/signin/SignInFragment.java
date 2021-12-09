@@ -4,6 +4,7 @@ import static edu.uw.tcss450.howlr.utils.PasswordValidator.*;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.auth0.android.jwt.JWT;
 
@@ -78,6 +82,17 @@ public class SignInFragment extends Fragment {
                 ));
 
         binding.buttonSignIn.setOnClickListener(this::attemptSignIn);
+
+        // Enable enter button to sign in
+        binding.editPassword.setOnEditorActionListener((edit_password, actionId, event) -> {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                Log.i("Enter button to login","Enter pressed");
+                //View myView = findViewID(R.id.button_sign_in);
+                //myView.performClick();
+                binding.buttonSignIn.callOnClick();
+            }
+            return false;
+        });
 
         mSignInModel.addResponseObserver(
                 getViewLifecycleOwner(),

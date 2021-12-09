@@ -12,9 +12,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,6 +73,17 @@ public class RegisterFragment extends Fragment {
         binding.buttonRegister.setOnClickListener(this::attemptRegister);
         mRegisterModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeResponse);
+
+        // Enable enter button to register
+        binding.editPassword2.setOnEditorActionListener((edit_password, actionId, event) -> {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                Log.i("Enter button to login","Enter pressed");
+                //View myView = findViewID(R.id.button_sign_in);
+                //myView.performClick();
+                binding.buttonRegister.callOnClick();
+            }
+            return false;
+        });
     }
 
     private void attemptRegister(final View button) {
