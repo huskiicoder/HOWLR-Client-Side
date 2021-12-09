@@ -43,14 +43,14 @@
     <action
         android:id="@+id/action_navigation_weather_to_navigation_map"
         app:destination="@id/navigation_map" />
-    <argument
-        android:name="lat"
-        app:argType="string"
-        android:defaultValue="default" />
-    <argument
-        android:name="lng"
-        app:argType="string"
-        android:defaultValue="default" />
+        <argument
+            android:name="lat"
+            app:argType="string"
+            android:defaultValue="default" />
+        <argument
+            android:name="lng"
+            app:argType="string"
+            android:defaultValue="default" />
     </fragment>
     <fragment
         android:id="@+id/navigation_chat"

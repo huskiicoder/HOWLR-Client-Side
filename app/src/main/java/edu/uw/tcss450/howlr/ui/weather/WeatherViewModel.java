@@ -1,5 +1,8 @@
 package edu.uw.tcss450.howlr.ui.weather;
 import android.app.Application;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -18,13 +21,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+
+import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 /**
  * Implements Weather class to generate current weather, hourly weather, daily weather.
@@ -34,22 +41,27 @@ import java.util.Objects;
 public class WeatherViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Weather>> mWeather;
-    private List<String> mLocation;
+    private MutableLiveData<Map<String, Double>> mLocationData;
+    private UserInfoViewModel mUserModel;
 
     public WeatherViewModel(@NonNull Application application) {
         super(application);
         mWeather = new MutableLiveData<>();
+        mLocationData = new MutableLiveData<>();
     }
 
     public void addWeatherObserver(@NonNull LifecycleOwner owner, @NonNull Observer<? super List<Weather>> observer) {
         mWeather.observe(owner, observer);
     }
 
-    public void connectGet(final double lat, final double lon, final String jwt) {
+    public void addLocationObserver(@NonNull LifecycleOwner owner, @NonNull Observer<? super Map<String, Double>> observer) {
+        mLocationData.observe(owner, observer);
+    }
+
+    public void connectGet(final String lat, final String lon, final String jwt) {
         if (jwt == null) {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
         }
-//        String url = "https://howlr-server-side.herokuapp.com/weather/47/-122/";
         String url = "https://howlr-server-side.herokuapp.com/weather?lat=" + lat + "&lon=" + lon;
 
         Request request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -67,12 +79,11 @@ public class WeatherViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
-    public void connectZipGet(final int zip, final String jwt) {
+    public void connectZipGet(final String zip, final String jwt) {
         if (jwt == null) {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
         }
-//        String url = "https://howlr-server-side.herokuapp.com/weather/47/-122/";
-        String url = "https://howlr-server-side.herokuapp.com/weather/zip?" + zip;
+        String url = "https://howlr-server-side.herokuapp.com/weather?zip=" + zip;
 
         Request request = new JsonObjectRequest(Request.Method.GET, url, null,
                 //no body for this get request
@@ -96,7 +107,14 @@ public class WeatherViewModel extends AndroidViewModel {
             throw new IllegalStateException("Unexpected response in WeatherViewModel: " + result);
         }
         try {
-            System.out.println(result);
+            Map<String, Double> location = new HashMap<>();
+            Double lat = result.getDouble("lat");
+            Double lon = result.getDouble("lon");
+
+            location.put("lat", lat);
+            location.put("lon", lon);
+
+            mLocationData.setValue(location);
 
             JSONObject currentData = result.getJSONObject("current");
 
@@ -158,5 +176,9 @@ public class WeatherViewModel extends AndroidViewModel {
                             " " +
                             data);
         }
+    }
+
+    public void setUserInfoViewModel(UserInfoViewModel userInfoViewModel) {
+        mUserModel = userInfoViewModel;
     }
 }

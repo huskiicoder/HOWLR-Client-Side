@@ -45,7 +45,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_messages.xml" value="0.128125" />
-        <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_weather_card.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_weather_daily.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_weather_hourly.xml" value="0.5" />
