@@ -16,12 +16,14 @@ public final class ChatMessage implements Serializable {
     private final String mMessage;
     private final String mSender;
     private final String mTimeStamp;
+    private final String mEmail;
 
-    public ChatMessage(int messageId, String message, String sender, String timeStamp) {
+    public ChatMessage(int messageId, String message, String sender, String timeStamp, String email) {
         mMessageId = messageId;
         mMessage = message;
         mSender = sender;
         mTimeStamp = timeStamp;
+        mEmail = email;
     }
 
     /**
@@ -40,7 +42,8 @@ public final class ChatMessage implements Serializable {
                 msg.getString("message"),
                 firstName +
                 " " + lastName,
-                msg.getString("timestamp"));
+                msg.getString("timestamp"),
+                msg.getString("email"));
     }
 
     public String getMessage() {
@@ -50,6 +53,8 @@ public final class ChatMessage implements Serializable {
     public String getSender() {
         return mSender;
     }
+
+    public String getEmail() { return mEmail; }
 
     public String getTimeStamp() {
         return mTimeStamp;

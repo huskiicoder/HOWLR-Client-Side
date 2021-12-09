@@ -30,6 +30,7 @@ import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
+import edu.uw.tcss450.howlr.ui.messages.MessagesListViewModel;
 import edu.uw.tcss450.howlr.ui.weather.WeatherViewModel;
 
 /**
@@ -54,6 +55,12 @@ public class HomeFragment extends Fragment {
 
     View myBinding;
 
+    /* Messages view model. */
+    MessagesListViewModel mModel;
+
+    /* User view model. */
+    UserInfoViewModel mUserModel;
+
     /**
      * Require empty public constructor
      */
@@ -65,6 +72,11 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
+
+        ViewModelProvider provider = new ViewModelProvider(getActivity());
+        mUserModel = provider.get(UserInfoViewModel.class);
+        mModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
+        mModel.connectGet(mUserModel.getmJwt(), mUserModel.getUserId());
     }
 
     @Override
@@ -83,15 +95,15 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         UserInfoViewModel model = new ViewModelProvider(getActivity())
                 .get(UserInfoViewModel.class);
-        try {
-            mBinding.textCity.setText((String)mWeatherModel.mResponse.getValue().get("city_name")
-                    + ", " + (String) mWeatherModel.mResponse.getValue().get("state_code"));
+//        try {
+//            mBinding.textCity.setText((String)mWeatherModel.mResponse.getValue().get("city_name")
+//                    + ", " + (String) mWeatherModel.mResponse.getValue().get("state_code"));
 //            int temp = (int) mWeatherModel.mResponse.getValue().get("temp");
 //            temp = (9/5) * temp +32;
-            mBinding.textTemp.setText(mWeatherModel.mResponse.getValue().get("temp") + "°");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//            mBinding.textTemp.setText(mWeatherModel.mResponse.getValue().get("temp") + "°");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
 
         RecyclerView recyclerViewMessages = myBinding.findViewById(recycler_view_messages);

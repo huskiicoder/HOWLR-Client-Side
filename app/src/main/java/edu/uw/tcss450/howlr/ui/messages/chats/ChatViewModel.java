@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 
 
@@ -100,7 +99,7 @@ public class ChatViewModel extends AndroidViewModel {
                 Request.Method.GET,
                 url,
                 null, //no body for this get request
-                this::handelSuccess,
+                this::handleSuccess,
                 this::handleError) {
 
             @Override
@@ -153,7 +152,7 @@ public class ChatViewModel extends AndroidViewModel {
                 Request.Method.GET,
                 url,
                 null, //no body for this get request
-                this::handelSuccess,
+                this::handleSuccess,
                 this::handleError) {
 
             @Override
@@ -188,7 +187,7 @@ public class ChatViewModel extends AndroidViewModel {
         getOrCreateMapEntry(chatId).setValue(list);
     }
 
-    private void handelSuccess(final JSONObject response) {
+    private void handleSuccess(final JSONObject response) {
         List<ChatMessage> list;
         if (!response.has("chatId")) {
             throw new IllegalStateException("Unexpected response in ChatViewModel: " + response);
@@ -198,13 +197,15 @@ public class ChatViewModel extends AndroidViewModel {
             JSONArray messages = response.getJSONArray("rows");
             for(int i = 0; i < messages.length(); i++) {
                 JSONObject message = messages.getJSONObject(i);
+//                System.out.println(message);
                 // TODO------------------------------------------------------------------------------------
                 ChatMessage cMessage = new ChatMessage(
                         message.getInt("messageid"),
                         message.getString("message"),
                         message.getString("firstname") +
                         " " + message.getString("lastname"),
-                        message.getString("timestamp")
+                        message.getString("timestamp"),
+                        message.getString("email")
                 );
                 if (!list.contains(cMessage)) {
                     // don't add a duplicate
