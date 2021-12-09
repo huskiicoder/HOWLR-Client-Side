@@ -8,94 +8,71 @@
     android:background="@color/colorCardInvis"
     tools:context=".ui.friends.FriendsListFragment">
 
-    <TextView
-        android:id="@+id/textView_requestContact_friendsfragment"
-        android:layout_width="295dp"
+    <RelativeLayout
+        android:id="@+id/layout_contact"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="5dp"
-        android:text="@string/textplain_friends_search"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@color/white"
+        android:background="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/button_search"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorCardInvis"
+            android:gravity="end"
+            android:src="@drawable/ic_friends_add_button_white"
+            tools:layout_editor_absoluteX="324dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageView
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/button_invite"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorCardInvis"
+            android:gravity="end"
+            android:src="@drawable/ic_friends_search_white_24dp"
+            tools:layout_editor_absoluteX="324dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageView
+            android:id="@+id/button_invite"
+            android:layout_width="24dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="300dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorCardInvis"
+            android:gravity="end"
+            android:src="@drawable/invitation"
+            tools:layout_editor_absoluteX="324dp"
+            tools:layout_editor_absoluteY="0dp" />
+    </RelativeLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_root"
         android:name="edu.uw.tcss450.authentication.ui.friends.FriendsFragment"
-        android:layout_width="395dp"
-        android:layout_height="200dp"
-        android:layout_below="@id/list_root_request"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:nestedScrollingEnabled="false"
-        android:orientation="vertical"
-        app:layoutManager="LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_addContact_friendsfragment"
-        tools:context="edu.uw.tcss450.authentication.ui.friends.FriendsListFragment"
-        tools:listitem="@layout/fragment_friends_card" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_root_request"
-        android:name="edu.uw.tcss450.authentication.ui.friends.FriendsFragment"
-        android:layout_width="395dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/layout_root"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:nestedScrollingEnabled="false"
         android:orientation="vertical"
         app:layoutManager="LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_root"
         tools:context="edu.uw.tcss450.authentication.ui.friends.FriendsListFragment"
-        tools:listitem="@layout/fragment_friends_request_card" />
-
-    <ImageButton
-        android:id="@+id/imageButton_requestContact_friendsfragment"
-        android:layout_width="86dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="305dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/button_shape"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="56dp"
+        tools:listitem="@layout/fragment_friends_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_friends_search_white_24dp" />
-
-    <TextView
-        android:id="@+id/textView_addContact_friendsfragment"
-        android:layout_width="295dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="5dp"
-        android:text="@string/textplain_friends_request"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_requestContact_friendsfragment" />
-
-    <ImageButton
-        android:id="@+id/imageButton_addContact_friendsfragment"
-        android:layout_width="86dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="305dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/button_shape"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton_requestContact_friendsfragment"
-        app:srcCompat="@drawable/ic_friends_add_button_white" />
+        app:layout_constraintTop_toBottomOf="@id/layout_contact"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package edu.uw.tcss450.howlr.ui.weather;
 
 import android.annotation.SuppressLint;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentMapsBinding;
@@ -85,6 +91,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
                 //Zoom levels are from 2.0f (zoomed out) to 21.f (zoomed in)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(c, 15.0f));
                 binding.textLatLong.setText("Latitude:" + Double.toString(c.latitude) + "\nLongitude:" + Double.toString(c.longitude));
+                binding.textLabel.setText(getAddress(c.latitude, c.longitude));
             }
         });
         mMap.setOnMapClickListener(this);
@@ -102,5 +109,20 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
                         latLng, mMap.getCameraPosition().zoom));
         binding.textLatLong.setText("Latitude:" + Double.toString(latLng.latitude) + "\nLongitude:" + Double.toString(latLng.longitude));
         mLatLng = latLng;
+    }
+
+    public String getAddress(Double lat, Double lon) {
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        List<Address> results = null;
+        String address = "";
+        try {
+            results = geocoder.getFromLocation(lat, lon, 1);
+            String cityName = results.get(0).getLocality();
+            String stateName = results.get(0).getAdminArea();
+            address += cityName + ", " + stateName;
+        } catch (IOException e) {
+            // nothing
+        }
+        return address;
     }
 }

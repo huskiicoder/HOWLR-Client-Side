@@ -107,6 +107,7 @@ public class WeatherViewModel extends AndroidViewModel {
             throw new IllegalStateException("Unexpected response in WeatherViewModel: " + result);
         }
         try {
+
             Map<String, Double> location = new HashMap<>();
             Double lat = result.getDouble("lat");
             Double lon = result.getDouble("lon");
@@ -115,7 +116,6 @@ public class WeatherViewModel extends AndroidViewModel {
             location.put("lon", lon);
 
             mLocationData.setValue(location);
-
             JSONObject currentData = result.getJSONObject("current");
 
             JSONArray hourlyArray = result.getJSONArray("hourly");
@@ -168,7 +168,7 @@ public class WeatherViewModel extends AndroidViewModel {
 
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
-            Log.e("NETWORK ERROR", error.getMessage());
+            Log.e("NETWORK ERROR", "WEATHERVIEWMODEL");
         } else {
             String data = new String(error.networkResponse.data, Charset.defaultCharset());
             Log.e("CLIENT ERROR",

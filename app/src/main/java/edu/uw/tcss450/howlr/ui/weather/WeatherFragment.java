@@ -42,7 +42,7 @@ public class WeatherFragment extends Fragment {
     private WeatherViewModel mWeatherModel;
     private LocationViewModel mModel;
     private FragmentWeatherBinding binding;
-    private static boolean mFirst = true;
+    private static boolean mDefault = true;
     /**
      * Blank Constructor
      */
@@ -67,10 +67,10 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if(mFirst){
+        if(mDefault){
             mWeatherModel.connectGet(Double.toString(mModel.getCurrentLocation().getLatitude()),
                     Double.toString(mModel.getCurrentLocation().getLongitude()), mUserModel.getmJwt());
-            mFirst = false;
+            mDefault = false;
         }
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }
@@ -83,7 +83,6 @@ public class WeatherFragment extends Fragment {
                 Navigation.findNavController(getView())
                         .navigate(WeatherFragmentDirections.actionNavigationWeatherToNavigationMap()));
         binding.buttonSearch.setOnClickListener(this::searchZipcode);
-        binding.buttonSearch.setFocusable(true);
         WeatherFragmentArgs args = WeatherFragmentArgs.fromBundle(getArguments());
         if (!args.getLat().equals("default") && !args.getLng().equals("default")){
             mWeatherModel.connectGet(args.getLat(),args.getLng(), mUserModel.getmJwt());
@@ -113,7 +112,6 @@ public class WeatherFragment extends Fragment {
 
                 hourly_rv.setAdapter(new WeatherRecyclerViewAdapterHourly(hourly_list));
                 daily_rv.setAdapter(new WeatherRecyclerViewAdapterDaily(daily_list));
-                System.out.println(list.size());
             }
         });
 
