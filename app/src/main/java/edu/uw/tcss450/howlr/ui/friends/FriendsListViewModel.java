@@ -54,12 +54,10 @@ public class FriendsListViewModel extends AndroidViewModel {
         searchResult = new MutableLiveData<>();
         searchResult.setValue(new String[]{"null"});
     }
-
     public  void addFriendObserver(@NonNull LifecycleOwner owner,
                                    @NonNull Observer<? super  List<Friends>> observer) {
         mFriends.observe(owner, observer);
     }
-
     public void addRequestListObserver(@NonNull LifecycleOwner owner,
                                        @NonNull Observer<? super List<Friends>> observer) {
         mRequestList.observe(owner, observer);
@@ -70,7 +68,22 @@ public class FriendsListViewModel extends AndroidViewModel {
                 getApplication().getResources()::getString;
         try {
             JSONObject root = result;
-                    JSONArray friends = root.getJSONArray("invitation");
+
+//                if (response.has(getString.apply(R.string.keys_json_friends_request))) {
+//                    JSONArray request = root.getJSONArray(
+//                            getString.apply(R.string.keys_json_friends_request));
+//                    ArrayList<Friends> listOfInvites = new ArrayList<>();
+//                    for(int i = 0; i < request.length(); i++) {
+//                        JSONObject jsonFriends = request.getJSONObject(i);
+//                        try {
+//                            Friends friends = new Friends(jsonFriends);
+//                            listOfInvites.add(friends);
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//                    }
+
+                    JSONArray friends = root.getJSONArray("contact");
                     ArrayList<Friends> listOfFriends = new ArrayList<>();
                     for (int i = 0; i < friends.length(); i++) {
                         JSONObject jsonFriends = friends.getJSONObject(i);
@@ -79,6 +92,7 @@ public class FriendsListViewModel extends AndroidViewModel {
                             listOfFriends.add(contact);
                         } catch (Exception ex) {
                             ex.printStackTrace();
+                            ;
                         }
                     }
                     mFriends.setValue(listOfFriends);
@@ -219,7 +233,6 @@ public class FriendsListViewModel extends AndroidViewModel {
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
     }
-
     public void connectAcceptFriends(final int memberId) {
         if (userInfoViewModel == null) {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
@@ -241,7 +254,6 @@ public class FriendsListViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
-
     public void connectDeleteContact(final int memberId) {
         String url = "https://howlr-server-side.herokuapp.com/contacts" +
                 "?memberId=" + memberId;

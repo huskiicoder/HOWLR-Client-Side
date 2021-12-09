@@ -38,7 +38,10 @@
 
                 <data
                     android:scheme="http"
-                    android:host="howlr-server-side.herokuapp.com" />
+                    android:host="10.0.2.2:8080" />
+<!--                <data-->
+<!--                    android:scheme="http"-->
+<!--                    android:host="howlr-server-side.herokuapp.com" />-->
             </intent-filter>
         </activity>
 

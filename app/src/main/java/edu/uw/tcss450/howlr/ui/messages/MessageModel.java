@@ -78,6 +78,13 @@ public class MessageModel implements Serializable {
     }
 
     /**
+     * Setter for the recent message content.
+     */
+    public void setMessageContent(String newMessage) {
+        mMessageContent = newMessage;
+    }
+
+    /**
      * Provides equality solely based on ChatId.
      * @param other the other object to check for equality
      * @return true if other chat ID matches this message ID, false otherwise
