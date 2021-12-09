@@ -66,8 +66,8 @@ public class FriendsRequestRecyclerViewAdapter
         }
 
         void setRequest(final Friends friends) {
-            binding.textviewFirstName.setText(friends.getFirstName());
-            binding.textviewLastName.setText(friends.getLastName());
+            binding.textviewName.setText(friends.getFirstName() + " " + friends.getLastName());
+            binding.textviewEmail.setText(friends.getUserName());
             binding.buttonAcceptRequest.setOnClickListener(view -> acceptRequest(this, friends));
             binding.buttonDeclineRequest.setOnClickListener(view -> declineRequest(this, friends));
         }

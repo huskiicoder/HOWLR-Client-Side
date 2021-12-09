@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_navigation_friends_list_to_navigation_friends_search"
             app:destination="@id/navigation_friends_search" />
+        <action
+            android:id="@+id/action_navigation_friends_list_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
     </fragment>
     <fragment
         android:id="@+id/navigation_messages"

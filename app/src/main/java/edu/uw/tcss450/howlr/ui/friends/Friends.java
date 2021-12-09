@@ -4,13 +4,15 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
+import edu.uw.tcss450.howlr.R;
+
 /**
  * Implements Friends with memberId, username, lastname, firstname.
  * @author Natalie Nguyen Hong
  * @version TCSS 450 Fall 2021
  */
 public class Friends implements Serializable {
-//    private int mPicture;
+    private int mPicture;
     /** Member id of this friend. */
     private final int mMemberId;
 
@@ -23,27 +25,27 @@ public class Friends implements Serializable {
     /** Last name of this friend. */
     private final String mLastName;
 
-//    public Friends(int picture, int memberId, String userName, String firstName, String lastName) {
-//        this.mPicture = picture;
-//        this.mMemberId = memberId;
-//        this.mUserName = userName;
-//        this.mFirstName = firstName;
-//        this.mLastName = lastName;
-//    }
-
-    /**
-     * Constructs a friend object.
-     * @param memberId member id of the friend.
-     * @param userName username of the friend.
-     * @param firstName first name of the friend.
-     * @param lastName last name of the friend.
-     */
     public Friends(int memberId, String userName, String firstName, String lastName) {
+        this.mPicture = R.drawable.shibaheart;
         this.mMemberId = memberId;
         this.mUserName = userName;
         this.mFirstName = firstName;
         this.mLastName = lastName;
     }
+
+//    /**
+//     * Constructs a friend object.
+//     * @param memberId member id of the friend.
+//     * @param userName username of the friend.
+//     * @param firstName first name of the friend.
+//     * @param lastName last name of the friend.
+//     */
+//    public Friends(int memberId, String userName, String firstName, String lastName) {
+//        this.mMemberId = memberId;
+//        this.mUserName = userName;
+//        this.mFirstName = firstName;
+//        this.mLastName = lastName;
+//    }
 
     /**
      * Constructs a friend from JSONobject.
@@ -57,9 +59,9 @@ public class Friends implements Serializable {
         mLastName = json.getString("lastname");
     }
 
-//    public int getPicture() {
-//        return mPicture;
-//    }
+    public int getPicture() {
+        return mPicture;
+    }
 
     /**
      * Get memberid of the friend.

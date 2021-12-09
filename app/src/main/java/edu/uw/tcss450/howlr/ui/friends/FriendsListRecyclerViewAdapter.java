@@ -13,6 +13,7 @@ import java.util.List;
 
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsCardBinding;
+import edu.uw.tcss450.howlr.ui.weather.LocationFragmentDirections;
 
 /**
  * Implements FriendsListRecyclerViewAdapter
@@ -92,5 +93,4 @@ public class FriendsListRecyclerViewAdapter extends
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
 }

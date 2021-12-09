@@ -79,10 +79,12 @@ public class WeatherFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentWeatherBinding binding = FragmentWeatherBinding.bind(getView());
+
         binding.buttonMap.setOnClickListener(button ->
                 Navigation.findNavController(getView())
                         .navigate(WeatherFragmentDirections.actionNavigationWeatherToNavigationMap()));
         binding.buttonSearch.setOnClickListener(this::searchZipcode);
+
         WeatherFragmentArgs args = WeatherFragmentArgs.fromBundle(getArguments());
         if (!args.getLat().equals("default") && !args.getLng().equals("default")){
             mWeatherModel.connectGet(args.getLat(),args.getLng(), mUserModel.getmJwt());
@@ -133,7 +135,7 @@ public class WeatherFragment extends Fragment {
     }
 
     private void searchZipcode(View view) {
-        EditText text = (EditText) getView().findViewById(R.id.textView_zipcode_search);
+        EditText text = getView().findViewById(R.id.textView_zipcode_search);
         String value = text.getText().toString();
         mWeatherModel.connectZipGet(value, mUserModel.getmJwt());
     }

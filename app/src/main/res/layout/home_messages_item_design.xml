@@ -49,9 +49,9 @@
             android:layout_marginLeft="-30dp"
             android:layout_marginTop="14dp"
             android:layout_toRightOf="@id/display_name"
-            android:textColor="@color/accent_color_light"
             android:text="7:30 pm"
             android:textAlignment="textEnd"
+            android:textColor="@color/accent_color_light"
             android:textSize="6sp">
 
         </TextView>
@@ -64,8 +64,8 @@
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/profile_image"
             android:text="Are you ready for your sprint review?"
-            android:textSize="12sp"
-            android:textColor="@color/text_color">
+            android:textColor="@color/text_color"
+            android:textSize="12sp">
 
         </TextView>
 

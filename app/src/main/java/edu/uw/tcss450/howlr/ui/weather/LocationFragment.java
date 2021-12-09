@@ -72,7 +72,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         location.setLat(Double.toString(mLatLng.latitude));
         location.setLng(Double.toString(mLatLng.longitude));
         Navigation.findNavController(getView()).navigate(location);
-
     }
     @SuppressLint("MissingPermission")
     @Override
@@ -91,7 +90,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
                 //Zoom levels are from 2.0f (zoomed out) to 21.f (zoomed in)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(c, 15.0f));
                 binding.textLatLong.setText("Latitude:" + Double.toString(c.latitude) + "\nLongitude:" + Double.toString(c.longitude));
-                binding.textLabel.setText(getAddress(c.latitude, c.longitude));
             }
         });
         mMap.setOnMapClickListener(this);
@@ -109,20 +107,5 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
                         latLng, mMap.getCameraPosition().zoom));
         binding.textLatLong.setText("Latitude:" + Double.toString(latLng.latitude) + "\nLongitude:" + Double.toString(latLng.longitude));
         mLatLng = latLng;
-    }
-
-    public String getAddress(Double lat, Double lon) {
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-        List<Address> results = null;
-        String address = "";
-        try {
-            results = geocoder.getFromLocation(lat, lon, 1);
-            String cityName = results.get(0).getLocality();
-            String stateName = results.get(0).getAdminArea();
-            address += cityName + ", " + stateName;
-        } catch (IOException e) {
-            // nothing
-        }
-        return address;
     }
 }
