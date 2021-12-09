@@ -68,33 +68,35 @@ public class FriendsListViewModel extends AndroidViewModel {
                 getApplication().getResources()::getString;
         try {
             JSONObject root = result;
-//            JSONArray request = root.getJSONArray(
-//                    getString.apply(R.string.keys_json_friends_request));
-//            ArrayList<Friends> listOfInvites = new ArrayList<>();
-//            for(int i = 0; i < request.length(); i++) {
-//                JSONObject jsonFriends = request.getJSONObject(i);
-//                try {
-//                    Friends friends = new Friends(jsonFriends);
-//                    listOfInvites.add(friends);
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
 
-            JSONArray friends = root.getJSONArray("contact");
-            ArrayList<Friends> listOfFriends = new ArrayList<>();
-            for (int i = 0; i < friends.length(); i++) {
-                JSONObject jsonFriends = friends.getJSONObject(i);
-                try {
-                    Friends contact = new Friends(jsonFriends);
-                    listOfFriends.add(contact);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    ;
-                }
-            }
-            mFriends.setValue(listOfFriends);
-//            mRequestList.setValue(listOfInvites);
+//                if (response.has(getString.apply(R.string.keys_json_friends_request))) {
+//                    JSONArray request = root.getJSONArray(
+//                            getString.apply(R.string.keys_json_friends_request));
+//                    ArrayList<Friends> listOfInvites = new ArrayList<>();
+//                    for(int i = 0; i < request.length(); i++) {
+//                        JSONObject jsonFriends = request.getJSONObject(i);
+//                        try {
+//                            Friends friends = new Friends(jsonFriends);
+//                            listOfInvites.add(friends);
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//                    }
+
+                    JSONArray friends = root.getJSONArray("contact");
+                    ArrayList<Friends> listOfFriends = new ArrayList<>();
+                    for (int i = 0; i < friends.length(); i++) {
+                        JSONObject jsonFriends = friends.getJSONObject(i);
+                        try {
+                            Friends contact = new Friends(jsonFriends);
+                            listOfFriends.add(contact);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            ;
+                        }
+                    }
+                    mFriends.setValue(listOfFriends);
+//                    mRequestList.setValue(listOfInvites);
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e("ERROR!", e.getMessage());
@@ -198,7 +200,7 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     public void connectAddFriendsPost(String email) {
-        String url = "https://howlr-server-side.herokuapp.com/contacts/" + userInfoViewModel.getEmail();
+        String url = "https://howlr-server-side.herokuapp.com/contacts" + userInfoViewModel.getEmail();
 
         JSONObject body = new JSONObject();
         try {

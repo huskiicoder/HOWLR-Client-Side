@@ -42,7 +42,10 @@ public class PushReceiver extends BroadcastReceiver {
         ChatMessage message = null;
         int chatId = -1;
         try{
-            message = ChatMessage.createFromJsonString(intent.getStringExtra("message"));
+            String firstName = intent.getStringExtra("firstname");
+            String lastName = intent.getStringExtra("lastname");
+            message = ChatMessage.createFromJsonString(intent.getStringExtra("message"),
+                    firstName, lastName);
             chatId = intent.getIntExtra("chatid", -1);
         } catch (JSONException e) {
             //Web service sent us something unexpected...I can't deal with this.
@@ -51,7 +54,6 @@ public class PushReceiver extends BroadcastReceiver {
 
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo();
         ActivityManager.getMyMemoryState(appProcessInfo);
-
         if (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE) {
             //app is in the foreground so send the message to the active Activities
             Log.d("PUSHY", "Message received in foreground: " + message);
