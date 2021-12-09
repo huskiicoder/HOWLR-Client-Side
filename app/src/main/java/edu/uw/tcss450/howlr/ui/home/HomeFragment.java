@@ -170,25 +170,7 @@ public class HomeFragment extends Fragment {
 
 
 
-        RecyclerView recyclerViewMessages = myBinding.findViewById(recycler_view_messages);
-        recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
-        int messagesCount = 0;
-        mUserList = new ArrayList<>();
-        for (int i = 0; i < mMessagesModel.mMessagesList.getValue().size(); i++) {
-            mUserList.add(mMessagesModel.mMessagesList.getValue().get(i));
-            messagesCount++;
-        }
-        if(messagesCount < 4) {
-            for(int i = 0; i < (4 - messagesCount); i++) {
-                mUserList.add(new MessageModel(R.drawable.shibaheart, 1,
-                        "Empty", "0:00 pm",
-                        "Start a new chat, make some friends or whatever!"));
-            }
-        }
 
-        mAdapterMessages = new HomeMessagesAdapter(mUserList);
-        recyclerViewMessages.setAdapter(mAdapterMessages);
-        recyclerViewMessages.setItemAnimator(new DefaultItemAnimator());
         // END MESSAGES IMPLEMENTATION
 
         // FOR FRIENDS RECYCLERVIEW
@@ -213,5 +195,27 @@ public class HomeFragment extends Fragment {
 
         recyclerViewFriends.setAdapter(mAdapterFriends);
         recyclerViewFriends.setItemAnimator(new DefaultItemAnimator());
+
+
+
+        RecyclerView recyclerViewMessages = myBinding.findViewById(recycler_view_messages);
+        recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
+        int messagesCount = 0;
+        mUserList = new ArrayList<>();
+        for (int i = 0; i < mMessagesModel.mMessagesList.getValue().size(); i++) {
+            mUserList.add(mMessagesModel.mMessagesList.getValue().get(i));
+            messagesCount++;
+        }
+        if(messagesCount < 4) {
+            for(int i = 0; i < (4 - messagesCount); i++) {
+                mUserList.add(new MessageModel(R.drawable.shibaheart, 1,
+                        "Empty", "0:00 pm",
+                        "Start a new chat, make some friends or whatever!"));
+            }
+        }
+
+        mAdapterMessages = new HomeMessagesAdapter(mUserList);
+        recyclerViewMessages.setAdapter(mAdapterMessages);
+        recyclerViewMessages.setItemAnimator(new DefaultItemAnimator());
     }
 }

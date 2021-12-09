@@ -13,9 +13,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 
 import com.auth0.android.jwt.JWT;
 
@@ -78,6 +80,11 @@ public class SignInFragment extends Fragment {
                 ));
 
         binding.buttonSignIn.setOnClickListener(this::attemptSignIn);
+
+        binding.textForgotPassword.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(
+                        SignInFragmentDirections.actionSignInFragmentToResetPasswordFragment()
+                ));
 
         mSignInModel.addResponseObserver(
                 getViewLifecycleOwner(),
