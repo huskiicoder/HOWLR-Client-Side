@@ -1,5 +1,6 @@
 package edu.uw.tcss450.howlr.ui.weather;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +66,12 @@ public class WeatherRecyclerViewAdapterDaily extends RecyclerView.Adapter<Weathe
             binding.textWeatherDailyLowTemp.setText(Math.round(Float.parseFloat(String.valueOf(weather.getLowTemp()))) + "°");
             binding.textWeatherDailyHighTemp.setText(Math.round(Float.parseFloat(String.valueOf(weather.getHighTemp()))) + "°") ;
             binding.textWeatherDailyHumidity.setText(String.valueOf(weather.getHumidity()) + "%");
-            Picasso.get().load("https://openweathermap.org/img/wn/" + weather.getIcon() + "@2x.png").into(binding.imageWeatherviewDayConditon);
+//            Picasso.get().load("https://openweathermap.org/img/wn/" + weather.getIcon() + "@2x.png").into(binding.imageWeatherviewDayConditon);
+
+            String a = "a" + weather.getIcon();
+            Context context = binding.imageWeatherviewDayConditon.getContext();
+            int id = context.getResources().getIdentifier(a, "drawable", context.getPackageName());
+            binding.imageWeatherviewDayConditon.setImageResource(id);
 
         }
 

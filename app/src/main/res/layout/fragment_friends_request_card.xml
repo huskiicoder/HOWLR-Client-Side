@@ -19,74 +19,75 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/colorAccent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/profile_image"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                app:cardCornerRadius="70dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/purple_default">
 
-                <ImageView
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/profile_image"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_centerVertical="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/shibabone" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    app:cardCornerRadius="70dp">
 
-        <TextView
-            android:id="@+id/textview_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textview_name"
-            android:layout_marginLeft="34dp"
-            android:layout_marginTop="8dp"
-            android:layout_toRightOf="@id/profile_image"
-            android:text="Cb3"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/shibabone" />
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/textview_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="34dp"
-                android:layout_marginTop="8dp"
-                android:layout_toRightOf="@id/profile_image"
-                android:text="Charles"
-                android:textAlignment="textStart"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                <TextView
+                    android:id="@+id/textview_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textview_name"
+                    android:layout_marginLeft="34dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/profile_image"
+                    android:text="Cb3"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/text_color"
+                    android:textSize="15sp" />
 
-            <ImageView
-                android:id="@+id/button_accept_request"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="360dp"
-                android:layout_marginTop="10dp"
-                android:gravity="end"
-                android:src="@drawable/ic_friends_accept_24" />
+                <TextView
+                    android:id="@+id/textview_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="34dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/profile_image"
+                    android:text="Charles"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/text_color"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/button_decline_request"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="360dp"
-            android:layout_marginTop="50dp"
-            android:gravity="end"
-            android:src="@drawable/ic_friends_cancel_24" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/button_accept_request"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="360dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="end"
+                    android:src="@drawable/ic_friends_accept_24" />
+
+                <ImageView
+                    android:id="@+id/button_decline_request"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="360dp"
+                    android:layout_marginTop="50dp"
+                    android:gravity="end"
+                    android:src="@drawable/ic_friends_cancel_24" />
+            </RelativeLayout>
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
