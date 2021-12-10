@@ -149,8 +149,7 @@ public class AddFriendsFragment extends Fragment {
         }
 
 
-        //String url = "https://howlr-server-side.herokuapp.com/messages/add";
-        String url = "http://10.0.2.2:8080/messages/add";
+        String url = "https://howlr-server-side.herokuapp.com/messages/add";
         Request request = new JsonObjectRequest(
                 Request.Method.POST,
                 url,

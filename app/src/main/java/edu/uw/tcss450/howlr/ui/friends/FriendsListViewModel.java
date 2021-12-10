@@ -181,7 +181,6 @@ public class FriendsListViewModel extends AndroidViewModel {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
         }
         String url = "https://howlr-server-side.herokuapp.com/contacts/" + userInfoViewModel.getEmail();
-//        String url = "http://10.0.2.2:5000/contacts/" + userInfoViewModel.getEmail();
         Request request = new JsonObjectRequest(Request.Method.GET, url, null,
                 //no body for this get request
                 this::handleResult, this::handleError) {

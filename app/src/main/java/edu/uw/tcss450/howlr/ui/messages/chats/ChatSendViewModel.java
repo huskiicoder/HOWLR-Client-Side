@@ -43,8 +43,7 @@ public class ChatSendViewModel extends AndroidViewModel {
 
     public void sendMessage(final int chatId, final String jwt, final String message) {
         // TODO------------------------------------------------------------------------------------
-        String url = "http://10.0.2.2:5000/" +
-                "messages";
+        String url = "https://howlr-server-side.herokuapp.com/messages";
 
 //        String url = getApplication().getResources().getString(R.string.base_url) +
 //                "messages";

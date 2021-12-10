@@ -89,13 +89,10 @@ public class ChatViewModel extends AndroidViewModel {
      */
     public void getFirstMessages(final int chatId, final String jwt) {
         // TODO------------------------------------------------------------------------------------
-        String url = "http://10.0.2.2:5000/" +
+        String url = "https://howlr-server-side.herokuapp.com/" +
                 "messages/" + chatId;
 
 //        String url = getApplication().getResources().getString(R.string.base_url) +
-//                "messages/" + chatId;
-
-//        String url = "http://howlr-server-side.herokuapp.com/" +
 //                "messages/" + chatId;
 
         Request request = new JsonObjectRequest(
@@ -139,7 +136,7 @@ public class ChatViewModel extends AndroidViewModel {
      */
     public void getNextMessages(final int chatId, final String jwt) {
         // TODO------------------------------------------------------------------------------------
-        String url = "http://10.0.2.2:5000/" +
+        String url = "https://howlr-server-side.herokuapp.com/" +
                 "messages/" +
                 chatId +
                 "/" +
