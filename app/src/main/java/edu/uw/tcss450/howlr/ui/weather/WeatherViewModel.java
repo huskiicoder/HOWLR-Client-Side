@@ -116,6 +116,7 @@ public class WeatherViewModel extends AndroidViewModel {
             location.put("lon", lon);
 
             mLocationData.setValue(location);
+
             JSONObject currentData = result.getJSONObject("current");
 
             JSONArray hourlyArray = result.getJSONArray("hourly");

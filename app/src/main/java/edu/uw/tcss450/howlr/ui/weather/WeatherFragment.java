@@ -1,6 +1,5 @@
 package edu.uw.tcss450.howlr.ui.weather;
 
-import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -12,22 +11,23 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
-import edu.uw.tcss450.howlr.databinding.FragmentSignInBinding;
 import edu.uw.tcss450.howlr.databinding.FragmentWeatherBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
@@ -43,6 +43,7 @@ public class WeatherFragment extends Fragment {
     private LocationViewModel mModel;
     private FragmentWeatherBinding binding;
     private static boolean mDefault = true;
+    private Geocoder mGeocoder;
     /**
      * Blank Constructor
      */
@@ -61,6 +62,7 @@ public class WeatherFragment extends Fragment {
             MainActivity activity = (MainActivity) getActivity();
             mWeatherModel.setUserInfoViewModel(activity.getUserInfoViewModel());
         }
+        mGeocoder = new Geocoder(getActivity());
     }
 
     @Override
@@ -120,7 +122,7 @@ public class WeatherFragment extends Fragment {
     }
 
     public String getAddress(Double lat, Double lon) {
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        Geocoder geocoder = new Geocoder(getActivity());
         List<Address> results = null;
         String address = "";
         try {
@@ -136,7 +138,33 @@ public class WeatherFragment extends Fragment {
 
     private void searchZipcode(View view) {
         EditText text = getView().findViewById(R.id.textView_zipcode_search);
-        String value = text.getText().toString();
-        mWeatherModel.connectZipGet(value, mUserModel.getmJwt());
+
+        String location = text.getText().toString();
+        Log.e("Location", location);
+        List<Address> addressList = new ArrayList<>();
+        String mCity = "Unknown";
+        if (location != null || !location.equals("")){
+            try {
+                addressList = mGeocoder.getFromLocationName(location,1);
+                Log.e("Add", String.valueOf(addressList.size()));
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            if (addressList.size() == 0){
+                //Send an error message
+                Log.e("Geocoder", "There is no location");
+            }
+            else {
+                Address address = addressList.get(0);
+                //get lat lon
+                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                mWeatherModel.connectGet(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude),mUserModel.getmJwt());
+                if (addressList.get(0).getLocality() != null){
+                    mCity = addressList.get(0).getLocality();
+                } else {
+                    mCity = "Unknown";
+                }
+            }
+        }
     }
 }

@@ -32,7 +32,6 @@ import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 public class FriendsSearchFragment extends Fragment implements View.OnClickListener {
     private FriendsListViewModel mFriendModel;
     private UserInfoViewModel mUserModel;
-    private ArrayAdapter<String> adapter;
     FragmentFriendsSearchListBinding binding;
 
     public FriendsSearchFragment() {
