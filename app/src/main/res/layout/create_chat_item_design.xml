@@ -83,8 +83,13 @@
                 android:id="@+id/create_chat_selected_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginLeft="360dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginBottom="58dp"
                 android:gravity="end"
                 android:src="@drawable/ic_create_chat_friend_blank_checkbox_24" />
 

@@ -1,16 +1,13 @@
-package edu.uw.tcss450.howlr.ui.messages.createChats;
-
+package edu.uw.tcss450.howlr.ui.messages.chatsAddFriends;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -32,23 +29,20 @@ import org.json.JSONObject;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
-import edu.uw.tcss450.howlr.ui.messages.MessageModel;
-import edu.uw.tcss450.howlr.ui.messages.MessagesPageFragmentDirections;
+import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatAdapter;
+import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatFragmentDirections;
+import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatFriendsModel;
+import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatViewModel;
 
-/**
- * create an instance of this fragment.
- */
-public class CreateChatFragment extends Fragment {
+public class AddFriendsFragment extends Fragment {
 
     /** Messages view model. */
     CreateChatViewModel mModel;
@@ -83,7 +77,7 @@ public class CreateChatFragment extends Fragment {
             MainActivity activity = (MainActivity) getActivity();
             mModel.setUserInfoViewModel(activity.getUserInfoViewModel());
         }
-        mModel.connectGetFriends();
+        mModel.connectGetFriendsNotInChat();
     }
 
     @Override
@@ -124,41 +118,39 @@ public class CreateChatFragment extends Fragment {
                     mCreateChatConfirmButton.setImageResource(R.drawable.ic_create_chat_floatbutton_cancel_24);
                     mCreateChatConfirmButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
                 }
-                System.out.println(mUserModel.getmMemberId() + " " + mFriendsAddToChatList);
             }
         });
 
-        /* The click listener for the confirm chat floating action button. */
+        /* The click listener for the confirming adding friends. */
         mCreateChatConfirmButton = (FloatingActionButton) mBinding.findViewById(R.id.createChatConfirmActionButton);
         mCreateChatConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!mFriendsAddToChatList.isEmpty()) {
-                    createChatRoom();
+                    addFriendsToChat();
                 }
             }
         });
-
         return mBinding;
     }
 
-    private void createChatRoom() {
+    private void addFriendsToChat() {
 
-        mFriendsAddToChatList.add(mUserModel.getmMemberId());
         JSONArray list = new JSONArray();
         for (int i = 0; i < mFriendsAddToChatList.size(); i++) {
             list.put(mFriendsAddToChatList.get(i));
         }
         JSONObject body = new JSONObject();
         try {
-            body.put("name", "Default");
+            body.put("chatId", mUserModel.getChatRoom());
             body.put("list", list);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
-        String url = "https://howlr-server-side.herokuapp.com/chats/create";
+        //String url = "https://howlr-server-side.herokuapp.com/messages/add";
+        String url = "http://10.0.2.2:8080/messages/add";
         Request request = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
@@ -182,18 +174,9 @@ public class CreateChatFragment extends Fragment {
     }
 
     private void handleResult(final JSONObject result) {
-        try {
-            int navToChat = result.getInt("chatID");
-            System.out.println("CHAT ROOM" + navToChat);
-
-            mUserModel.setChatRoom(navToChat);
-            Navigation.findNavController(getView())
-                    .navigate(CreateChatFragmentDirections
-                            .actionNavigationCreateChatToNavigationChat(navToChat));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("ERROR!", e.getMessage());
-        }
+        Navigation.findNavController(getView())
+                .navigate(AddFriendsFragmentDirections
+                        .actionAddFriendsFragmentToNavigationChat(mUserModel.getChatRoom()));
 
     }
 
@@ -209,5 +192,4 @@ public class CreateChatFragment extends Fragment {
                             data);
         }
     }
-
 }

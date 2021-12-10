@@ -63,6 +63,15 @@
         <argument
             android:name="chatid"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_navigation_chat_to_navigation_create_chat"
+            app:destination="@id/navigation_create_chat" />
+        <action
+            android:id="@+id/action_navigation_chat_to_addFriendsFragment"
+            app:destination="@id/navigation_add_friends" />
+        <action
+            android:id="@+id/action_navigation_chat_to_navigation_messages"
+            app:destination="@id/navigation_messages" />
     </fragment>
     <fragment
         android:id="@+id/navigation_friends_request"
@@ -98,5 +107,16 @@
         <action
             android:id="@+id/action_navigation_create_chat_to_navigation_chat"
             app:destination="@id/navigation_chat" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_add_friends"
+        android:name="edu.uw.tcss450.howlr.ui.messages.chatsAddFriends.AddFriendsFragment"
+        android:label="AddFriendsFragment" >
+        <action
+            android:id="@+id/action_addFriendsFragment_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
+        <argument
+            android:name="chatId"
+            app:argType="integer" />
     </fragment>
 </navigation>

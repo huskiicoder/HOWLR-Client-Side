@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/action_sign_out"
@@ -12,8 +13,18 @@
             the built-in android functionality-->
     <item
             android:id="@+id/bt_switch"
-            android:title = "Dark Mode"
+            android:title = "Dark Mode" />
 
-        />
+    <item
+        android:id="@+id/action_leave_chat"
+        android:title="Leave Chat"
+        app:showAsAction="never"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/action_invite_friend_button"
+        android:icon="@drawable/ic_add_friend_to_chat_24"
+        app:showAsAction="always"
+        android:visible="false"/>
 
 </menu>
