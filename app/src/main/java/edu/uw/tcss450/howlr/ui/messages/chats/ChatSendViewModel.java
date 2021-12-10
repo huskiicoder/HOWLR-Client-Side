@@ -43,7 +43,7 @@ public class ChatSendViewModel extends AndroidViewModel {
 
     public void sendMessage(final int chatId, final String jwt, final String message) {
         // TODO------------------------------------------------------------------------------------
-        String url = "http://10.0.2.2:8080/" +
+        String url = "http://10.0.2.2:5000/" +
                 "messages";
         JSONObject body = new JSONObject();
         try {

@@ -62,7 +62,7 @@
                     android:scheme="http" />
 
                     android:scheme="http"
-                    android:host="10.0.2.2:8080" />
+                    android:host="10.0.2.2:5000" />
 <!--                <data-->
 <!--                    android:scheme="http"-->
 <!--                    android:host="howlr-server-side.herokuapp.com" />-->

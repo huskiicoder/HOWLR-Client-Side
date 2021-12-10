@@ -57,8 +57,8 @@ public class MessagesListViewModel extends AndroidViewModel  {
                 MessageModel cm = new MessageModel(
                         R.drawable.shibabone,
                         jsonMessage.getInt("chatid"),
-                        jsonMessage.getString("firstname"), //+
-                        //" " + jsonMessage.getString("lastname"),
+                        jsonMessage.getString("firstname") +
+                        " " + jsonMessage.getString("lastname"),
                         jsonMessage.getString("timestamp"),
                         jsonMessage.getString("message"));
                 if (!mMessagesList.getValue().contains(cm)) {
@@ -78,9 +78,9 @@ public class MessagesListViewModel extends AndroidViewModel  {
 
     public void connectGet(final String jwt, final int memberId) {
         // TODO------------------------------------------------------------------------------------
-//        String url = "http://10.0.2.2:8080/chats/" + memberId;
+        String url = "http://10.0.2.2:5000/chats/" + memberId;
 
-        String url = "https://howlr-server-side.herokuapp.com/chats/" + memberId;
+//        String url = "https://howlr-server-side.herokuapp.com/chats/" + memberId;
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
