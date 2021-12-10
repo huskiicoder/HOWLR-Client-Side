@@ -21,64 +21,46 @@
         <entry key="..\:/Users/amira/StudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_home.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/amira/StudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_messages_page.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/amira/StudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_sign_in.xml" value="1.0" />
-          <entry key="..\:/Users/amira/StudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_weather.xml" value="0.21197916666666666" />
-          <entry key="..\:/Users/amira/StudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_weather_daily.xml" value="0.21197916666666666" />
-          <entry key="..\:/Users/amira/StudioProjects/HOWLR-Client-Side/app/src/main/res/layout/messages_page_item_design.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/amira/StudioProjects/HOWLR-Client-Side/app/src/main/res/layout/messages_page_item_design.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/amira/StudioProjects/HOWLR-Client-Side/app/src/main/res/menu/drop_down.xml" value="0.20833333333333334" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_add_friend_to_chat_24.xml" value="0.5407407407407407" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_create_chat_friend_blank_checkbox_24.xml" value="0.5407407407407407" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_create_chat_friend_selected_checkbox_24.xml" value="0.5407407407407407" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/activity_main.xml" value="0.3473731884057971" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/create_chat_item_design.xml" value="0.25759878419452886" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_create_chat.xml" value="0.26902173913043476" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_create_chat_friends_model.xml" value="0.4257246376811594" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_friends.xml" value="0.29257246376811596" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_friends_card.xml" value="0.25759878419452886" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_friends_list.xml" value="0.29257246376811596" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_messages_page.xml" value="0.19021739130434784" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/home_friends_item_design.xml" value="0.4257246376811594" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/messages_page_item_design.xml" value="0.25759878419452886" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36770833333333336" />
-          <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/menu/drop_down.xml" value="0.36770833333333336" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_add_friend_to_chat_24.xml" value="0.5407407407407407" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_create_chat_floatbutton_cancel_24.xml" value="0.5703125" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_create_chat_floatbutton_check_24.xml" value="0.5703125" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_create_chat_friend_blank_checkbox_24.xml" value="0.5407407407407407" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_create_chat_friend_selected_checkbox_24.xml" value="0.5407407407407407" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_friend_add_button_24.xml" value="0.5703125" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_messages_icon_24.xml" value="0.5703125" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/drawable/ic_messages_page_add_24.xml" value="0.5703125" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/activity_auth.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/activity_main.xml" value="0.3473731884057971" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/activity_maps.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/create_chat_item_design.xml" value="0.25759878419452886" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_chat_message.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_create_chat.xml" value="0.26902173913043476" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_create_chat_friends_model.xml" value="0.4257246376811594" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_friends.xml" value="0.29257246376811596" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_friends_card.xml" value="0.25759878419452886" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_friends_list.xml" value="0.29257246376811596" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_friends_request_list.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/fragment_messages_page.xml" value="0.19021739130434784" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/home_friends_item_design.xml" value="0.4257246376811594" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/layout/messages_page_item_design.xml" value="0.25759878419452886" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36770833333333336" />
+        <entry key="..\:/Users/justi/AndroidStudioProjects/HOWLR-Client-Side/app/src/main/res/menu/drop_down.xml" value="0.36770833333333336" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14375" />
-        <entry key="app/src/main/res/drawable/ic_add_friend_button_24.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_friends_icon_24.xml" value="0.14375" />
         <entry key="app/src/main/res/drawable/ic_home_icon_24.xml" value="0.14375" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.14375" />
         <entry key="app/src/main/res/drawable/ic_messages_icon_24.xml" value="0.14375" />
         <entry key="app/src/main/res/drawable/ic_weather_icon_24dp.xml" value="0.2640625" />
-        <entry key="app/src/main/res/drawable/ic_weather_map_24.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.128125" />
-        <entry key="app/src/main/res/layout/activity_maps.xml" value="0.24791666666666667" />
-        <entry key="app/src/main/res/layout/fragment_chat_message.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_friends.xml" value="0.12760416666666666" />
-        <entry key="app/src/main/res/layout/fragment_friends_add_card.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/fragment_friends_add_list.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/fragment_friends_card.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/fragment_friends_list.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_friends_request_card.xml" value="0.3697916666666667" />
-        <entry key="app/src/main/res/layout/fragment_friends_request_list.xml" value="0.24139492753623187" />
-        <entry key="app/src/main/res/layout/fragment_friends_search_list.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_friends_card.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_friends_list.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_messages.xml" value="0.128125" />
-          <entry key="app/src/main/res/layout/fragment_reset_password.xml" value="0.1734375" />
-          <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.335" />
-          <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/fragment_weather_card.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/fragment_weather_daily.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_weather_hourly.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/fragment_weather_list.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/fragment_weather_map.xml" value="0.3697916666666667" />
-        <entry key="app/src/main/res/layout/home_friends_item_design.xml" value="0.19479166666666667" />
-        <entry key="app/src/main/res/layout/home_messages_item_design.xml" value="0.19479166666666667" />
-          <entry key="app/src/main/res/layout/home_weather_design.xml" value="0.1234375" />
-          <entry key="app/src/main/res/layout/home_weather_item_design.xml" value="0.7483900074091997" />
-          <entry key="app/src/main/res/layout/messages_page_item_design.xml" value="0.1234375" />
-          <entry key="app/src/main/res/layout/popup_reset_password.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.335" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.12760416666666666" />
-        <entry key="app/src/main/res/menu/drop_down.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14427083333333332" />
       </map>
     </option>
