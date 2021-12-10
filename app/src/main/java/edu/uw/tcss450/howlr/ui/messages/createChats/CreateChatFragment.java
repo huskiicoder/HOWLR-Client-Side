@@ -42,6 +42,7 @@ import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
+import edu.uw.tcss450.howlr.ui.friends.Friends;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 import edu.uw.tcss450.howlr.ui.messages.MessagesPageFragmentDirections;
 
@@ -60,7 +61,7 @@ public class CreateChatFragment extends Fragment {
     CreateChatAdapter mAdapter;
 
     /** List of friends. */
-    List<CreateChatFriendsModel> mFriendsList;
+    List<Friends> mFriendsList;
 
     /** List of friends selected to add to a chat */
     List<Integer> mFriendsAddToChatList;
@@ -107,7 +108,7 @@ public class CreateChatFragment extends Fragment {
         mAdapter.setOnItemClickListener(new CreateChatAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int itemClicked) {
-                CreateChatFriendsModel selected = mFriendsList.get(itemClicked);
+                Friends selected = mFriendsList.get(itemClicked);
                 if (!mFriendsAddToChatList.contains(selected.getMemberId())) {
                     mFriendsAddToChatList.add(selected.getMemberId());
                 } else {

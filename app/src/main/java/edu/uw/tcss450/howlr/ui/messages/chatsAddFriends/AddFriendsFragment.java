@@ -37,9 +37,8 @@ import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
+import edu.uw.tcss450.howlr.ui.friends.Friends;
 import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatAdapter;
-import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatFragmentDirections;
-import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatFriendsModel;
 import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatViewModel;
 
 public class AddFriendsFragment extends Fragment {
@@ -54,7 +53,7 @@ public class AddFriendsFragment extends Fragment {
     CreateChatAdapter mAdapter;
 
     /** List of friends. */
-    List<CreateChatFriendsModel> mFriendsList;
+    List<Friends> mFriendsList;
 
     /** List of friends selected to add to a chat */
     List<Integer> mFriendsAddToChatList;
@@ -87,7 +86,7 @@ public class AddFriendsFragment extends Fragment {
         RecyclerView recyclerView = mBinding.findViewById(R.id.create_chat_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mFriendsList = new ArrayList<>();
+        mFriendsList = new ArrayList<Friends>();
         mFriendsList.addAll(Objects.requireNonNull(mModel.mFriendsList.getValue()));
 
         mFriendsAddToChatList = new ArrayList<>();
@@ -101,7 +100,7 @@ public class AddFriendsFragment extends Fragment {
         mAdapter.setOnItemClickListener(new CreateChatAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int itemClicked) {
-                CreateChatFriendsModel selected = mFriendsList.get(itemClicked);
+                Friends selected = mFriendsList.get(itemClicked);
                 if (!mFriendsAddToChatList.contains(selected.getMemberId())) {
                     mFriendsAddToChatList.add(selected.getMemberId());
                 } else {

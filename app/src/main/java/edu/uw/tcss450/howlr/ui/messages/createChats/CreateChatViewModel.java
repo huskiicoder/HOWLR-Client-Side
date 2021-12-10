@@ -33,7 +33,7 @@ import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 
 public class CreateChatViewModel extends AndroidViewModel {
 
-    public MutableLiveData<List<CreateChatFriendsModel>> mFriendsList;
+    public MutableLiveData<List<Friends>> mFriendsList;
 
     private final MutableLiveData<JSONObject> mResponse;
 
@@ -49,7 +49,7 @@ public class CreateChatViewModel extends AndroidViewModel {
     }
 
     public  void addFriendObserver(@NonNull LifecycleOwner owner,
-                                   @NonNull Observer<? super  List<CreateChatFriendsModel>> observer) {
+                                   @NonNull Observer<? super  List<Friends>> observer) {
         mFriendsList.observe(owner, observer);
     }
 
@@ -62,12 +62,12 @@ public class CreateChatViewModel extends AndroidViewModel {
         try {
             JSONObject root = result;
 
-            JSONArray CreateChatFriendsModel = root.getJSONArray("invitation");
-            ArrayList<CreateChatFriendsModel> listOfFriends = new ArrayList<>();
-            for (int i = 0; i < CreateChatFriendsModel.length(); i++) {
-                JSONObject jsonFriends = CreateChatFriendsModel.getJSONObject(i);
+            JSONArray friends = root.getJSONArray("contact");
+            ArrayList<Friends> listOfFriends = new ArrayList<>();
+            for (int i = 0; i < friends.length(); i++) {
+                JSONObject jsonFriends = friends.getJSONObject(i);
                 try {
-                    CreateChatFriendsModel contact = new CreateChatFriendsModel(jsonFriends);
+                    Friends contact = new Friends(jsonFriends);
                     listOfFriends.add(contact);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -87,12 +87,9 @@ public class CreateChatViewModel extends AndroidViewModel {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
         }
         String url = "https://howlr-server-side.herokuapp.com/contacts/" + mUserModel.getEmail();
-        Request request = new JsonObjectRequest(Request.Method.GET,
-                url,
-                null,
+        Request request = new JsonObjectRequest(Request.Method.GET, url, null,
                 //no body for this get request
-                this::handleResult,
-                this::handleError) {
+                this::handleResult, this::handleError) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -101,21 +98,11 @@ public class CreateChatViewModel extends AndroidViewModel {
                 return headers;
             }
         };
-        request.setRetryPolicy(new DefaultRetryPolicy(
-                10_000,
+        request.setRetryPolicy(new DefaultRetryPolicy(10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         //Instantiate the RequestQueue and add the request to the queue
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
-
-        request.setRetryPolicy(new DefaultRetryPolicy(
-                10_000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        //Instantiate the RequestQueue and add the request to the queue
-        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
-                .addToRequestQueue(request);
     }
 
     public void connectGetFriendsNotInChat() {
@@ -158,7 +145,7 @@ public class CreateChatViewModel extends AndroidViewModel {
         mUserModel = viewModel;
     }
 
-    public List<CreateChatFriendsModel> getFriends() {
+    public List<Friends> getFriends() {
         return mFriendsList.getValue();
     }
 }

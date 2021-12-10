@@ -15,6 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import edu.uw.tcss450.howlr.R;
+import edu.uw.tcss450.howlr.databinding.CreateChatItemDesignBinding;
+import edu.uw.tcss450.howlr.databinding.FragmentCreateChatBinding;
+import edu.uw.tcss450.howlr.databinding.FragmentFriendsCardBinding;
+import edu.uw.tcss450.howlr.ui.friends.Friends;
 import me.pushy.sdk.model.api.PushyPushDeliveryRequest;
 
 /**
@@ -26,7 +30,7 @@ public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.Cr
     protected Context mContext;
 
     /** The list of friends. */
-    List<CreateChatFriendsModel> mFriends;
+    List<Friends> mFriends;
 
     /** Click listener for individual recycler view items. */
     private OnItemClickListener mListener;
@@ -36,7 +40,7 @@ public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.Cr
      * @param friends The list of friends for the recycler view.
      * @param context The application context.
      */
-    public CreateChatAdapter(Context context, List<CreateChatFriendsModel> friends) {
+    public CreateChatAdapter(Context context, List<Friends> friends) {
         this.mFriends = friends;
         this.mContext = context;
     }
@@ -62,10 +66,7 @@ public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.Cr
      */
     @Override
     public void onBindViewHolder(@NonNull CreateChatAdapter.CreateChatViewHolder holder, int position) {
-        String username = mFriends.get(position).getFirstName();
-        String firstName = mFriends.get(position).getFirstName();
-        String lastName = mFriends.get(position).getLastName();
-        holder.setContact(username, firstName, lastName);
+        holder.setContact(mFriends.get(position));
 
         /* Click listener that will check or uncheck the checkbox icon when selected. */
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -102,14 +103,9 @@ public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.Cr
      */
     public static class CreateChatViewHolder extends RecyclerView.ViewHolder {
 
-        /** The username of the friend card. */
-        private final TextView mUsername;
+        private Friends mFriend;
 
-        /** The first name of the friend card. */
-        private final TextView mFirstName;
-
-        /** The last name of the friend card. */
-        private final TextView mLastName;
+        private CreateChatItemDesignBinding binding;
 
         /** Checkbox icon for being selected. */
         private ImageView mSelectedIcon;
@@ -125,19 +121,16 @@ public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.Cr
          */
         public CreateChatViewHolder(View itemView, OnItemClickListener listener) {
             super(itemView);
-
-            mUsername = itemView.findViewById(R.id.create_chat_username);
-            mFirstName = itemView.findViewById(R.id.create_chat_first_name);
-            mLastName = itemView.findViewById(R.id.create_chat_last_name);
+            binding = CreateChatItemDesignBinding.bind(itemView);
             mSelectedIcon = itemView.findViewById(R.id.create_chat_selected_check);
             mSelected = false;
 
         }
 
-        void setContact(String username, String firstName, String lastName) {
-            mUsername.setText(username);
-            mFirstName.setText(firstName);
-            mLastName.setText(lastName);
+        void setContact(final Friends friend) {
+            mFriend = friend;
+            binding.textviewUsername.setText(friend.getUserName());
+            binding.textviewName.setText(friend.getFirstName() + " " + friend.getLastName());
             mSelectedIcon.setImageResource(R.drawable.ic_create_chat_friend_blank_checkbox_24);
         }
 
