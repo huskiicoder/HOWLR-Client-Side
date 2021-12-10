@@ -1,6 +1,8 @@
 package edu.uw.tcss450.howlr.ui.weather;
 
 import android.annotation.SuppressLint;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentMapsBinding;
@@ -66,7 +72,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         location.setLat(Double.toString(mLatLng.latitude));
         location.setLng(Double.toString(mLatLng.longitude));
         Navigation.findNavController(getView()).navigate(location);
-
     }
     @SuppressLint("MissingPermission")
     @Override

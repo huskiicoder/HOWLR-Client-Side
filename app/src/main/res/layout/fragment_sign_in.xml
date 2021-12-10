@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.auth.signin.SignInFragment">
-
+    <!--        android:autofillHints=""-->
     <EditText
         android:id="@+id/edit_email"
         android:layout_width="0dp"
@@ -14,7 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:autofillHints=""
+
         android:ems="10"
         android:hint="@string/hint_email"
         android:inputType="textEmailAddress"
@@ -79,5 +79,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_sign_in"
         tools:text="@string/switch_sign_in" />
+
+    <TextView
+        android:id="@+id/text_forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_forgot_password"
+        app:layout_constraintTop_toBottomOf="@id/switch_signin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:clickable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

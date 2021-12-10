@@ -10,16 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.uw.tcss450.howlr.MainActivity;
-import edu.uw.tcss450.howlr.R;
-import edu.uw.tcss450.howlr.databinding.FragmentFriendsBinding;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsListBinding;
 
 /**
@@ -29,7 +20,6 @@ import edu.uw.tcss450.howlr.databinding.FragmentFriendsListBinding;
  */
 
 public class FriendsListFragment extends Fragment {
-    private FriendsListRecyclerViewAdapter mFriendAdapter;
     private FriendsListViewModel mFriendListModel;
     private FragmentFriendsListBinding binding;
 
@@ -67,13 +57,13 @@ public class FriendsListFragment extends Fragment {
 
         FragmentFriendsListBinding binding = FragmentFriendsListBinding.bind(getView());
 
-        binding.imageButtonAddContactFriendsfragment.setOnClickListener(button ->
+        binding.buttonInvite.setOnClickListener(button ->
                 Navigation.findNavController(getView())
                         .navigate(FriendsListFragmentDirections.actionNavigationFriendsListToNavigationFriendsRequest()));
-
-        binding.imageButtonRequestContactFriendsfragment.setOnClickListener(button ->
-                Navigation.findNavController(getView())
-                        .navigate(FriendsListFragmentDirections.actionNavigationFriendsListToNavigationFriendsRequest()));
+        binding.buttonAdd.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(FriendsListFragmentDirections.actionNavigationFriendsListToNavigationFriendsAdd()));
+        binding.buttonSearch.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(FriendsListFragmentDirections.actionNavigationFriendsListToNavigationFriendsSearch()));
 
         mFriendListModel.addFriendObserver(getViewLifecycleOwner(), friendsList -> {
 

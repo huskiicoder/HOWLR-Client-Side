@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorCardInvis"
+    tools:context=".ui.friends.FriendsListFragment">
+
+    <AutoCompleteTextView
+        android:id="@+id/textView_addContact_friendsfragment"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="@string/textplain_friends_search"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_root"
+        android:name="edu.uw.tcss450.authentication.ui.friends.FriendsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/layout_root"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="edu.uw.tcss450.authentication.ui.friends.FriendsListFragment"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="56dp"
+        tools:listitem="@layout/fragment_friends_add_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_addContact_friendsfragment"/>
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/imageButton_searchContact_friendsfragment"-->
+<!--        android:layout_width="86dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginStart="305dp"-->
+<!--        android:background="@drawable/button_shape"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_friends_search_white_24dp" />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

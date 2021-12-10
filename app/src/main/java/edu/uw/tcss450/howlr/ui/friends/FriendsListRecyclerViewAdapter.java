@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsCardBinding;
+import edu.uw.tcss450.howlr.ui.weather.LocationFragmentDirections;
 
 /**
  * Implements FriendsListRecyclerViewAdapter
@@ -40,7 +42,7 @@ public class FriendsListRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(@NonNull FriendsListViewHolder holder, int position) {
 
-        holder.setContact(mFriends.get(position));
+        holder.setFriend(mFriends.get(position));
     }
 
     @Override
@@ -67,16 +69,27 @@ public class FriendsListRecyclerViewAdapter extends
             binding = FragmentFriendsCardBinding.bind(view);
         }
 
-        void setContact(final Friends friends) {
+        void setFriend(final Friends friends) {
 
             mFriend = friends;
-            binding.cardRoot.setOnClickListener(view -> {
-                Navigation.findNavController(mView).navigate(FriendsListFragmentDirections.actionNavigationFriendsListToNavigationFriends(friends));
-            });
+            binding.buttonDelete.setOnClickListener(view -> deleteContact(this,friends));
 //            binding.imgAvatar.setImageResource(friends.getPicture());
             binding.textviewUsername.setText(friends.getUserName());
-            binding.textviewFirstName.setText(friends.getFirstName());
-            binding.textviewLastName.setText(friends.getLastName());
+            binding.textviewName.setText(friends.getFirstName() + " " + friends.getLastName());
         }
+    }
+    private void deleteContact(final FriendsListViewHolder view, final Friends friend) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mParent.getActivity());
+        builder.setTitle("Delete Contact");
+        builder.setMessage("Do you want to delete this contact?");
+        builder.setPositiveButton("YES", (dialog, which) -> {
+            mFriends.remove(friend);
+            notifyItemRemoved(view.getLayoutPosition());
+            final int memberId = friend.getMemberId();
+            mParent.deleteFriend(memberId);
+        });
+        builder.setNegativeButton("NO", null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

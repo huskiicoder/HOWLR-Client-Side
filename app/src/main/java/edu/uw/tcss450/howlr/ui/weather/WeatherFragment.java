@@ -1,5 +1,6 @@
 package edu.uw.tcss450.howlr.ui.weather;
 
+import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -11,18 +12,23 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.view.WindowManager;
+import android.widget.EditText;
+import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
-import edu.uw.tcss450.howlr.databinding.FragmentSignInBinding;
 import edu.uw.tcss450.howlr.databinding.FragmentWeatherBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
@@ -36,6 +42,9 @@ public class WeatherFragment extends Fragment {
     private UserInfoViewModel mUserModel;
     private WeatherViewModel mWeatherModel;
     private LocationViewModel mModel;
+    private FragmentWeatherBinding binding;
+    private static boolean mDefault = true;
+    private Geocoder mGeocoder;
     /**
      * Blank Constructor
      */
@@ -46,26 +55,54 @@ public class WeatherFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ViewModelProvider provider = new ViewModelProvider(getActivity());
-        mUserModel = provider.get(UserInfoViewModel.class);
         mWeatherModel = provider.get(WeatherViewModel.class);
         mModel = provider.get(LocationViewModel.class);
-//        mWeatherModel.connectGet(mModel.getCurrentLocation().getLatitude(), mModel.getCurrentLocation().getLongitude(), mUserModel.getmJwt());
-        mWeatherModel.connectGet(47,-122,mUserModel.getmJwt());
+        mUserModel = provider.get(UserInfoViewModel.class);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        if (getActivity() instanceof MainActivity) {
+            MainActivity activity = (MainActivity) getActivity();
+            mWeatherModel.setUserInfoViewModel(activity.getUserInfoViewModel());
+        }
+        mGeocoder = new Geocoder(getActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+//        if(mDefault){
+//            mWeatherModel.connectGet(Double.toString(mModel.getCurrentLocation().getLatitude()),
+//                    Double.toString(mModel.getCurrentLocation().getLongitude()), mUserModel.getmJwt());
+//            mDefault = false;
+//        }
+        mWeatherModel.connectGet("47","-122", mUserModel.getmJwt());
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         FragmentWeatherBinding binding = FragmentWeatherBinding.bind(getView());
 
-//        String location = getAddress();
+        binding.buttonMap.setOnClickListener(button ->
+                Navigation.findNavController(getView())
+                        .navigate(WeatherFragmentDirections.actionNavigationWeatherToNavigationMap()));
+        binding.buttonSearch.setOnClickListener(this::searchZipcode);
+
+        WeatherFragmentArgs args = WeatherFragmentArgs.fromBundle(getArguments());
+        if (!args.getLat().equals("default") && !args.getLng().equals("default")){
+            mWeatherModel.connectGet(args.getLat(),args.getLng(), mUserModel.getmJwt());
+            String address = getAddress(Double.parseDouble(args.getLat()), Double.parseDouble(args.getLng()));
+            binding.textViewLocation.setText(address);
+        }
+
+        mWeatherModel.addLocationObserver(getViewLifecycleOwner(), location -> {
+            if (!location.isEmpty()) {
+                String address = getAddress(location.get("lat"), location.get("lon"));
+                binding.textViewLocation.setText(address);
+            }
+        });
 
         final RecyclerView hourly_rv = binding.weatherRecyclerviewHourly;
         final RecyclerView daily_rv = binding.weatherRecyclerview10days;
@@ -76,28 +113,28 @@ public class WeatherFragment extends Fragment {
                 List<Weather> hourly_list = list.subList(1,25);
                 List<Weather> daily_list = list.subList(26,33);
                 binding.textCurrentTemp.setText(Math.round(Float.parseFloat(String.valueOf(list.get(0).getCurrentTemp()))) + "°");
-//                binding.textViewLocation.setText(String.valueOf(list.get(0).getCity()));
-                binding.textViewLocation.setText("Tacoma");
                 binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurentWeather()));
                 binding.textViewHumidity.setText("Hunidity " + String.valueOf(list.get(0).getHumidity()) + "%");
-                Picasso.get().load("https://openweathermap.org/img/wn/"+ "04d" + "@2x.png").into(binding.imageView);
+//                Picasso.get().load("https://openweathermap.org/img/wn/"+ "04d" + "@2x.png").into(binding.imageView);
+
+                String a = "a" + list.get(0).getIcon();
+                Context context = binding.imageView.getContext();
+                int id = context.getResources().getIdentifier(a, "drawable", context.getPackageName());
+                binding.imageView.setImageResource(id);
 
                 hourly_rv.setAdapter(new WeatherRecyclerViewAdapterHourly(hourly_list));
                 daily_rv.setAdapter(new WeatherRecyclerViewAdapterDaily(daily_list));
-                System.out.println(list.size());
             }
         });
-        binding.buttonMap.setOnClickListener(button ->
-                Navigation.findNavController(getView())
-                        .navigate(WeatherFragmentDirections.actionNavigationWeatherToNavigationMap()));
+
     }
 
-    public String getAddress() {
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+    public String getAddress(Double lat, Double lon) {
+        Geocoder geocoder = new Geocoder(getActivity());
         List<Address> results = null;
         String address = "";
         try {
-            results = geocoder.getFromLocation(mModel.getCurrentLocation().getLatitude(), mModel.getCurrentLocation().getLongitude(), 1);
+            results = geocoder.getFromLocation(lat, lon, 1);
             String cityName = results.get(0).getLocality();
             String stateName = results.get(0).getAdminArea();
             address += cityName + ", " + stateName;
@@ -105,5 +142,37 @@ public class WeatherFragment extends Fragment {
             // nothing
         }
         return address;
+    }
+
+    private void searchZipcode(View view) {
+        EditText text = getView().findViewById(R.id.textView_zipcode_search);
+
+        String location = text.getText().toString();
+        Log.e("Location", location);
+        List<Address> addressList = new ArrayList<>();
+        String mCity = "Unknown";
+        if (location != null || !location.equals("")){
+            try {
+                addressList = mGeocoder.getFromLocationName(location,1);
+                Log.e("Add", String.valueOf(addressList.size()));
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            if (addressList.size() == 0){
+                //Send an error message
+                Log.e("Geocoder", "There is no location");
+            }
+            else {
+                Address address = addressList.get(0);
+                //get lat lon
+                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                mWeatherModel.connectGet(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude),mUserModel.getmJwt());
+                if (addressList.get(0).getLocality() != null){
+                    mCity = addressList.get(0).getLocality();
+                } else {
+                    mCity = "Unknown";
+                }
+            }
+        }
     }
 }

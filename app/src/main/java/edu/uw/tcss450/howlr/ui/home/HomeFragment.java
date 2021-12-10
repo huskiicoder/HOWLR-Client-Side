@@ -1,8 +1,10 @@
 package edu.uw.tcss450.howlr.ui.home;
 
+import static edu.uw.tcss450.howlr.R.id.recycler_home_weather;
 import static edu.uw.tcss450.howlr.R.id.recycler_view_friends;
 import static edu.uw.tcss450.howlr.R.id.recycler_view_messages;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,15 +16,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import edu.uw.tcss450.howlr.MainActivity;
@@ -30,8 +36,12 @@ import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentHomeBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
+import edu.uw.tcss450.howlr.ui.friends.FriendsListRecyclerViewAdapter;
+import edu.uw.tcss450.howlr.ui.friends.FriendsListViewModel;
+import edu.uw.tcss450.howlr.ui.friends.HomeFriendsAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
+import edu.uw.tcss450.howlr.ui.messages.MessagesListViewModel;
 import edu.uw.tcss450.howlr.ui.weather.Weather;
 import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterDaily;
 import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterHourly;
@@ -52,13 +62,26 @@ public class HomeFragment extends Fragment {
     /* Recycler view adapter */
     HomeMessagesAdapter mAdapterMessages;
 
+    /* View model for messages */
+    MessagesListViewModel mMessagesModel;
+
     /* List of users */
     List<HomeFriendsModel> mFriendsList;
 
     /* Recycler view adapter for Friends */
     HomeFriendsAdapter mAdapterFriends;
 
+    /* User view model. */
+    UserInfoViewModel mUserModel;
+
     View myBinding;
+
+    private FriendsListViewModel mFriendListModel;
+    private TextView dateTimeDisplay;
+    private Calendar calendar;
+    private SimpleDateFormat dateFormat;
+    private String date;
+    private LocationViewModel mModel;
 
     /**
      * Require empty public constructor
@@ -73,7 +96,19 @@ public class HomeFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserInfo = provider.get(UserInfoViewModel.class);
         mWeatherModel = new ViewModelProvider(getActivity()).get(WeatherViewModel.class);
-//        mWeatherModel.connectGet(47,-122, mUserInfo.getmJwt());
+        mModel = provider.get(LocationViewModel.class);
+        mUserModel = provider.get(UserInfoViewModel.class);
+        mMessagesModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
+        mMessagesModel.connectGet(mUserModel.getmJwt(), mUserModel.getmMemberId());
+        // Initializing friends list stuff
+        mFriendListModel = new ViewModelProvider(getActivity()).get(FriendsListViewModel.class);
+        if (getActivity() instanceof MainActivity) {
+            MainActivity activity = (MainActivity) getActivity();
+            mFriendListModel.setUserInfoViewModel(activity.getUserInfoViewModel());
+            mWeatherModel.setUserInfoViewModel(activity.getUserInfoViewModel());
+        }
+        mFriendListModel.connectGetAll();
+        mFriendListModel.connectGetFirstLast();
     }
 
     @Override
@@ -81,6 +116,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false);
 
+        mWeatherModel.connectGet("47","-122", mUserModel.getmJwt());
+//        mWeatherModel.connectGet(Double.toString(mModel.getCurrentLocation().getLatitude()),
+//                Double.toString(mModel.getCurrentLocation().getLongitude()), mUserModel.getmJwt());
         // TESTING MESSAGES STUFF
         myBinding = inflater.inflate(R.layout.fragment_home, container, false);
         return myBinding;
@@ -92,40 +130,45 @@ public class HomeFragment extends Fragment {
         UserInfoViewModel model = new ViewModelProvider(getActivity())
                 .get(UserInfoViewModel.class);
 
-        mWeatherModel.addWeatherObserver(getViewLifecycleOwner(), list->{
-            if (!list.isEmpty()){
-                List<Weather> hourly_list = list.subList(1,25);
-                List<Weather> daily_list = list.subList(26,33);
-                mBinding.textTemp.setText(String.valueOf(list.get(0).getCurrentTemp()));
-                mBinding.textCity.setText(String.valueOf(list.get(0).getCity()) + "°");
+        // get the users account name
+        String email = model.getEmail();
+        FragmentHomeBinding binding = FragmentHomeBinding.bind(getView());
+        mFriendListModel.addFirstLastObserver(getViewLifecycleOwner(), nameList -> {
+            Log.d("observer", "I entered firstLastObserver");
+            if (!nameList.isEmpty()) {
+                String first = nameList.get(0);
+                String last = nameList.get(1);
+                binding.accountName.setText(first + " " + last);
             }
         });
 
+        // weather card building
 
-        RecyclerView recyclerViewMessages = myBinding.findViewById(recycler_view_messages);
-        recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
+        calendar = Calendar.getInstance();
+        dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+        date = dateFormat.format(calendar.getTime());
+        binding.textWeatherDateHome.setText(date + " | ");
+        // Recycler view set up for home weather card
+        RecyclerView recyclerViewWeather = myBinding.findViewById(recycler_home_weather);
+        recyclerViewWeather.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewWeather.setLayoutManager(new LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL, false));
 
-        /**
-         * Creates template data for recycler view.
-         * TODO Delete after manual implementation of data is no longer needed.
-         */
-        mUserList = new ArrayList<>();
-        mUserList.add(new MessageModel(R.drawable.shibabone, 1, "Charles Bryan",
-                "2:30 pm", "Are you ready for the sprint review"));
-        mUserList.add(new MessageModel(R.drawable.shibacoffee, 1, "Amir Almemar",
-                "3:30 pm", "Are you ready for the sprint review"));
-        mUserList.add(new MessageModel(R.drawable.shibadab, 1, "Daniel Jiang",
-                "4:30 pm", "Are you ready for the sprint review"));
-        mUserList.add(new MessageModel(R.drawable.shibadance, 1, "Eddie Robinson",
-                "5:30 pm", "Are you ready for the sprint review"));
-        mUserList.add(new MessageModel(R.drawable.shibaheart, 1, "Justin Aschenbrenner",
-                "6:30 pm", "Are you ready for the sprint review"));
-        mUserList.add(new MessageModel(R.drawable.shibalaptop, 1, "Natalie Hong",
-                "7:30 pm", "Are you ready for the sprint review"));
+        mWeatherModel.addWeatherObserver(getViewLifecycleOwner(), list->{
+            if (!list.isEmpty()){
+                List<Weather> daily_list = list.subList(26,31);
+                int temp = (int) list.get(0).getCurrentTemp();
+                binding.textTempHome.setText(temp + "°F");
+                binding.textCityHome.setText(String.valueOf(list.get(0).getCity()));
+                String a = "a" + list.get(0).getIcon();
+                Context context = binding.imageHomeCurrWeather.getContext();
+                int id = context.getResources().getIdentifier(a, "drawable", context.getPackageName());
+                binding.imageHomeCurrWeather.setImageResource(id);
+                recyclerViewWeather.setAdapter(new HomeWeatherAdapter(daily_list));
+            }
+        });
 
-        mAdapterMessages = new HomeMessagesAdapter(mUserList);
-        recyclerViewMessages.setAdapter(mAdapterMessages);
-        recyclerViewMessages.setItemAnimator(new DefaultItemAnimator());
+        // END MESSAGES IMPLEMENTATION
 
         // FOR FRIENDS RECYCLERVIEW
         RecyclerView recyclerViewFriends = myBinding.findViewById(recycler_view_friends);
@@ -136,16 +179,40 @@ public class HomeFragment extends Fragment {
          * TODO Delete after manual implementation of data is no longer needed.
          */
         mFriendsList = new ArrayList<>();
-        mFriendsList.add(new HomeFriendsModel(R.drawable.shibabone, "Charles Bryan"));
-        mFriendsList.add(new HomeFriendsModel(R.drawable.shibacoffee, "Charles Bryan"));
-        mFriendsList.add(new HomeFriendsModel(R.drawable.shibalaptop, "Charles Bryan"));
-        mFriendsList.add(new HomeFriendsModel(R.drawable.shibadab, "Charles Bryan"));
-        mFriendsList.add(new HomeFriendsModel(R.drawable.shibaheart, "Charles Bryan"));
+//        mFriendsList.add(new HomeFriendsModel(R.drawable.shibabone, "Charles Bryan"));
 
-        mAdapterFriends = new HomeFriendsAdapter(mFriendsList);
+        mFriendListModel.addFriendObserver(getViewLifecycleOwner(), friendsList -> {
+
+            if (!friendsList.isEmpty()) {
+                binding.recyclerViewFriends.setAdapter(new HomeFriendsAdapter(friendsList, this));
+            }
+        });
+
+
+
         recyclerViewFriends.setAdapter(mAdapterFriends);
         recyclerViewFriends.setItemAnimator(new DefaultItemAnimator());
 
 
+
+        RecyclerView recyclerViewMessages = myBinding.findViewById(recycler_view_messages);
+        recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
+        int messagesCount = 0;
+        mUserList = new ArrayList<>();
+        for (int i = 0; i < mMessagesModel.mMessagesList.getValue().size(); i++) {
+            mUserList.add(mMessagesModel.mMessagesList.getValue().get(i));
+            messagesCount++;
+        }
+        if(messagesCount < 4) {
+            for(int i = 0; i < (4 - messagesCount); i++) {
+                mUserList.add(new MessageModel(R.drawable.shibaheart, 1,
+                        "Empty", "0:00 pm",
+                        "Start a new chat, make some friends or whatever!"));
+            }
+        }
+
+        mAdapterMessages = new HomeMessagesAdapter(mUserList);
+        recyclerViewMessages.setAdapter(mAdapterMessages);
+        recyclerViewMessages.setItemAnimator(new DefaultItemAnimator());
     }
 }

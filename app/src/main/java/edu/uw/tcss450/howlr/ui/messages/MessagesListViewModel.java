@@ -5,7 +5,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -72,7 +74,7 @@ public class MessagesListViewModel extends AndroidViewModel  {
 
     public void connectGet(final String jwt, final int memberId) {
         // TODO------------------------------------------------------------------------------------
-        String url = "http://10.0.2.2:8080/chats/" + memberId;
+        String url = "http://10.0.2.2:5000/chats/" + memberId;
 
 //        String url = "https://howlr-server-side.herokuapp.com/chats/" + memberId;
         Request request = new JsonObjectRequest(

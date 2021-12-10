@@ -12,8 +12,12 @@
     <!-- consider using this button as a dark mode toggle to proc
             the built-in android functionality-->
     <item
-            android:id="@+id/bt_switch"
-            android:title = "Dark Mode" />
+        android:id="@+id/bt_switch"
+        android:title = "Dark Mode" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="Settings"/>
 
     <item
         android:id="@+id/action_leave_chat"

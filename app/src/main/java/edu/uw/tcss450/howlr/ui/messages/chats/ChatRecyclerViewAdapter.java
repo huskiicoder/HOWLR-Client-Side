@@ -66,7 +66,8 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             int standard = (int) res.getDimension(R.dimen.chat_margin);
             int extended = (int) res.getDimension(R.dimen.chat_margin_sided);
 
-            if (mEmail.equals(message.getSender())) {
+//            System.out.println("setMessage() = " + mEmail + " " + message.getSender());
+            if (mEmail.equals(message.getEmail())) {
                 //This message is from the user. Format it as such
                 binding.textMessage.setText(message.getMessage());
                 ViewGroup.MarginLayoutParams layoutParams =

@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:text="100%"
-                android:textSize="10dp"
+                android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_weather_temperature" />
@@ -36,15 +36,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:text="52"
-                android:textSize="10dp"
+                android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_weather_icon" />
 
             <ImageView
                 android:id="@+id/image_weather_icon"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:foregroundGravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
                 android:layout_marginTop="2dp"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:text="Now"
-                android:textSize="10dp"
+                android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

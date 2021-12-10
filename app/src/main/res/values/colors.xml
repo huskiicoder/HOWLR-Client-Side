@@ -21,11 +21,33 @@
     <color name="secondaryTextColor">#000000</color>
 
     <color name="secondaryTextColorFade">#222222</color>
-    <color name="background_color2">#A280A5</color>
-    <color name="accent_color_light">#956AA9</color>
+
+
     <color name="accent_color_dark">#6200EE</color>
-    <color name="text_color">#000000</color>
+
     <color name="text_accent_color">#6200EE</color>
     <color name="fill1">#808080</color>
     <color name="fill3">#A280A5</color>
+
+
+
+    <!-- Fixing theming stuff, the colors below this will be the permanent solution once done -->
+    <!-- DEFAULT THEME -->
+    <color name="purple_default">#A280A5</color>
+    <color name="accent_purple_default">#956AA9</color>
+    <color name="text_color">#000000</color>
+    <color name="purple_secondary_default">#956AA9</color>
+    <color name="purple_secondary_variant_default">#c699db</color>
+    <color name="purple_on_secondary_default">#000000</color>
+
+    <!-- SECOND THEME - BLUES -->
+
+    <color name="primary_blue">#2196F3</color>
+    <color name="primary_blue_dark">#1976D2</color>
+    <color name="primary__blue_light">#BBDEFB</color>
+    <color name="accent_blue">#536DFE</color>
+    <color name="primary_blue_text">#212121</color>
+    <color name="secondary_blue_text">#757575</color>
+    <color name="icons_blue">#FFFFFF</color>
+    <color name="divider_blue">#BDBDBD</color>
 </resources>

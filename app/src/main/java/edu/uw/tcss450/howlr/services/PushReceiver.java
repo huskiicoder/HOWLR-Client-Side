@@ -44,6 +44,7 @@ public class PushReceiver extends BroadcastReceiver {
         try{
             String firstName = intent.getStringExtra("firstname");
             String lastName = intent.getStringExtra("lastname");
+            System.out.println(intent.getStringExtra("message"));
             message = ChatMessage.createFromJsonString(intent.getStringExtra("message"),
                     firstName, lastName);
             chatId = intent.getIntExtra("chatid", -1);

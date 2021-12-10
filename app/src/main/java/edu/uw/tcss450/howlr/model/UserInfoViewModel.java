@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 public class UserInfoViewModel extends ViewModel {
 
     private final String mEmail;
-    private final int mMemberId;
+    private int mMemberId;
     private final String mJwt;
     private int chatRoom;
 

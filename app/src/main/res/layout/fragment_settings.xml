@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.settings.SettingsFragment">
+
+
+    <TextView
+        android:id="@+id/text_theme_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Theme mode:"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="148dp" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text_theme_mode"
+            app:layout_constraintEnd_toEndOf="@id/text_theme_mode">
+
+            <RadioButton
+                android:id="@+id/radio_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:text="Light Mode"
+                android:textAlignment="textStart"
+                app:layout_constraintBottom_toTopOf="@+id/radio_light"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/radio_light" />
+
+            <RadioButton
+                android:id="@+id/radio_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layoutDirection="rtl"
+                android:text="Dark Mode"
+                android:textAlignment="textStart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </RadioGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

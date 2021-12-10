@@ -18,6 +18,7 @@ import edu.uw.tcss450.howlr.databinding.FragmentFriendsRequestCardBinding;
 
 /**
  * Implements FriendsRequestRecyclerViewAdapter
+ *
  * @author Natalie Nguyen Hong
  * @version TCSS 450 Fall 2021
  */
@@ -65,9 +66,8 @@ public class FriendsRequestRecyclerViewAdapter
         }
 
         void setRequest(final Friends friends) {
-            binding.textviewFirstName.setText(friends.getUserName());
-            String fullName = friends.getFirstName() + " " + friends.getLastName();
-            binding.textviewLastName.setText(fullName);
+            binding.textviewName.setText(friends.getFirstName() + " " + friends.getLastName());
+            binding.textviewEmail.setText(friends.getUserName());
             binding.buttonAcceptRequest.setOnClickListener(view -> acceptRequest(this, friends));
             binding.buttonDeclineRequest.setOnClickListener(view -> declineRequest(this, friends));
         }
@@ -92,7 +92,7 @@ public class FriendsRequestRecyclerViewAdapter
             mFriendsRequests.remove(friends);
             notifyItemRemoved(view.getLayoutPosition());
             final int memberId = friends.getMemberId();
-            mParent.deleteContact(memberId);
+            mParent.declineContact(memberId);
 
             CharSequence text = "You've Declined A Friends Request!";
             int duration = Toast.LENGTH_LONG;

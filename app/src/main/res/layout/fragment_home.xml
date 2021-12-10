@@ -13,7 +13,7 @@
         android:layout_width="370dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/background_color2"
+        app:cardBackgroundColor="@color/purple_default"
         card_view:cardCornerRadius="8dp">
 
         <!-- TextView for displaying account name -->
@@ -34,7 +34,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginLeft="25dp"
             app:cardCornerRadius="250dp"
-            app:cardBackgroundColor="@color/background_color2">
+            app:cardBackgroundColor="@color/purple_default">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="80dp"
@@ -59,44 +59,84 @@
         android:layout_width="370dp"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/background_color2"
+        android:background="@color/accent_purple_default"
         card_view:cardCornerRadius="8dp">
 
-        <TextView
-            android:id="@+id/textCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Port Orchard, WA"
-            android:textColor="@color/text_color"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="15dp"
-            android:textSize="18dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_weather_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/purple_default">
 
-        <TextView
-            android:id="@+id/textTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="55dp"
-            android:text="85°"
-            android:textColor="@color/text_color"
-            android:textSize="90dp" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="220dp"
-            android:background="@color/background_color2"
-            card_view:cardElevation="0dp">
-
-            <ImageView
+            <TextClock
+                android:id="@+id/text_weather_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/background_color2"
-                android:src="@drawable/sunny"/>
-        </androidx.cardview.widget.CardView>
+                android:textSize="30dp"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"/>
 
+            <TextView
+                android:id="@+id/text_weather_date_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sat, Dec 4 |"
+                android:textColor="@color/text_color"
+                card_view:layout_constraintTop_toBottomOf="@id/text_weather_time"
+                card_view:layout_constraintStart_toStartOf="@id/text_weather_time"/>
+
+            <TextView
+                android:id="@+id/text_weather_high_low_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="46°,35°"
+                android:textColor="@color/text_color"
+                card_view:layout_constraintTop_toBottomOf="@id/text_temp_home"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="5dp"/>
+
+            <TextView
+                android:id="@+id/text_city_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City"
+                android:textColor="@color/text_color"
+                card_view:layout_constraintStart_toEndOf="@id/text_weather_date_home"
+                card_view:layout_constraintTop_toBottomOf="@id/text_weather_time"/>
+
+            <TextView
+                android:id="@+id/text_temp_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="85*"
+                android:textColor="@color/text_color"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                android:textSize="35dp"
+                android:layout_marginRight="5dp"/>
+
+            <ImageView
+                android:id="@+id/image_home_curr_weather"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintEnd_toStartOf="@id/text_temp_home"
+                android:src="@drawable/ic_weather_icon_24dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_home_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                card_view:layout_constraintTop_toBottomOf="@id/text_weather_date_home"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent">
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -114,7 +154,7 @@
             android:layout_width="175dp"
             android:layout_height="200dp"
             android:layout_gravity="left"
-            app:cardBackgroundColor="@color/background_color2"
+            app:cardBackgroundColor="@color/purple_default"
             card_view:cardCornerRadius="8dp">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -131,14 +171,14 @@
             android:layout_width="175dp"
             android:layout_height="200dp"
             android:layout_gravity="end"
-            app:cardBackgroundColor="@color/accent_color_light"
+            app:cardBackgroundColor="@color/accent_purple_default"
             card_view:cardCornerRadius="8dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_messages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/background_color2">
+                android:background="@color/purple_default">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -148,6 +188,28 @@
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_wait"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:elevation="2dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
