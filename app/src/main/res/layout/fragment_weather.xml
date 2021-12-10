@@ -5,7 +5,7 @@
     android:id="@+id/weatherLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/purple_default"
     tools:context=".ui.weather.WeatherFragment">
 
     <TextView
@@ -17,6 +17,7 @@
         android:text="City"
         android:textAlignment="center"
         android:textSize="15sp"
+        android:textColor="@color/text_color"
         app:layout_constraintBottom_toTopOf="@+id/text_currentTemp"
         app:layout_constraintEnd_toStartOf="@+id/textView_zipcode_search"
         app:layout_constraintHorizontal_bias="0.133"
@@ -27,32 +28,25 @@
         android:id="@+id/textView_weather_condition"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="268dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="490dp"
+        android:layout_marginTop="32dp"
         android:text="Current Weather"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/text_currentTemp"
-        app:layout_constraintTop_toBottomOf="@+id/text_currentTemp"
-        app:layout_constraintVertical_bias="1.0" />
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="@+id/textView_zipcode_search"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView_zipcode_search"
+        app:layout_constraintTop_toBottomOf="@+id/textView_zipcode_search" />
 
     <TextView
         android:id="@+id/textView_humidity"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="268dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="451dp"
         android:text="Humidity"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView_weather_condition"
-        app:layout_constraintVertical_bias="0.25" />
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="@+id/textView_weather_condition"
+        app:layout_constraintStart_toStartOf="@+id/textView_weather_condition"
+        app:layout_constraintTop_toBottomOf="@+id/textView_weather_condition" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -72,6 +66,7 @@
         android:layout_marginStart="42dp"
         android:layout_marginEnd="100dp"
         android:text=" Temp"
+        android:textColor="@color/text_color"
         android:textAlignment="center"
         android:textSize="44sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView"

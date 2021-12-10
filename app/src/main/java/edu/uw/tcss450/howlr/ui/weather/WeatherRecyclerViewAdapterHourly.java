@@ -1,5 +1,6 @@
 package edu.uw.tcss450.howlr.ui.weather;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,12 @@ public class WeatherRecyclerViewAdapterHourly extends RecyclerView.Adapter<Weath
             binding.textWeatherTime.setText((String.valueOf(weather.getTime()) + ":00"));
             binding.textWeatherTemperature.setText(Math.round(Float.parseFloat(String.valueOf(weather.getCurrentTemp()))) + "°");
             binding.textWeatherHumidity.setText(String.valueOf(weather.getHumidity()) + "%");
-            Picasso.get().load("https://openweathermap.org/img/wn/"+ weather.getIcon()+ "@2x.png").into(binding.imageWeatherIcon);
+//            Picasso.get().load("https://openweathermap.org/img/wn/"+ weather.getIcon()+ "@2x.png").into(binding.imageWeatherIcon);
+
+            String a = "a" + weather.getIcon();
+            Context context = binding.imageWeatherIcon.getContext();
+            int id = context.getResources().getIdentifier(a, "drawable", context.getPackageName());
+            binding.imageWeatherIcon.setImageResource(id);
         }
     }
 }

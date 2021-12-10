@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:padding="5dp"
-        app:cardBackgroundColor="@color/colorAccent">
+        app:cardBackgroundColor="@color/purple_default">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,6 +26,7 @@
                 android:layout_marginTop="11dp"
                 android:layout_marginBottom="10dp"
                 android:text="TextView"
+                android:textColor="@color/text_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -39,6 +40,7 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="High Temp"
+                android:textColor="@color/text_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/text_weather_daily_low_temp"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -53,6 +55,7 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="Low Temp"
+                android:textColor="@color/text_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_weatherview_day_conditon"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -66,6 +69,7 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="Humidity"
+                android:textColor="@color/text_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/text_weather_daily_high_temp"
                 app:layout_constraintTop_toTopOf="parent" />
