@@ -143,7 +143,6 @@ public class ChatFragment extends Fragment {
     }
 
     public void leaveChat () {
-        // TODO------------------------------------------------------------------------------------
         String url = "https://howlr-server-side.herokuapp.com/messages/leave";
 //        String url = getApplication().getResources().getString(R.string.base_url) +
 //                "messages/leave";
