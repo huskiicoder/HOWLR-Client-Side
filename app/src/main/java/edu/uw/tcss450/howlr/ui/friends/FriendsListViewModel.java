@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +57,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     /** MutableLiveData List of user from searching. */
     private MutableLiveData<List<Friends>> searchFriends;
 
+    private MutableLiveData<List<String>> mUsername;
+
     /**
      * Constructs FriendsListViewModel.
      * @param application
@@ -68,6 +71,9 @@ public class FriendsListViewModel extends AndroidViewModel {
 
         mRequestList = new MutableLiveData<>();
         mRequestList.setValue(new ArrayList<>());
+
+        mUsername = new MutableLiveData<>();
+        mUsername.setValue(new ArrayList<>());
 
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
@@ -106,7 +112,6 @@ public class FriendsListViewModel extends AndroidViewModel {
     private void handleResult(final JSONObject result) {
         try {
             JSONObject root = result;
-
             boolean isSuccess = root.getBoolean("succes");
             if (!isSuccess) {
                 return;
@@ -142,6 +147,7 @@ public class FriendsListViewModel extends AndroidViewModel {
             // Set the value to the MutableLiveData List<Friends>
             mFriends.setValue(listOfFriends);
             mRequestList.setValue(listOfInvites);
+
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e("ERROR!", e.getMessage());
@@ -439,10 +445,62 @@ public class FriendsListViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
 
-    /**
-     * Set userinfoviewmodel.
-     * @param viewModel
-     */
+    // THIS IS JUST TO GET THE CURRENT USERS FIRST AND LAST NAME
+    public void connectGetFirstLast() {
+        if (userInfoViewModel == null) {
+            throw new IllegalArgumentException("No UserInfoViewModel is assigned");
+        }
+        String url = "https://howlr-server-side.herokuapp.com/contacts/name/" +
+                userInfoViewModel.getEmail();
+        Request request = new JsonObjectRequest(Request.Method.GET,
+                url,
+                null, //no body for this get request
+                this::handleFirstLastResult,
+                this::handleError) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", "Bearer " + userInfoViewModel.getmJwt());
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
+    }
+
+    private void handleFirstLastResult(final JSONObject result) {
+        try {
+            JSONObject root = result;
+            JSONArray name = root.getJSONArray("rows");
+            ArrayList<String> fullName = new ArrayList<>();
+            try {
+                JSONObject firstJSON = name.getJSONObject(0);
+//                JSONObject lastJSON = name.getJSONObject(1);
+                String firstName = (String) firstJSON.get("firstname");
+                String lastName = (String)firstJSON.get("lastname");
+                fullName.add(firstName);
+                fullName.add(lastName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            mUsername.setValue(fullName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("ERROR!", e.getMessage());
+        }
+        mUsername.setValue(mUsername.getValue());
+    }
+
+    public  void addFirstLastObserver(@NonNull LifecycleOwner owner,
+                                   @NonNull Observer<? super  List<String>> observer) {
+        mUsername.observe(owner, observer);
+    }
+
     public void setUserInfoViewModel(UserInfoViewModel viewModel) {
         userInfoViewModel = viewModel;
     }

@@ -1,5 +1,8 @@
 package edu.uw.tcss450.howlr.ui.home;
 
+import android.graphics.drawable.Drawable;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
@@ -52,12 +58,29 @@ public class HomeMessagesAdapter extends RecyclerView.Adapter<HomeMessagesAdapte
      */
     @Override
     public void onBindViewHolder(@NonNull HomeMessagesAdapter.ViewHolder holder, int position) {
-        int picture = mUserList.get(position).getPicture();
+//        int picture = mUserList.get(position).getPicture();
+        Field[] drawablesFields = R.drawable.class.getFields();
+        ArrayList<Drawable> drawables = new ArrayList<>();
+        ImageView picture = holder.mPicture;
+
+        for (Field field : drawablesFields) {
+            try {
+                if(field.getName().startsWith("shiba")) {
+                    Log.i("LOG_TAG", "com.your.project.R.drawable." + field.getName());
+                    drawables.add(picture.getResources().getDrawable(field.getInt(null)));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Random rand = new Random();
+        Drawable a = drawables.get(rand.nextInt(drawables.size()));
+
         String displayName = mUserList.get(position).getRecentName();
         String messageTime = mUserList.get(position).getMessageTime();
         String messageContent = mUserList.get(position).getMessageContent();
 
-        holder.setData(picture, displayName, messageTime, messageContent);
+        holder.setData(a, displayName, messageTime, messageContent);
     }
 
     /**
@@ -106,9 +129,9 @@ public class HomeMessagesAdapter extends RecyclerView.Adapter<HomeMessagesAdapte
          * @param theMessageTime The message time
          * @param theMessageContent The message content
          */
-        public void setData(int thePicture, String theDisplayName,
+        public void setData(Drawable thePicture, String theDisplayName,
                             String theMessageTime, String theMessageContent) {
-            mPicture.setImageResource(thePicture);
+            mPicture.setImageDrawable(thePicture);
             mDisplayName.setText(theDisplayName);
             mMessageTime.setText(theMessageTime);
             mMessageContent.setText(theMessageContent);

@@ -1,5 +1,6 @@
 package edu.uw.tcss450.howlr.ui.weather;
 
+import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -18,9 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,17 +70,19 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if(mDefault){
-            mWeatherModel.connectGet(Double.toString(mModel.getCurrentLocation().getLatitude()),
-                    Double.toString(mModel.getCurrentLocation().getLongitude()), mUserModel.getmJwt());
-            mDefault = false;
-        }
+//        if(mDefault){
+//            mWeatherModel.connectGet(Double.toString(mModel.getCurrentLocation().getLatitude()),
+//                    Double.toString(mModel.getCurrentLocation().getLongitude()), mUserModel.getmJwt());
+//            mDefault = false;
+//        }
+        mWeatherModel.connectGet("47","-122", mUserModel.getmJwt());
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         FragmentWeatherBinding binding = FragmentWeatherBinding.bind(getView());
 
         binding.buttonMap.setOnClickListener(button ->
@@ -112,7 +115,12 @@ public class WeatherFragment extends Fragment {
                 binding.textCurrentTemp.setText(Math.round(Float.parseFloat(String.valueOf(list.get(0).getCurrentTemp()))) + "°");
                 binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurentWeather()));
                 binding.textViewHumidity.setText("Hunidity " + String.valueOf(list.get(0).getHumidity()) + "%");
-                Picasso.get().load("https://openweathermap.org/img/wn/"+ "04d" + "@2x.png").into(binding.imageView);
+//                Picasso.get().load("https://openweathermap.org/img/wn/"+ "04d" + "@2x.png").into(binding.imageView);
+
+                String a = "a" + list.get(0).getIcon();
+                Context context = binding.imageView.getContext();
+                int id = context.getResources().getIdentifier(a, "drawable", context.getPackageName());
+                binding.imageView.setImageResource(id);
 
                 hourly_rv.setAdapter(new WeatherRecyclerViewAdapterHourly(hourly_list));
                 daily_rv.setAdapter(new WeatherRecyclerViewAdapterDaily(daily_list));

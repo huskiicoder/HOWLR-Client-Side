@@ -16,12 +16,14 @@ public final class ChatMessage implements Serializable {
     private final String mMessage;
     private final String mSender;
     private final String mTimeStamp;
+    private final String mEmail;
 
-    public ChatMessage(int messageId, String message, String sender, String timeStamp) {
+    public ChatMessage(int messageId, String message, String sender, String timeStamp, String email) {
         mMessageId = messageId;
         mMessage = message;
         mSender = sender;
         mTimeStamp = timeStamp;
+        mEmail = email;
     }
 
     /**
@@ -31,12 +33,17 @@ public final class ChatMessage implements Serializable {
      * @return a ChatMessage Object with the details contained in the JSON String.
      * @throws JSONException when cmAsString cannot be parsed into a ChatMessage.
      */
-    public static ChatMessage createFromJsonString(final String cmAsJson) throws JSONException {
+    public static ChatMessage createFromJsonString(final String cmAsJson, String firstName,
+                                                   String lastName) throws JSONException {
         final JSONObject msg = new JSONObject(cmAsJson);
+        // TODO------------------------------------------------------------------------------------
+
         return new ChatMessage(msg.getInt("messageid"),
                 msg.getString("message"),
-                msg.getString("email"),
-                msg.getString("timestamp"));
+                firstName +
+                " " + lastName,
+                msg.getString("timestamp"),
+                msg.getString("email"));
     }
 
     public String getMessage() {
@@ -46,6 +53,8 @@ public final class ChatMessage implements Serializable {
     public String getSender() {
         return mSender;
     }
+
+    public String getEmail() { return mEmail; }
 
     public String getTimeStamp() {
         return mTimeStamp;

@@ -103,4 +103,9 @@
             android:id="@+id/action_navigation_map_to_navigation_weather"
             app:destination="@id/navigation_weather" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="edu.uw.tcss450.howlr.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

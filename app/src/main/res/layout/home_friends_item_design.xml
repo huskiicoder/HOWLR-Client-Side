@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/background_color2">
+        android:background="@color/purple_default">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/profile_image"
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/accent_color_light" />
+            android:background="@color/accent_purple_default" />
 
     </RelativeLayout>
 

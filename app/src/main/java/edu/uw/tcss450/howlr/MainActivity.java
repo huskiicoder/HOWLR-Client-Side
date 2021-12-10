@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -73,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
     private UserInfoViewModel mUserInfoViewModel;
 
+    private RadioGroup themeRadioGroup;
+    private View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getMemberid(), args.getJwt())
                 ).get(UserInfoViewModel.class);
 
-//        setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -291,8 +296,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_sign_out) {
             signOut();
-        } else if (id == R.id.bt_switch) {
-            switchColor();
+        } else if (id == R.id.action_settings) {
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment); // replace "nav_host_fragment" with the id of your navHostFragment in activity layout
+            navController.navigate(R.id.navigation_settings);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
