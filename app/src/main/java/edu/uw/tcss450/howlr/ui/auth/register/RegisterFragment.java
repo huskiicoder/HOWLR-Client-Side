@@ -12,9 +12,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,6 +72,20 @@ public class RegisterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonRegister.setOnClickListener(this::attemptRegister);
+
+        // Handles pressing enter on keyboard after typing password to enter app right away
+        // without use of button
+        binding.editPassword2.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView editPassword2, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    Log.i("Note: ","Enter pressed");
+                    binding.buttonRegister.performClick();
+                }
+                return false;
+            }
+        });
+
         mRegisterModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeResponse);
     }

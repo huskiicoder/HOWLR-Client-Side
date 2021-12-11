@@ -14,10 +14,13 @@ import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.auth0.android.jwt.JWT;
 
@@ -80,6 +83,19 @@ public class SignInFragment extends Fragment {
                 ));
 
         binding.buttonSignIn.setOnClickListener(this::attemptSignIn);
+
+        // Handles pressing enter on keyboard after typing password to enter app right away
+        // without use of button
+        binding.editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView edit_password, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    Log.i("Note: ","Enter pressed");
+                    binding.buttonSignIn.performClick();
+                }
+                return false;
+            }
+        });
 
         binding.textForgotPassword.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
