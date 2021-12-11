@@ -40,11 +40,14 @@ import java.util.Set;
 
 import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
+import edu.uw.tcss450.howlr.databinding.FragmentCreateChatBinding;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.friends.Friends;
+import edu.uw.tcss450.howlr.ui.friends.FriendsListRecyclerViewAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 import edu.uw.tcss450.howlr.ui.messages.MessagesPageFragmentDirections;
+import edu.uw.tcss450.howlr.ui.messages.chatsAddFriends.AddFriendsAdapter;
 
 /**
  * create an instance of this fragment.
@@ -67,7 +70,7 @@ public class CreateChatFragment extends Fragment {
     List<Integer> mFriendsAddToChatList;
 
     /** The binding to the view. */
-    private View mBinding;
+    private FragmentCreateChatBinding mBinding;
 
     /** Button for confirming creation of a chat room. */
     FloatingActionButton mCreateChatConfirmButton;
@@ -79,7 +82,6 @@ public class CreateChatFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(requireActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mModel = new ViewModelProvider(getActivity()).get(CreateChatViewModel.class);
-        mModel = new ViewModelProvider(getActivity()).get(CreateChatViewModel.class);
         if (getActivity() instanceof MainActivity) {
             MainActivity activity = (MainActivity) getActivity();
             mModel.setUserInfoViewModel(activity.getUserInfoViewModel());
@@ -90,47 +92,56 @@ public class CreateChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              @Nullable Bundle savedInstancesState) {
-        mBinding = inflater.inflate(R.layout.fragment_create_chat, container, false);
-        RecyclerView recyclerView = mBinding.findViewById(R.id.create_chat_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mBinding = FragmentCreateChatBinding.inflate(inflater);
+
+        return mBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        FragmentCreateChatBinding binding = FragmentCreateChatBinding.bind(getView());
 
         mFriendsList = new ArrayList<>();
-        mFriendsList.addAll(Objects.requireNonNull(mModel.mFriendsList.getValue()));
-
+        mFriendsList.addAll(Objects.requireNonNull(mModel.getFriendsList().getValue()));
         mFriendsAddToChatList = new ArrayList<>();
 
-        mAdapter = new CreateChatAdapter(requireActivity().getApplicationContext(), mFriendsList);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        mModel.addFriendObserver(getViewLifecycleOwner(), friendsList -> {
+            if (!friendsList.isEmpty()) {
+                mAdapter = new CreateChatAdapter(friendsList, this);
+                binding.createChatRecyclerView.setAdapter(mAdapter);
 
-
-        /* The click listener to add friends to new chat hashset. */
-        mAdapter.setOnItemClickListener(new CreateChatAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(int itemClicked) {
-                Friends selected = mFriendsList.get(itemClicked);
-                if (!mFriendsAddToChatList.contains(selected.getMemberId())) {
-                    mFriendsAddToChatList.add(selected.getMemberId());
-                } else {
-                    for (int i = 0; i < mFriendsAddToChatList.size(); i++) {
-                        if (mFriendsAddToChatList.get(i) == selected.getMemberId()) {
-                            mFriendsAddToChatList.remove(i);
+                /* The click listener to add friends to new chat hashset. */
+                mAdapter.setOnItemClickListener(new CreateChatAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(int itemClicked) {
+                        Friends selected = friendsList.get(itemClicked);
+                        if (!mFriendsAddToChatList.contains(selected.getMemberId())) {
+                            mFriendsAddToChatList.add(selected.getMemberId());
+                        } else {
+                            for (int i = 0; i < mFriendsAddToChatList.size(); i++) {
+                                if (mFriendsAddToChatList.get(i) == selected.getMemberId()) {
+                                    mFriendsAddToChatList.remove(i);
+                                }
+                            }
                         }
+                        if (!mFriendsAddToChatList.isEmpty()) {
+                            mCreateChatConfirmButton.setImageResource(R.drawable.ic_create_chat_floatbutton_check_24);
+                            mCreateChatConfirmButton.setBackgroundTintList(ColorStateList.valueOf(Color.CYAN));
+                        } else {
+                            mCreateChatConfirmButton.setImageResource(R.drawable.ic_create_chat_floatbutton_cancel_24);
+                            mCreateChatConfirmButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                        }
+                        System.out.println(mUserModel.getmMemberId() + " " + mFriendsAddToChatList);
                     }
-                }
-                if (!mFriendsAddToChatList.isEmpty()) {
-                    mCreateChatConfirmButton.setImageResource(R.drawable.ic_create_chat_floatbutton_check_24);
-                    mCreateChatConfirmButton.setBackgroundTintList(ColorStateList.valueOf(Color.CYAN));
-                } else {
-                    mCreateChatConfirmButton.setImageResource(R.drawable.ic_create_chat_floatbutton_cancel_24);
-                    mCreateChatConfirmButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-                }
-                System.out.println(mUserModel.getmMemberId() + " " + mFriendsAddToChatList);
+                });
             }
         });
 
+
         /* The click listener for the confirm chat floating action button. */
-        mCreateChatConfirmButton = (FloatingActionButton) mBinding.findViewById(R.id.createChatConfirmActionButton);
+        mCreateChatConfirmButton = (FloatingActionButton) mBinding.getRoot().findViewById(R.id.createChatConfirmActionButton);
         mCreateChatConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,8 +150,6 @@ public class CreateChatFragment extends Fragment {
                 }
             }
         });
-
-        return mBinding;
     }
 
     private void createChatRoom() {

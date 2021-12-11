@@ -31,7 +31,9 @@ import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 public class MessagesListViewModel extends AndroidViewModel  {
 
-    public MutableLiveData<List<MessageModel>> mMessagesList;
+    private MutableLiveData<List<MessageModel>> mMessagesList;
+
+    private UserInfoViewModel userInfoViewModel;
 
     public MessagesListViewModel(@NonNull Application application) {
         super(application);
@@ -102,6 +104,10 @@ public class MessagesListViewModel extends AndroidViewModel  {
 
     }
 
+    public MutableLiveData<List<MessageModel>> getMessagesList() {
+        return mMessagesList;
+    }
 
+    public void setUserInfoViewModel(UserInfoViewModel viewModel) { userInfoViewModel = viewModel; }
 
 }
