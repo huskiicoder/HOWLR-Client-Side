@@ -1,6 +1,7 @@
 package edu.uw.tcss450.howlr.ui.messages;
 
 import android.app.Application;
+import android.os.Message;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
+import edu.uw.tcss450.howlr.ui.friends.Friends;
 
 public class MessagesListViewModel extends AndroidViewModel  {
 
@@ -39,6 +41,11 @@ public class MessagesListViewModel extends AndroidViewModel  {
         super(application);
         mMessagesList = new MutableLiveData<>();
         mMessagesList.setValue(new ArrayList<>());
+    }
+
+    public  void addMessagesObserver(@NonNull LifecycleOwner owner,
+                                   @NonNull Observer<? super  List<MessageModel>> observer) {
+        mMessagesList.observe(owner, observer);
     }
 
     private void handleError(final VolleyError error) {

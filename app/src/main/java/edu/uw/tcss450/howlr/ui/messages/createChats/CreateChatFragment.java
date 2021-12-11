@@ -81,7 +81,7 @@ public class CreateChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ViewModelProvider provider = new ViewModelProvider(requireActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
-        mModel = new ViewModelProvider(getActivity()).get(CreateChatViewModel.class);
+        mModel = new ViewModelProvider(requireActivity()).get(CreateChatViewModel.class);
         if (getActivity() instanceof MainActivity) {
             MainActivity activity = (MainActivity) getActivity();
             mModel.setUserInfoViewModel(activity.getUserInfoViewModel());

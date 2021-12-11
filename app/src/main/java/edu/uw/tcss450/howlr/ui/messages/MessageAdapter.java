@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import edu.uw.tcss450.howlr.R;
+import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
 
 /**
  * Adapter class that connects the RecyclerView to the data.
@@ -25,7 +26,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      */
     private List<MessageModel> mUserList;
 
-    protected Context mContext;
+    private final MessagesPageFragment mParent;
 
     private OnItemClickListener mListener;
 
@@ -33,9 +34,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      * Constructor for the message adapter.
      * @param theUserList The list of people who the user is messaging with
      */
-    public MessageAdapter(Context context, List<MessageModel> theUserList) {
-        mContext = context;
+    public MessageAdapter(List<MessageModel> theUserList, MessagesPageFragment parent) {
         this.mUserList = theUserList;
+        this.mParent = parent;
     }
 
     /**
@@ -49,8 +50,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.messages_page_item_design, parent, false);
-        ViewHolder viewHolder = new ViewHolder(v, mListener);
-        return viewHolder;
+        return new ViewHolder(v, mListener);
     }
 
     /**
