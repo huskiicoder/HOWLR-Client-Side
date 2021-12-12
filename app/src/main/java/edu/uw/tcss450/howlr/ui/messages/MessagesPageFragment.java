@@ -1,21 +1,15 @@
 package edu.uw.tcss450.howlr.ui.messages;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,10 +21,6 @@ import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
-import edu.uw.tcss450.howlr.ui.auth.signin.SignInFragmentDirections;
-import edu.uw.tcss450.howlr.ui.friends.Friends;
-import edu.uw.tcss450.howlr.ui.friends.FriendsListRecyclerViewAdapter;
-import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatAdapter;
 
 
 /**
@@ -38,23 +28,23 @@ import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatAdapter;
  */
 public class MessagesPageFragment extends Fragment {
 
-    /* Messages view model. */
-    MessagesListViewModel mModel;
+    /** Messages view model. */
+    private MessagesListViewModel mModel;
 
-    /* User view model. */
-    UserInfoViewModel mUserModel;
+    /** User view model. */
+    private UserInfoViewModel mUserModel;
 
-    /* List of users with chat. */
-    List<MessageModel> mUserList;
+    /** List of users with chat. */
+    private List<MessageModel> mUserList;
 
-    /* Binding to root */
-    FragmentMessagesPageBinding mBinding;
+    /** Binding to root */
+    private FragmentMessagesPageBinding mBinding;
 
-    /* Recycler view adapter */
-    MessageAdapter mAdapter;
+    /** Recycler view adapter */
+    private MessageAdapter mAdapter;
 
     /** Button for creating a chat room. */
-    FloatingActionButton mCreateChatButton;
+    private FloatingActionButton mCreateChatButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +60,7 @@ public class MessagesPageFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              @Nullable Bundle savedInstancesState) {
         mBinding = FragmentMessagesPageBinding.inflate(inflater);
 
@@ -81,39 +71,31 @@ public class MessagesPageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentMessagesPageBinding binding = FragmentMessagesPageBinding.bind(getView());
+        FragmentMessagesPageBinding binding = FragmentMessagesPageBinding.bind(requireView());
 
         mUserList = new ArrayList<>();
         mUserList.addAll(Objects.requireNonNull(mModel.getMessagesList().getValue()));
 
         mModel.addMessagesObserver(getViewLifecycleOwner(), messagesList -> {
             if (!messagesList.isEmpty()) {
-                mAdapter = new MessageAdapter(messagesList, this);
+                mAdapter = new MessageAdapter(messagesList);
                 binding.messagesPageRecyclerView.setAdapter(mAdapter);
 
                 /* Click listener for navigating to chat from recycler view item. */
-                mAdapter.setOnItemClickListener(new MessageAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int itemClicked) {
-                        mUserModel.setChatRoom(messagesList.get(itemClicked).getChatId());
-                        Navigation.findNavController(getView())
-                                .navigate(MessagesPageFragmentDirections
-                                        .actionNavigationMessagesToNavigationChat(messagesList.get(itemClicked).getChatId()));
-                    }
+                mAdapter.setOnItemClickListener(itemClicked -> {
+                    mUserModel.setChatRoom(messagesList.get(itemClicked).getChatId());
+                    Navigation.findNavController(requireView())
+                            .navigate(MessagesPageFragmentDirections
+                                    .actionNavigationMessagesToNavigationChat(messagesList.get(itemClicked).getChatId()));
                 });
             }
         });
 
         /* Click listener for navigating to CreateChatFragment using floating action button. */
         mCreateChatButton = (FloatingActionButton) binding.getRoot().findViewById(R.id.createChatActionButton);
-        mCreateChatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(getView())
-                        .navigate(MessagesPageFragmentDirections
-                                .actionNavigationMessagesToNavigationCreateChat());
-            }
-        });
+        mCreateChatButton.setOnClickListener(view1 -> Navigation.findNavController(requireView())
+                .navigate(MessagesPageFragmentDirections
+                        .actionNavigationMessagesToNavigationCreateChat()));
 
     }
 

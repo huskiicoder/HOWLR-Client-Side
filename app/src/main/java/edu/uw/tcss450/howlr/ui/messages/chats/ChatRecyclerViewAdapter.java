@@ -3,7 +3,6 @@ package edu.uw.tcss450.howlr.ui.messages.chats;
 import android.content.res.Resources;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.RoundedCorner;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -20,14 +19,25 @@ import java.util.List;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentChatMessageBinding;
 
-
+/**
+ * The adapter for the chat fragment's recycler view.
+ */
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.MessageViewHolder> {
 
+    /** The list of chat messages to be binded to the adapter. */
     private final List<ChatMessage> mMessages;
+
+    /** The email of the sender. */
     private final String mEmail;
+
+    /**
+     * Instantiates the recycler view adapter.
+     * @param messages The new list of chat messages.
+     * @param email The new email.
+     */
     public ChatRecyclerViewAdapter(List<ChatMessage> messages, String email) {
         this.mMessages = messages;
-        mEmail = email;
+        this.mEmail = email;
     }
 
 
@@ -39,6 +49,11 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 .inflate(R.layout.fragment_chat_message, parent, false));
     }
 
+    /**
+     * Binds the contents to the holder.
+     * @param holder The holder to be binded to.
+     * @param position The position of the holder.
+     */
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         holder.setMessage(mMessages.get(position));
@@ -49,16 +64,31 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         return mMessages.size();
     }
 
+    /**
+     * The view holder of the adapter.
+     */
     class MessageViewHolder extends RecyclerView.ViewHolder {
-        private final View mView;
-        private FragmentChatMessageBinding binding;
 
+        /** The view. */
+        private final View mView;
+
+        /** The fragment binding. */
+        private final FragmentChatMessageBinding binding;
+
+        /**
+         * Instantiates the view holder.
+         * @param view The view
+         */
         public MessageViewHolder(@NonNull View view) {
             super(view);
-            mView = view;
-            binding = FragmentChatMessageBinding.bind(view);
+            this.mView = view;
+            this.binding = FragmentChatMessageBinding.bind(view);
         }
 
+        /**
+         * Sets the message to the view holder.
+         * @param message The chat message.
+         */
         void setMessage(final ChatMessage message) {
             final Resources res = mView.getContext().getResources();
             final MaterialCardView card = binding.cardRoot;
@@ -66,15 +96,12 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             int standard = (int) res.getDimension(R.dimen.chat_margin);
             int extended = (int) res.getDimension(R.dimen.chat_margin_sided);
 
-//            System.out.println("setMessage() = " + mEmail + " " + message.getSender());
             if (mEmail.equals(message.getEmail())) {
-                //This message is from the user. Format it as such
+                //This message is from the user.
                 binding.textMessage.setText(message.getMessage());
                 ViewGroup.MarginLayoutParams layoutParams =
                         (ViewGroup.MarginLayoutParams) card.getLayoutParams();
-                //Set the left margin
                 layoutParams.setMargins(extended, standard, standard, standard);
-                // Set this View to the right (end) side
                 ((FrameLayout.LayoutParams) card.getLayoutParams()).gravity =
                         Gravity.END;
 
@@ -102,15 +129,13 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
                 card.requestLayout();
             } else {
-                //This message is from another user. Format it as such
+                //This message is from another user.
                 binding.textMessage.setText(message.getSender() +
                         ": " + message.getMessage());
                 ViewGroup.MarginLayoutParams layoutParams =
                         (ViewGroup.MarginLayoutParams) card.getLayoutParams();
 
-                //Set the right margin
                 layoutParams.setMargins(standard, standard, extended, standard);
-                // Set this View to the left (start) side
                 ((FrameLayout.LayoutParams) card.getLayoutParams()).gravity =
                         Gravity.START;
 

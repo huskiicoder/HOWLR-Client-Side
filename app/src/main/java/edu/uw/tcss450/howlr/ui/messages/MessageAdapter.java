@@ -1,10 +1,8 @@
 package edu.uw.tcss450.howlr.ui.messages;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import edu.uw.tcss450.howlr.R;
-import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
 
 /**
  * Adapter class that connects the RecyclerView to the data.
@@ -24,19 +21,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     /**
      * The list of people who the user is messaging with.
      */
-    private List<MessageModel> mUserList;
+    private final List<MessageModel> mUserList;
 
-    private final MessagesPageFragment mParent;
-
+    /** The adapter click listener. */
     private OnItemClickListener mListener;
 
     /**
      * Constructor for the message adapter.
      * @param theUserList The list of people who the user is messaging with
      */
-    public MessageAdapter(List<MessageModel> theUserList, MessagesPageFragment parent) {
+    public MessageAdapter(List<MessageModel> theUserList) {
         this.mUserList = theUserList;
-        this.mParent = parent;
     }
 
     /**
@@ -61,7 +56,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
         int picture = mUserList.get(position).getPicture();
-        //int chatId = mUserList.get(position).getChatId();
         String displayName = mUserList.get(position).getRecentName();
         String messageTime = mUserList.get(position).getMessageTime();
         String messageContent = mUserList.get(position).getMessageContent();
@@ -92,21 +86,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         /** Profile picture. */
-        private ImageView mPicture;
-
-        /** Chat Id. */
-        private int mChatId;
+        private final ImageView mPicture;
 
         /** Display name. */
-        private TextView mDisplayName;
+        private final TextView mDisplayName;
 
         /** Message time. */
-        private TextView mMessageTime;
+        private final TextView mMessageTime;
 
         /** Message content. */
-        private TextView mMessageContent;
-
-        public MessageViewHolderClickListener mClickListener;
+        private final TextView mMessageContent;
 
         /**
          * The view holder constructor.
@@ -114,31 +103,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
          */
         public ViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
-
             mPicture = itemView.findViewById(R.id.picture);
-            //mChatId = itemView.findViewById();
             mDisplayName = itemView.findViewById(R.id.display_name);
             mMessageTime = itemView.findViewById(R.id.message_time);
             mMessageContent = itemView.findViewById(R.id.message_content);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAbsoluteAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAbsoluteAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
                     }
                 }
             });
-        }
-
-        /**
-         * Click listener for entering chat room.
-         */
-        public interface MessageViewHolderClickListener {
-            void onItemClick(int id);
         }
 
         /**

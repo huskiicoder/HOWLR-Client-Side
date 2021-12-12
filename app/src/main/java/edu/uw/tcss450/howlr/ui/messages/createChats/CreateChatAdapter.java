@@ -26,10 +26,8 @@ import me.pushy.sdk.model.api.PushyPushDeliveryRequest;
  */
 public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.CreateChatViewHolder> {
 
-    private final CreateChatFragment mParent;
-
     /** The list of friends. */
-    List<Friends> mFriends;
+    private List<Friends> mFriends;
 
     /** Click listener for individual recycler view items. */
     private OnItemClickListener mListener;
@@ -37,11 +35,9 @@ public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.Cr
     /**
      * Instantiates the chat Adapter.
      * @param friends The list of friends for the recycler view.
-     * @param parent The parent fragment.
      */
-    public CreateChatAdapter(List<Friends> friends, CreateChatFragment parent) {
+    public CreateChatAdapter(List<Friends> friends) {
         this.mFriends = friends;
-        this.mParent = parent;
     }
 
     /**
@@ -55,7 +51,7 @@ public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.Cr
     public CreateChatAdapter.CreateChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.create_chat_item_design, parent, false);
-        return new CreateChatViewHolder(v, mListener);
+        return new CreateChatViewHolder(v);
     }
 
     /**
@@ -103,8 +99,6 @@ public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.Cr
      */
     public static class CreateChatViewHolder extends RecyclerView.ViewHolder {
 
-        private Friends mFriend;
-
         private CreateChatItemDesignBinding binding;
 
         /** Checkbox icon for being selected. */
@@ -117,9 +111,8 @@ public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.Cr
         /**
          * Instantiates the view holder and sets a click listener for clicking recycler view items.
          * @param itemView The item view.
-         * @param listener The click listener for the item.
          */
-        public CreateChatViewHolder(View itemView, OnItemClickListener listener) {
+        public CreateChatViewHolder(View itemView) {
             super(itemView);
             binding = CreateChatItemDesignBinding.bind(itemView);
             mSelectedIcon = itemView.findViewById(R.id.create_chat_selected_check);
@@ -127,8 +120,11 @@ public class CreateChatAdapter extends RecyclerView.Adapter<CreateChatAdapter.Cr
 
         }
 
+        /**
+         * Sets the information for the holder.
+         * @param friend The friend object.
+         */
         void setContact(final Friends friend) {
-            mFriend = friend;
             binding.textviewUsername.setText(friend.getUserName());
             binding.textviewName.setText(friend.getFirstName() + " " + friend.getLastName());
             mSelectedIcon.setImageResource(R.drawable.ic_create_chat_friend_blank_checkbox_24);

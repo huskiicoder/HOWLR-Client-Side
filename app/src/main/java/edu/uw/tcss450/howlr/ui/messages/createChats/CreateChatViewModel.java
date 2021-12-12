@@ -31,14 +31,24 @@ import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.friends.Friends;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 
+/**
+ * The view model for creating a chat.
+ */
 public class CreateChatViewModel extends AndroidViewModel {
 
+    /** The mutable list of friends. */
     private MutableLiveData<List<Friends>> mFriendsList;
 
+    /** The mutable response. */
     private final MutableLiveData<JSONObject> mResponse;
 
+    /** The user view model. */
     private UserInfoViewModel mUserModel;
 
+    /**
+     * Instantiates the view model.
+     * @param application The application.
+     */
     public CreateChatViewModel(@NonNull Application application) {
         super(application);
         mFriendsList = new MutableLiveData<>();
@@ -48,16 +58,78 @@ public class CreateChatViewModel extends AndroidViewModel {
         mResponse.setValue(new JSONObject());
     }
 
+    /**
+     * Adds a response observer to notify of any incoming changes to the friends list.
+     * @param owner The lifecycle owner.
+     * @param observer The observer.
+     */
     public  void addFriendObserver(@NonNull LifecycleOwner owner,
                                    @NonNull Observer<? super  List<Friends>> observer) {
         mFriendsList.observe(owner, observer);
     }
 
-    private void handleError(final VolleyError error) {
-        Log.e("CONNECTION ERROR", error.getLocalizedMessage());
-        throw new IllegalStateException(error.getMessage());
+    /**
+     * Handles fetching friends of the user.
+     */
+    public void connectGetFriends() {
+        if (mUserModel == null) {
+            throw new IllegalArgumentException("No UserInfoViewModel is assigned");
+        }
+        String url = "https://howlr-server-side.herokuapp.com/contacts/" + mUserModel.getEmail();
+        Request request = new JsonObjectRequest(Request.Method.GET, url, null,
+                this::handleResult, this::handleError) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + mUserModel.getmJwt());
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
 
+    /**
+     * Handles fetching friends of the user not in a chat.
+     */
+    public void connectGetFriendsNotInChat() {
+        if (mUserModel == null) {
+            throw new IllegalArgumentException("No UserInfoViewModel is assigned");
+        }
+        String url = "https://howlr-server-side.herokuapp.com/contacts/" + mUserModel.getEmail();
+        Request request = new JsonObjectRequest(Request.Method.GET,
+                url,
+                null,
+                this::handleResult,
+                this::handleError) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + mUserModel.getmJwt());
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+    }
+
+    /**
+     * Handles success from the friends fetch methods.
+     * @param result The JSON result.
+     */
     private void handleResult(final JSONObject result) {
         try {
             JSONObject root = result;
@@ -81,64 +153,13 @@ public class CreateChatViewModel extends AndroidViewModel {
         mFriendsList.setValue(mFriendsList.getValue());
     }
 
-
-    public void connectGetFriends() {
-        if (mUserModel == null) {
-            throw new IllegalArgumentException("No UserInfoViewModel is assigned");
-        }
-        String url = "https://howlr-server-side.herokuapp.com/contacts/" + mUserModel.getEmail();
-        Request request = new JsonObjectRequest(Request.Method.GET, url, null,
-                //no body for this get request
-                this::handleResult, this::handleError) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
-                headers.put("Authorization", "Bearer " + mUserModel.getmJwt());
-                return headers;
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(10_000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //Instantiate the RequestQueue and add the request to the queue
-        Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
-    }
-
-    public void connectGetFriendsNotInChat() {
-        if (mUserModel == null) {
-            throw new IllegalArgumentException("No UserInfoViewModel is assigned");
-        }
-        String url = "https://howlr-server-side.herokuapp.com/contacts/" + mUserModel.getEmail();
-        Request request = new JsonObjectRequest(Request.Method.GET,
-                url,
-                null,
-                //no body for this get request
-                this::handleResult,
-                this::handleError) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
-                headers.put("Authorization", "Bearer " + mUserModel.getmJwt());
-                return headers;
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(
-                10_000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //Instantiate the RequestQueue and add the request to the queue
-        Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
-
-        request.setRetryPolicy(new DefaultRetryPolicy(
-                10_000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        //Instantiate the RequestQueue and add the request to the queue
-        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
-                .addToRequestQueue(request);
+    /**
+     * Handles errors from the friends fetch methods.
+     * @param error
+     */
+    private void handleError(final VolleyError error) {
+        Log.e("CONNECTION ERROR", error.getLocalizedMessage());
+        throw new IllegalStateException(error.getMessage());
     }
 
     public MutableLiveData<List<Friends>> getFriendsList() {

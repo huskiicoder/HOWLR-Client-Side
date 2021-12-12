@@ -27,7 +27,9 @@ import java.util.Objects;
 
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 
-
+/**
+ * The view model for an individual chat.
+ */
 public class ChatViewModel extends AndroidViewModel {
 
     /**
@@ -35,7 +37,7 @@ public class ChatViewModel extends AndroidViewModel {
      * The Key represents the Chat ID
      * The value represents the List of (known) messages for that that room.
      */
-    private Map<Integer, MutableLiveData<List<ChatMessage>>> mMessages;
+    private final Map<Integer, MutableLiveData<List<ChatMessage>>> mMessages;
 
     public ChatViewModel(@NonNull Application application) {
         super(application);
@@ -92,20 +94,16 @@ public class ChatViewModel extends AndroidViewModel {
         String url = "https://howlr-server-side.herokuapp.com/" +
                 "messages/" + chatId;
 
-//        String url = getApplication().getResources().getString(R.string.base_url) +
-//                "messages/" + chatId;
-
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
-                null, //no body for this get request
+                null,
                 this::handleSuccess,
                 this::handleError) {
 
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
                 headers.put("Authorization", jwt);
                 return headers;
             }
@@ -115,11 +113,8 @@ public class ChatViewModel extends AndroidViewModel {
                 10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
-
-        //code here will run
     }
 
     /**
@@ -135,30 +130,22 @@ public class ChatViewModel extends AndroidViewModel {
      * @param jwt the users signed JWT
      */
     public void getNextMessages(final int chatId, final String jwt) {
-        // TODO------------------------------------------------------------------------------------
         String url = "https://howlr-server-side.herokuapp.com/" +
                 "messages/" +
                 chatId +
                 "/" +
-                mMessages.get(chatId).getValue().get(0).getMessageId();
-
-//        String url = getApplication().getResources().getString(R.string.base_url) +
-//                "messages/" +
-//                chatId +
-//                "/" +
-//                mMessages.get(chatId).getValue().get(0).getMessageId();
+                Objects.requireNonNull(mMessages.get(chatId)).getValue().get(0).getMessageId();
 
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
-                null, //no body for this get request
+                null,
                 this::handleSuccess,
                 this::handleError) {
 
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
                 headers.put("Authorization", jwt);
                 return headers;
             }
@@ -168,18 +155,15 @@ public class ChatViewModel extends AndroidViewModel {
                 10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
-
-        //code here will run
     }
 
     /**
      * When a chat message is received externally to this ViewModel, add it
      * with this method.
-     * @param chatId
-     * @param message
+     * @param chatId The new chatID.
+     * @param message The new message.
      */
     public void addMessage(final int chatId, final ChatMessage message) {
         List<ChatMessage> list = getMessageListByChatId(chatId);
@@ -195,10 +179,9 @@ public class ChatViewModel extends AndroidViewModel {
         try {
             list = getMessageListByChatId(response.getInt("chatId"));
             JSONArray messages = response.getJSONArray("rows");
+
             for(int i = 0; i < messages.length(); i++) {
                 JSONObject message = messages.getJSONObject(i);
-//                System.out.println(message);
-                // TODO------------------------------------------------------------------------------------
                 ChatMessage cMessage = new ChatMessage(
                         message.getInt("messageid"),
                         message.getString("message"),
@@ -208,19 +191,15 @@ public class ChatViewModel extends AndroidViewModel {
                         message.getString("email")
                 );
                 if (!list.contains(cMessage)) {
-                    // don't add a duplicate
                     list.add(0, cMessage);
                 } else {
-                    // this shouldn't happen but could with the asynchronous
-                    // nature of the application
                     Log.wtf("Chat message already received",
                             "Or duplicate id:" + cMessage.getMessageId());
                 }
 
             }
-            //inform observers of the change (setValue)
             getOrCreateMapEntry(response.getInt("chatId")).setValue(list);
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
             Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
         }
