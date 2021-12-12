@@ -75,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
     private UserInfoViewModel mUserInfoViewModel;
 
-    private RadioGroup themeRadioGroup;
-    private View view;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -315,8 +312,8 @@ public class MainActivity extends AppCompatActivity {
 
         //End the app completely
         finishAndRemoveTask();
-
     }
+
 
     /**
      * A BroadcastReceiver that listens for messages sent from PushReceiver
@@ -358,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
         }
         IntentFilter iFilter = new IntentFilter(PushReceiver.RECEIVED_NEW_MESSAGE);
         registerReceiver(mPushMessageReceiver, iFilter);
-//        startLocationUpdates();
+        startLocationUpdates();
     }
 
     @Override
@@ -367,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
         if (mPushMessageReceiver != null){
             unregisterReceiver(mPushMessageReceiver);
         }
-//        stopLocationUpdates();
+        stopLocationUpdates();
     }
     public UserInfoViewModel getUserInfoViewModel() {
         return mUserInfoViewModel;
