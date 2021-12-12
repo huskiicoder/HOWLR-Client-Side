@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -27,7 +28,9 @@ import edu.uw.tcss450.howlr.utils.PasswordValidator;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Simple fragment allowing for initial user registration.
+ * @author Amir Almemar
+ * @version TCSS 450 Fall 2021
  */
 public class RegisterFragment extends Fragment {
 
@@ -150,7 +153,7 @@ public class RegisterFragment extends Fragment {
         directions.setEmail(binding.editEmail.getText().toString());
         directions.setPassword(binding.editPassword1.getText().toString());
 
-        Navigation.findNavController(getView()).navigate(directions);
+        Navigation.findNavController(getView()).navigate((NavDirections) directions);
 
     }
 

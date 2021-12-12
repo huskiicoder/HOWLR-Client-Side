@@ -16,9 +16,11 @@ import android.widget.RadioGroup;
 import edu.uw.tcss450.howlr.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment for settings menu which can be accessed from any navigation
+ * destination via top right corner. Settings menu allows users to change
+ * application theme, as well as change password.
+ * @author Edward Robinson, Amir Almemar,
+ * @version TCSS 450 Fall 2021
  */
 public class SettingsFragment extends Fragment {
     private RadioGroup modeRadioGroup;

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -35,7 +36,11 @@ import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.utils.PasswordValidator;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Simple fragment allowing for user sign-in which implements
+ * stay-signed-in and forgot password functionality. This page allows
+ * users to navigate to registration as well.
+ * @author Amir Almemar,
+ * @version TCSS 450 Fall 2021
  */
 public class SignInFragment extends Fragment {
 
@@ -169,7 +174,7 @@ public class SignInFragment extends Fragment {
         }
 
         Navigation.findNavController(getView())
-                .navigate(SignInFragmentDirections
+                .navigate((NavDirections) SignInFragmentDirections
                         .actionLoginFragmentToMainActivity(email,memberid, jwt));
         getActivity().finish();
     }
