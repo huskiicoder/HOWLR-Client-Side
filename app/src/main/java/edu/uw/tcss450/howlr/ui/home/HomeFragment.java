@@ -22,10 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -199,8 +195,8 @@ public class HomeFragment extends Fragment {
         recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
         int messagesCount = 0;
         mUserList = new ArrayList<>();
-        for (int i = 0; i < mMessagesModel.mMessagesList.getValue().size(); i++) {
-            mUserList.add(mMessagesModel.mMessagesList.getValue().get(i));
+        for (int i = 0; i < mMessagesModel.getMessagesList().getValue().size(); i++) {
+            mUserList.add(mMessagesModel.getMessagesList().getValue().get(i));
             messagesCount++;
         }
         if(messagesCount < 4) {

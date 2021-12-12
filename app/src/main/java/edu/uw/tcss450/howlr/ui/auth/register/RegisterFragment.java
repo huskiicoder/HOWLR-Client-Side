@@ -9,12 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +28,9 @@ import edu.uw.tcss450.howlr.utils.PasswordValidator;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Simple fragment allowing for initial user registration.
+ * @author Amir Almemar
+ * @version TCSS 450 Fall 2021
  */
 public class RegisterFragment extends Fragment {
 
@@ -69,6 +75,20 @@ public class RegisterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonRegister.setOnClickListener(this::attemptRegister);
+
+        // Handles pressing enter on keyboard after typing password to enter app right away
+        // without use of button
+        binding.editPassword2.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView editPassword2, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    Log.i("Note: ","Enter pressed");
+                    binding.buttonRegister.performClick();
+                }
+                return false;
+            }
+        });
+
         mRegisterModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeResponse);
     }
@@ -133,7 +153,7 @@ public class RegisterFragment extends Fragment {
         directions.setEmail(binding.editEmail.getText().toString());
         directions.setPassword(binding.editPassword1.getText().toString());
 
-        Navigation.findNavController(getView()).navigate(directions);
+        Navigation.findNavController(getView()).navigate((NavDirections) directions);
 
     }
 

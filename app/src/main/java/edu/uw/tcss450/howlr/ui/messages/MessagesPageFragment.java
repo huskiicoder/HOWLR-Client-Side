@@ -1,5 +1,7 @@
 package edu.uw.tcss450.howlr.ui.messages;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,11 +21,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.auth.signin.SignInFragmentDirections;
+import edu.uw.tcss450.howlr.ui.friends.Friends;
+import edu.uw.tcss450.howlr.ui.friends.FriendsListRecyclerViewAdapter;
+import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatAdapter;
 
 
 /**
@@ -41,7 +48,7 @@ public class MessagesPageFragment extends Fragment {
     List<MessageModel> mUserList;
 
     /* Binding to root */
-    View mBinding;
+    FragmentMessagesPageBinding mBinding;
 
     /* Recycler view adapter */
     MessageAdapter mAdapter;
@@ -52,44 +59,53 @@ public class MessagesPageFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ViewModelProvider provider = new ViewModelProvider(getActivity());
+        ViewModelProvider provider = new ViewModelProvider(requireActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
-        mModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
+        mModel = new ViewModelProvider(requireActivity()).get(MessagesListViewModel.class);
+        if (getActivity() instanceof MainActivity) {
+            MainActivity activity = (MainActivity) getActivity();
+            mModel.setUserInfoViewModel(activity.getUserInfoViewModel());
+        }
         mModel.connectGet(mUserModel.getmJwt(), mUserModel.getmMemberId());
-        System.out.println(mUserModel.getmMemberId());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              @Nullable Bundle savedInstancesState) {
-        mBinding = inflater.inflate(R.layout.fragment_messages_page, container, false);
-        RecyclerView recyclerView = mBinding.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mBinding = FragmentMessagesPageBinding.inflate(inflater);
 
+        return mBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        FragmentMessagesPageBinding binding = FragmentMessagesPageBinding.bind(getView());
 
         mUserList = new ArrayList<>();
-        for (int i = 0; i < mModel.mMessagesList.getValue().size(); i++) {
-            mUserList.add(mModel.mMessagesList.getValue().get(i));
-        }
+        mUserList.addAll(Objects.requireNonNull(mModel.getMessagesList().getValue()));
 
+        mModel.addMessagesObserver(getViewLifecycleOwner(), messagesList -> {
+            if (!messagesList.isEmpty()) {
+                mAdapter = new MessageAdapter(messagesList, this);
+                binding.messagesPageRecyclerView.setAdapter(mAdapter);
 
-        mAdapter = new MessageAdapter(getActivity().getApplicationContext(), mUserList);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        /* Click listener for navigating to chat from recycler view item. */
-        mAdapter.setOnItemClickListener(new MessageAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int itemClicked) {
-                mUserModel.setChatRoom(mUserList.get(itemClicked).getChatId());
-                Navigation.findNavController(getView())
-                        .navigate(MessagesPageFragmentDirections
-                                .actionNavigationMessagesToNavigationChat(mUserList.get(itemClicked).getChatId()));
+                /* Click listener for navigating to chat from recycler view item. */
+                mAdapter.setOnItemClickListener(new MessageAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int itemClicked) {
+                        mUserModel.setChatRoom(messagesList.get(itemClicked).getChatId());
+                        Navigation.findNavController(getView())
+                                .navigate(MessagesPageFragmentDirections
+                                        .actionNavigationMessagesToNavigationChat(messagesList.get(itemClicked).getChatId()));
+                    }
+                });
             }
         });
 
         /* Click listener for navigating to CreateChatFragment using floating action button. */
-        mCreateChatButton = (FloatingActionButton) mBinding.findViewById(R.id.createChatActionButton);
+        mCreateChatButton = (FloatingActionButton) binding.getRoot().findViewById(R.id.createChatActionButton);
         mCreateChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +115,6 @@ public class MessagesPageFragment extends Fragment {
             }
         });
 
-        return mBinding;
     }
 
 }

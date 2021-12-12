@@ -33,7 +33,7 @@ import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 
 public class CreateChatViewModel extends AndroidViewModel {
 
-    public MutableLiveData<List<Friends>> mFriendsList;
+    private MutableLiveData<List<Friends>> mFriendsList;
 
     private final MutableLiveData<JSONObject> mResponse;
 
@@ -139,6 +139,10 @@ public class CreateChatViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
+    }
+
+    public MutableLiveData<List<Friends>> getFriendsList() {
+        return mFriendsList;
     }
 
     public void setUserInfoViewModel(UserInfoViewModel viewModel) {

@@ -12,13 +12,13 @@
         android:id="@+id/text_theme_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="Theme mode:"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteY="148dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioGroup
+    <RadioGroup
             android:id="@+id/radio_group_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,6 +49,27 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </RadioGroup>
+
+    <TextView
+        android:id="@+id/text_Account_Settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="144dp"
+        android:text="Account Settings:"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_reset_password"
+        android:layout_width="153dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="98dp"
+        android:text="Reset Password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_Account_Settings"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
