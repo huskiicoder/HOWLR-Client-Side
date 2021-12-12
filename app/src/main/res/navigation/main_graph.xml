@@ -119,7 +119,11 @@
         android:id="@+id/navigation_settings"
         android:name="edu.uw.tcss450.howlr.ui.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_navigation_settings_to_resetPasswordFragment2"
+            app:destination="@id/resetPasswordFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_create_chat"
         android:name="edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatFragment"
@@ -139,4 +143,8 @@
             android:name="chatId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/resetPasswordFragment2"
+        android:name="edu.uw.tcss450.howlr.ui.auth.ResetPasswordFragment"
+        android:label="ResetPasswordFragment" />
 </navigation>

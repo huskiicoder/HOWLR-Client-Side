@@ -2,7 +2,7 @@ package edu.uw.tcss450.howlr.ui.home;
 
 /**
  * The model of each message card in the messages page.
- * @author Daniel Jiang
+ * @author Edward Robinson
  */
 public class HomeFriendsModel {
 
