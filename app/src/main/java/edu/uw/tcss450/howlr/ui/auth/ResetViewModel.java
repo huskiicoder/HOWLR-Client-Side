@@ -21,20 +21,42 @@ import org.json.JSONObject;
 import java.nio.charset.Charset;
 import java.util.Objects;
 
+/**
+ * ViewModel class for Reset Password Fragment. Handles async operations.
+ *
+ * @author Edward Robinson
+ */
 public class ResetViewModel extends AndroidViewModel {
+    /** Mutable live data to handle the JSON response for connectGet */
     private MutableLiveData<JSONObject> mResponse;
 
+    /**
+     * Public constructor to initialize the fields.
+     *
+     * @param application the application.
+     */
     public ResetViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
     }
 
+    /**
+     * Response observer for async operations.
+     *
+     * @param owner the Lifecycle Owner
+     * @param observer the observer
+     */
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
 
+    /**
+     * Handles errors on connectGet method.
+     *
+     * @param error the error that occurred
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -81,9 +103,5 @@ public class ResetViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         Volley.newRequestQueue(getApplication().getApplicationContext())
                 .add(request);
-    }
-
-    private void handleResult(JSONObject jsonObject) {
-
     }
 }
