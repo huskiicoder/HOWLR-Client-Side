@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Shut down the app. In production release, you would let the user
                     //know why the app is shutting down...maybe ask for permission again?
-                    finishAndRemoveTask();
+//                    finishAndRemoveTask();
                 }
                 return;
             }

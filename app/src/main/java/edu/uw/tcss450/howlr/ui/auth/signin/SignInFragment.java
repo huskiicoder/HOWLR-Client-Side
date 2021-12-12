@@ -141,7 +141,7 @@ public class SignInFragment extends Fragment {
      * @param email users email
      * @param jwt the JSON Web Token supplied by the server
      */
-    private void navigateToSuccess(final String email, final int memberid, final String jwt) {
+    private void navigateToSuccess(final String email, final String jwt) {
         if (binding.switchSignin.isChecked()) {
             SharedPreferences prefs =
                     getActivity().getSharedPreferences(
@@ -149,12 +149,11 @@ public class SignInFragment extends Fragment {
                             Context.MODE_PRIVATE);
             //Store the credentials in SharedPrefs
             prefs.edit().putString(getString(R.string.keys_prefs_jwt), jwt).apply();
-            prefs.edit().putInt(getString(R.string.keys_prefs_memberid), memberid).apply();
         }
 
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
-                        .actionLoginFragmentToMainActivity(email,memberid, jwt));
+                        .actionLoginFragmentToMainActivity(email,88, jwt));
         getActivity().finish();
     }
 
@@ -179,7 +178,7 @@ public class SignInFragment extends Fragment {
                     mUserViewModel = new ViewModelProvider(getActivity(),
                             new UserInfoViewModel.UserInfoViewModelFactory(
                                     binding.editEmail.getText().toString(),
-                                    response.getInt("memberid"),
+                                    88,
                                     response.getString("token")
                             )).get(UserInfoViewModel.class);
 
@@ -200,18 +199,18 @@ public class SignInFragment extends Fragment {
                 getActivity().getSharedPreferences(
                         getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
-//        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
-//            String token = prefs.getString(getString(R.string.keys_prefs_jwt), "");
-//            JWT jwt = new JWT(token);
-//            // Check to see if the web token is still valid or not. To make a JWT expire after a
-//            // longer or shorter time period, change the expiration time when the JWT is
-//            // created on the web service.
-//            if(!jwt.isExpired(0)) {
-//                String email = jwt.getClaim("email").asString();
-//                navigateToSuccess(email, mUserViewModel.getmMemberId(), token);
-//                return;
-//            }
-//        }
+        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
+            String token = prefs.getString(getString(R.string.keys_prefs_jwt), "");
+            JWT jwt = new JWT(token);
+            // Check to see if the web token is still valid or not. To make a JWT expire after a
+            // longer or shorter time period, change the expiration time when the JWT is
+            // created on the web service.
+            if(!jwt.isExpired(0)) {
+                String email = jwt.getClaim("email").asString();
+                navigateToSuccess(email, token);
+                return;
+            }
+        }
     }
 
     /**
@@ -229,7 +228,6 @@ public class SignInFragment extends Fragment {
             } else {
                 navigateToSuccess(
                         binding.editEmail.getText().toString(),
-                        mUserViewModel.getmMemberId(),
                         mUserViewModel.getmJwt()
                 );
             }
