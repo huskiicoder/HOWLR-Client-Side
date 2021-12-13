@@ -1,5 +1,7 @@
 package edu.uw.tcss450.howlr.model;
 
+import android.app.Notification;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -55,7 +57,5 @@ public class UserInfoViewModel extends ViewModel {
                     "Argument must be: " + UserInfoViewModel.class);
         }
     }
-
-
 }
 

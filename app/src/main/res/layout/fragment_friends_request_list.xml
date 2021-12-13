@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context="edu.uw.tcss450.authentication.ui.friends.FriendsListFragment"
+        tools:context="edu.uw.tcss450.authentication.ui.friends.FriendsRequestsFragment"
         tools:listitem="@layout/fragment_friends_request_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

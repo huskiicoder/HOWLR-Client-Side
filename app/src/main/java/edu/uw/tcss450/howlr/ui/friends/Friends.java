@@ -1,5 +1,6 @@
 package edu.uw.tcss450.howlr.ui.friends;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -17,7 +18,7 @@ public class Friends implements Serializable {
     private final int mMemberId;
 
     /** Username of this friend. */
-    private final String mUserName;
+    private String mUserName;
 
     /** First name of this friend. */
     private final String mFirstName;
@@ -25,12 +26,16 @@ public class Friends implements Serializable {
     /** Last name of this friend. */
     private final String mLastName;
 
-    public Friends(int memberId, String userName, String firstName, String lastName) {
+    public Friends(int memberId, String firstName, String lastName, String userName) {
         this.mPicture = R.drawable.shibaheart;
         this.mMemberId = memberId;
         this.mUserName = userName;
         this.mFirstName = firstName;
         this.mLastName = lastName;
+    }
+
+    public void setmUserName(String userName) {
+        this.mUserName = userName;
     }
 
 //    /**
@@ -46,6 +51,13 @@ public class Friends implements Serializable {
 //        this.mFirstName = firstName;
 //        this.mLastName = lastName;
 //    }
+    public static Friends createFromJsonString(final String json) throws JSONException {
+        final JSONObject msg = new JSONObject(json);
+        return new Friends(msg.getInt("memberid"),
+                msg.getString("firstname"),
+                msg.getString("lastname"),
+                msg.getString("username"));
+    }
 
     /**
      * Constructs a friend from JSONobject.

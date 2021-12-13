@@ -11,12 +11,11 @@
     <AutoCompleteTextView
         android:id="@+id/textView_addContact_friendsfragment"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:hint="@string/textplain_friends_search"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

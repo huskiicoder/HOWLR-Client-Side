@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_navigation_friends_list_to_navigation_chat"
             app:destination="@id/navigation_chat" />
+        <action
+            android:id="@+id/action_navigation_friends_list_to_navigation_chat2"
+            app:destination="@id/navigation_chat" />
     </fragment>
     <fragment
         android:id="@+id/navigation_messages"
@@ -96,6 +99,9 @@
         <action
             android:id="@+id/action_navigation_friends_add_to_navigation_friends_list"
             app:destination="@id/navigation_friends_list" />
+        <action
+            android:id="@+id/action_navigation_friends_add_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
     </fragment>
     <fragment
         android:id="@+id/navigation_friends_search"
@@ -105,6 +111,9 @@
         <action
             android:id="@+id/action_navigation_friends_search_to_navigation_friends_list"
             app:destination="@id/navigation_friends_list" />
+        <action
+            android:id="@+id/action_navigation_friends_search_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
     </fragment>
     <fragment
         android:id="@+id/navigation_map"
