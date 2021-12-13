@@ -53,14 +53,9 @@ public class ResetPasswordFragment extends Fragment {
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(getContext(), text, duration);
                 toast.show();
-                Navigation.findNavController(getView()).navigate(
-                        ResetPasswordFragmentDirections.actionResetPasswordFragmentToSignInFragment()
-                );
+                getActivity().onBackPressed();
             }
         });
-    }
-
-    private void confirmEmailSent(final String email) {
 
     }
 

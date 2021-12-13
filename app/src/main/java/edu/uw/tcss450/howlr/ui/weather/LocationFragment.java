@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -71,7 +72,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
                 LocationFragmentDirections.actionNavigationMapToNavigationWeather();
         location.setLat(Double.toString(mLatLng.latitude));
         location.setLng(Double.toString(mLatLng.longitude));
-        Navigation.findNavController(getView()).navigate(location);
+        Navigation.findNavController(getView()).navigate((NavDirections) location);
     }
     @SuppressLint("MissingPermission")
     @Override

@@ -22,6 +22,8 @@ import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 
 /**
  * Adapter class that connects the RecyclerView to the data.
+ *
+ * @author Edward Robinson
  */
 public class HomeMessagesAdapter extends RecyclerView.Adapter<HomeMessagesAdapter.ViewHolder> {
 
@@ -53,12 +55,12 @@ public class HomeMessagesAdapter extends RecyclerView.Adapter<HomeMessagesAdapte
 
     /**
      * Binds the data from the message activity to inside our RecyclerView layout.
+     *
      * @param holder The view holder
      * @param position The position
      */
     @Override
     public void onBindViewHolder(@NonNull HomeMessagesAdapter.ViewHolder holder, int position) {
-//        int picture = mUserList.get(position).getPicture();
         Field[] drawablesFields = R.drawable.class.getFields();
         ArrayList<Drawable> drawables = new ArrayList<>();
         ImageView picture = holder.mPicture;

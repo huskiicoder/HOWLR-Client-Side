@@ -49,6 +49,7 @@ import edu.uw.tcss450.howlr.ui.messages.chats.ChatViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    /** Configuration for the App Bar */
     private AppBarConfiguration mAppBarConfiguration;
 
     /**
@@ -61,27 +62,45 @@ public class MainActivity extends AppCompatActivity {
      */
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;
-    // A constant int for the permissions request code. Must be a 16 bit number
+
+    /** A constant int for the permissions request code. Must be a 16 bit number*/
     private static final int MY_PERMISSIONS_LOCATIONS = 8414;
+
+    /** Requests location */
     private LocationRequest mLocationRequest;
-    //Use a FusedLocationProviderClient to request the location
+
+    /** Use a FusedLocationProviderClient to request the location */
     private FusedLocationProviderClient mFusedLocationClient;
-    // Will use this call back to decide what to do when a location change is detected
+
+    /** Will use this call back to decide what to do when a location change is detected */
     private LocationCallback mLocationCallback;
-    //The ViewModel that will store the current location
+
+    /** The ViewModel that will store the current location */
     private LocationViewModel mLocationModel;
+
+    /** ViewBinding for Main Activity */
     ActivityMainBinding binding;
 
+    /** Push message receiver */
     private MainPushMessageReceiver mPushMessageReceiver;
+
+    /** Push contact receiver */
     private MainPushFriendReceiver mPushFriendReceiver;
+
+    /** ViewModel to keep track of new messages */
     private NewMessageCountViewModel mNewMessageModel;
+
+    /** ViewModel to keep track of new friends */
     private NewFriendCountViewModel mNewFriendModel;
 
+    /** ViewModel for the users information */
     private UserInfoViewModel mUserInfoViewModel;
 
-    private RadioGroup themeRadioGroup;
-    private View view;
-
+    /**
+     * Initializes all the fields for the activity.
+     *
+     * @param savedInstanceState the instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -148,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         // Location stuff
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -186,6 +201,13 @@ public class MainActivity extends AppCompatActivity {
         createLocationRequest();
     }
 
+    /**
+     * Requests location permissions from the user
+     *
+     * @param requestCode code for the permissions request
+     * @param permissions the permissions
+     * @param grantResults the results of the request
+     */
     @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -205,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Shut down the app. In production release, you would let the user
                     //know why the app is shutting down...maybe ask for permission again?
-                    finishAndRemoveTask();
+//                    finishAndRemoveTask();
                 }
                 return;
             }
@@ -214,6 +236,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Upon location permission granted, get the current location.
+     */
     private void requestLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
@@ -282,6 +307,11 @@ public class MainActivity extends AppCompatActivity {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
 
+    /**
+     * Overridden method from AppCompatActivity.
+     *
+     * @return Navigates upward.
+     */
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -289,12 +319,24 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    /**
+     * Inflates the dropdown menu on Main Activity.
+     *
+     * @param menu the dropdown menu to be inflated
+     * @return the Options menu inflated
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.drop_down, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Sets the actions for each button on the dropdown menu.
+     *
+     * @param item the menu item used to get ID of each button.
+     * @return the item selected
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -308,11 +350,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void switchColor() {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-    }
-
-
+    /**
+     * Sets the action for the sign out button on the dropdown menu. Sign out will remove the users
+     * JWT and close the app.
+     */
     private void signOut() {
         SharedPreferences prefs =
                 getSharedPreferences(
@@ -332,20 +373,27 @@ public class MainActivity extends AppCompatActivity {
                 new ViewModelProvider(this)
                         .get(UserInfoViewModel.class)
                         .getmJwt());
-
     }
+
 
     /**
      * A BroadcastReceiver that listens for messages sent from PushReceiver
      */
     private class MainPushMessageReceiver extends BroadcastReceiver {
-
+        /** Chat viewModel for the push message receiver. */
         private ChatViewModel mModel =
                 new ViewModelProvider(MainActivity.this)
                         .get(ChatViewModel.class);
 
         private FriendsListViewModel mFriendsModel =
                 new ViewModelProvider(MainActivity.this).get(FriendsListViewModel.class);
+
+        /**
+         * Determines the actions to be taken upon receiving a message.
+         *
+         * @param context context of the app
+         * @param intent intent for the push message
+         */
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -406,6 +454,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Resumes pushy and location updates.
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -420,21 +471,34 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter iFilterFriend = new IntentFilter(PushReceiver.RECEIVED_NEW_FRIEND);
 
         registerReceiver(mPushMessageReceiver, iFilter);
+
         registerReceiver(mPushFriendReceiver, iFilterFriend);
+
         startLocationUpdates();
     }
 
+    /**
+     * Stops pushy and location updates.
+     */
     @Override
     public void onPause() {
         super.onPause();
         if (mPushMessageReceiver != null){
             unregisterReceiver(mPushMessageReceiver);
         }
+
         if (mPushFriendReceiver != null){
             unregisterReceiver(mPushFriendReceiver);
         }
+
         stopLocationUpdates();
     }
+
+    /**
+     * Getter for the user's information ViewModel.
+     *
+     * @return the UserInfoViewModel
+     */
     public UserInfoViewModel getUserInfoViewModel() {
         return mUserInfoViewModel;
     }

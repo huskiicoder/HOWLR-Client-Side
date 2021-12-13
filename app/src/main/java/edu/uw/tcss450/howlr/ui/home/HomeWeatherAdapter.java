@@ -24,26 +24,42 @@ import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
 import edu.uw.tcss450.howlr.ui.weather.Weather;
 import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterHourly;
 
+/**
+ * HomeWeatherAdapter for building the Home Weather RecyclerView Card
+ *
+ * @author Edward Robinson
+ */
 public class HomeWeatherAdapter extends RecyclerView.Adapter<HomeWeatherAdapter.ViewHolder> {
+    /** List for each days weather */
     private List<Weather> mWeatherList;
+
+    /** Not sure, gotta look */
     private boolean singleMode;
 
+    /**
+     * Public constructor that initializes the daily weather list.
+     *
+     * @param mWeatherList Daily weather list to be initialized.
+     */
     public HomeWeatherAdapter(List<Weather> mWeatherList) {
         this.mWeatherList = mWeatherList;
         singleMode = false;
     }
 
+    /**
+     * Updates the weather RecyclerView.
+     *
+     * @param holder the ViewHolder
+     * @param position the position
+     */
     @Override
     public void onBindViewHolder(@NonNull HomeWeatherAdapter.ViewHolder holder, int position) {
-//        String day = String.valueOf(mWeatherList.get(0).getDate());
-//        String temperature = String.valueOf(mWeatherList.get(0).getCurrentTemp());
-//        String icon = mWeatherList.get(0).getIcon();
-//        holder.setData(icon, temperature, day);
         holder.setData(mWeatherList.get(position));
     }
 
     /**
      * Inflates the design of our item design.
+     *
      * @param parent The parent
      * @param viewType The view type
      * @return The view holder
@@ -55,6 +71,11 @@ public class HomeWeatherAdapter extends RecyclerView.Adapter<HomeWeatherAdapter.
                 .from(parent.getContext()).inflate(R.layout.home_weather_item_design, parent, false));
     }
 
+    /**
+     * Getter for mWeatherList size
+     *
+     * @return mWeatherList size
+     */
     @Override
     public int getItemCount() {
 
@@ -65,28 +86,16 @@ public class HomeWeatherAdapter extends RecyclerView.Adapter<HomeWeatherAdapter.
         }
     }
 
-    public void setToSingleDay() {
-        singleMode = true;
-    }
-
+    /**
+     * The ViewHolder for RecyclerView
+     *
+     * @author Edward Robinson
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-            /**
-             * Day of the week.
-             */
-            private TextView mDay;
-
-            /**
-             * Temperature.
-             */
-            private TextView mTemperature;
-
-            /**
-             * Weather icon.
-             */
-            private ImageView mWeatherIcon;
-
+            /** The View for each item */
             private final View mView;
+
+            /** Binding for the Home Weather card */
             private HomeWeatherItemDesignBinding binding;
 
             /**
@@ -96,9 +105,6 @@ public class HomeWeatherAdapter extends RecyclerView.Adapter<HomeWeatherAdapter.
              */
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-//                mDay = itemView.findViewById(R.id.text_weather_forecast_day_home);
-//                mTemperature = itemView.findViewById(R.id.text_weather_forecast_temp_home);
-//                mWeatherIcon = itemView.findViewById(R.id.image_weather_forecast_home);
                 mView = itemView;
                 binding = HomeWeatherItemDesignBinding.bind(itemView);
             }

@@ -20,8 +20,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import com.google.android.gms.maps.model.LatLng;
-import com.squareup.picasso.Picasso;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,8 +32,10 @@ import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
- * @author Edward Robinson, Natalie Nguyen Hong
+ * Fragment for weather which displays current weather, 24 hour forecast,
+ * and multi-day forecast for current location. Allows for location searching
+ * via zip code, as well as via map.
+ * @author Edward Robinson, Natalie Nguyen Hong, Amir Almemar
  * @version TCSS 450 Fall 2021
  */
 public class WeatherFragment extends Fragment {
@@ -114,8 +114,7 @@ public class WeatherFragment extends Fragment {
                 List<Weather> daily_list = list.subList(26,33);
                 binding.textCurrentTemp.setText(Math.round(Float.parseFloat(String.valueOf(list.get(0).getCurrentTemp()))) + "°");
                 binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurentWeather()));
-                binding.textViewHumidity.setText("Hunidity " + String.valueOf(list.get(0).getHumidity()) + "%");
-//                Picasso.get().load("https://openweathermap.org/img/wn/"+ "04d" + "@2x.png").into(binding.imageView);
+                binding.textViewHumidity.setText("Humidity " + String.valueOf(list.get(0).getHumidity()) + "%");
 
                 String a = "a" + list.get(0).getIcon();
                 Context context = binding.imageView.getContext();
@@ -164,7 +163,7 @@ public class WeatherFragment extends Fragment {
             }
             else {
                 Address address = addressList.get(0);
-                //get lat lon
+                //get lat long coordinates
                 LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                 mWeatherModel.connectGet(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude),mUserModel.getmJwt());
                 if (addressList.get(0).getLocality() != null){

@@ -5,7 +5,7 @@
     android:id="@+id/layoiut_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/purple_default"
     tools:context=".ui.auth.signin.SignInFragment">
 
     <EditText
