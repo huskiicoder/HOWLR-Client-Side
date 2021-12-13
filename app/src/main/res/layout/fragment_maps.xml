@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:src="@drawable/ic_friends_search_white_24dp"
+        android:background="@color/colorCardInvis"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.877"
         app:layout_constraintStart_toEndOf="@+id/text_label"
