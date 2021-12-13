@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,15 +34,17 @@ import java.util.List;
 import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentHomeBinding;
-import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
+import edu.uw.tcss450.howlr.ui.friends.FriendsListRecyclerViewAdapter;
 import edu.uw.tcss450.howlr.ui.friends.FriendsListViewModel;
 import edu.uw.tcss450.howlr.ui.friends.HomeFriendsAdapter;
+import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 import edu.uw.tcss450.howlr.ui.messages.MessagesListViewModel;
-import edu.uw.tcss450.howlr.ui.messages.MessagesPageFragmentDirections;
 import edu.uw.tcss450.howlr.ui.weather.Weather;
+import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterDaily;
+import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterHourly;
 import edu.uw.tcss450.howlr.ui.weather.WeatherViewModel;
 
 /**
@@ -49,34 +53,48 @@ import edu.uw.tcss450.howlr.ui.weather.WeatherViewModel;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding mBinding;
+
+    /** Weather ViewModel used to populate the weather card */
     private WeatherViewModel mWeatherModel;
+
+    /** User info ViewModel used to get the users information */
     private UserInfoViewModel mUserInfo;
 
-    /* List of users with chat. */
+    /** List of users with chat. */
     List<MessageModel> mUserList;
 
-    /* Recycler view adapter */
+    /** Recycler view adapter for messages card */
     HomeMessagesAdapter mAdapterMessages;
 
-    /* View model for messages */
+    /** View model for messages */
     MessagesListViewModel mMessagesModel;
 
-    /* List of users */
+    /** List of users for contacts list */
     List<HomeFriendsModel> mFriendsList;
 
-    /* Recycler view adapter for Friends */
+    /** Recycler view adapter for Friends */
     HomeFriendsAdapter mAdapterFriends;
 
-    /* User view model. */
+    /** User view model. */
     UserInfoViewModel mUserModel;
 
+    /** View for inflating the fragment */
     View myBinding;
 
+    /** ViewModel for populating friends list card */
     private FriendsListViewModel mFriendListModel;
+
     private TextView dateTimeDisplay;
+
     private Calendar calendar;
+
+    /** Used to format the Calendar object */
     private SimpleDateFormat dateFormat;
+
+    /** String that represents the date and is placed into the textView on weather card */
     private String date;
+
+    /** ViewModel to get current location data */
     private LocationViewModel mModel;
 
     /**
@@ -86,6 +104,11 @@ public class HomeFragment extends Fragment {
 
     }
 
+    /**
+     * OnCreate method used to initialize all fields.
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +130,14 @@ public class HomeFragment extends Fragment {
         mFriendListModel.connectGetFirstLast();
     }
 
+    /**
+     * onCreateView used to initialize the ViewBinding on Home and get current weather information.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -120,6 +151,12 @@ public class HomeFragment extends Fragment {
         return myBinding;
     }
 
+    /**
+     * onViewCreated method to populate all of the data within the cards for each card on Home page.
+     *
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -127,7 +164,6 @@ public class HomeFragment extends Fragment {
                 .get(UserInfoViewModel.class);
 
         // get the users account name
-        String email = model.getEmail();
         FragmentHomeBinding binding = FragmentHomeBinding.bind(getView());
         mFriendListModel.addFirstLastObserver(getViewLifecycleOwner(), nameList -> {
             Log.d("observer", "I entered firstLastObserver");
@@ -185,27 +221,16 @@ public class HomeFragment extends Fragment {
         // FOR FRIENDS RECYCLERVIEW
         RecyclerView recyclerViewFriends = myBinding.findViewById(recycler_view_friends);
         recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        /**
-         * Creates template data for recycler view.
-         * TODO Delete after manual implementation of data is no longer needed.
-         */
         mFriendsList = new ArrayList<>();
-//        mFriendsList.add(new HomeFriendsModel(R.drawable.shibabone, "Charles Bryan"));
 
         mFriendListModel.addFriendObserver(getViewLifecycleOwner(), friendsList -> {
-
             if (!friendsList.isEmpty()) {
                 binding.recyclerViewFriends.setAdapter(new HomeFriendsAdapter(friendsList, this));
             }
         });
 
-
-
         recyclerViewFriends.setAdapter(mAdapterFriends);
         recyclerViewFriends.setItemAnimator(new DefaultItemAnimator());
-
-
 
         RecyclerView recyclerViewMessages = myBinding.findViewById(recycler_view_messages);
         recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));

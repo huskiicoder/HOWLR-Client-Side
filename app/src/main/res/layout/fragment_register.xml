@@ -89,6 +89,31 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_fifty"
         android:autofillHints="" />
 
+    <TextView
+        android:id="@+id/text_password_reqs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/button_register"
+        app:layout_constraintStart_toStartOf="@id/edit_password_2"
+        android:text="Password must have at least:"
+        android:textColor="@color/text_color"/>
+
+    <TextView
+        android:id="@+id/text_password_reqs_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_password_reqs"
+        app:layout_constraintStart_toStartOf="@id/text_password_reqs"
+        android:paddingStart="35dp"
+        android:text="- 7 characters in length
+                      &#xA;- One digit(0-9)
+                      &#xA;- One uppercase character
+                      &#xA;- One lowercase character
+                      &#xA;- One special character(@#$%&amp;*!?
+                      &#xA;- No white space
+                      &#xA;- Passwords must match"
+        android:textColor="@color/text_color"/>
+
     <Button
         android:id="@+id/button_register"
         android:layout_width="wrap_content"

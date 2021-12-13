@@ -32,8 +32,10 @@ import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 /**
- * The fragment for the weather page.
- * @author Edward Robinson, Natalie Nguyen Hong
+ * Fragment for weather which displays current weather, 24 hour forecast,
+ * and multi-day forecast for current location. Allows for location searching
+ * via zip code, as well as via map.
+ * @author Edward Robinson, Natalie Nguyen Hong, Amir Almemar
  * @version TCSS 450 Fall 2021
  */
 public class WeatherFragment extends Fragment {
@@ -104,12 +106,6 @@ public class WeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        if(mDefault){
-//            mWeatherModel.connectGet(Double.toString(mModel.getCurrentLocation().getLatitude()),
-//                    Double.toString(mModel.getCurrentLocation().getLongitude()), mUserModel.getmJwt());
-//            mDefault = false;
-//        }
         mWeatherModel.connectGet("47","-122", mUserModel.getJwt());
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }
@@ -153,9 +149,8 @@ public class WeatherFragment extends Fragment {
                 List<Weather> hourly_list = list.subList(1,25);
                 List<Weather> daily_list = list.subList(26,33);
                 binding.textCurrentTemp.setText(Math.round(Float.parseFloat(String.valueOf(list.get(0).getCurrentTemp()))) + "°");
-                binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurrentWeather()));
-                binding.textViewHumidity.setText("Hunidity " + String.valueOf(list.get(0).getHumidity()) + "%");
-//                Picasso.get().load("https://openweathermap.org/img/wn/"+ "04d" + "@2x.png").into(binding.imageView);
+                binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurentWeather()));
+                binding.textViewHumidity.setText("Humidity " + String.valueOf(list.get(0).getHumidity()) + "%");
 
                 String a = "a" + list.get(0).getIcon();
                 Context context = binding.imageView.getContext();
@@ -214,7 +209,7 @@ public class WeatherFragment extends Fragment {
             }
             else {
                 Address address = addressList.get(0);
-                //get lat lon
+                //get lat long coordinates
                 LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                 mWeatherModel.connectGet(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude),mUserModel.getJwt());
                 if (addressList.get(0).getLocality() != null){

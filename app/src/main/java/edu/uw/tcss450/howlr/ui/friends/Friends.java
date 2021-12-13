@@ -1,5 +1,6 @@
 package edu.uw.tcss450.howlr.ui.friends;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -7,35 +8,22 @@ import java.io.Serializable;
 import edu.uw.tcss450.howlr.R;
 
 /**
- * Implements friends with their memberID, username, first name, and last name.
+ * Implements Friends with memberId, username, lastname, firstname.
  * @author Natalie Nguyen Hong
  * @version TCSS 450 Fall 2021
  */
 public class Friends implements Serializable {
-
-    /**
-     * Profile picture of the friend.
-     */
     private int mPicture;
-
-    /**
-     * The member ID of the friend.
-     */
+    /** Member id of this friend. */
     private final int mMemberId;
 
-    /**
-     * The username of the friend.
-     */
-    private final String mUserName;
+    /** Username of this friend. */
+    private String mUserName;
 
-    /**
-     * The first name of the friend.
-     */
+    /** First name of this friend. */
     private final String mFirstName;
 
-    /**
-     * The last name of the friend.
-     */
+    /** Last name of this friend. */
     private final String mLastName;
 
     /**
@@ -53,24 +41,22 @@ public class Friends implements Serializable {
         this.mLastName = lastName;
     }
 
-//    /**
-//     * Constructs a friend object.
-//     * @param memberId member id of the friend.
-//     * @param userName username of the friend.
-//     * @param firstName first name of the friend.
-//     * @param lastName last name of the friend.
-//     */
-//    public Friends(int memberId, String userName, String firstName, String lastName) {
-//        this.mMemberId = memberId;
-//        this.mUserName = userName;
-//        this.mFirstName = firstName;
-//        this.mLastName = lastName;
-//    }
+    public void setmUserName(String userName) {
+        this.mUserName = userName;
+    }
+
+    public static Friends createFromJsonString(final String json) throws JSONException {
+        final JSONObject msg = new JSONObject(json);
+        return new Friends(msg.getInt("memberid"),
+                msg.getString("firstname"),
+                msg.getString("lastname"),
+                msg.getString("username"));
+    }
 
     /**
-     * Constructs a friend from the JSON object.
-     * @param json The JSON object
-     * @throws Exception The exception
+     * Constructs a friend from JSONobject.
+     * @param json a json object
+     * @throws Exception
      */
     public Friends(JSONObject json) throws Exception {
         mMemberId = json.getInt("memberid");
@@ -88,8 +74,8 @@ public class Friends implements Serializable {
     }
 
     /**
-     * Gets the friend's member ID.
-     * @return The friend's member ID
+     * Get memberid of the friend.
+     * @return memberid of the friend.
      */
     public int getMemberId()
     {
@@ -97,8 +83,8 @@ public class Friends implements Serializable {
     }
 
     /**
-     * Gets the friend's first name.
-     * @return The friend's first name
+     * Get first name of the friend.
+     * @return first name of the friend.
      */
     public String getFirstName()
     {
@@ -106,16 +92,16 @@ public class Friends implements Serializable {
     }
 
     /**
-     * Gets the friend's username.
-     * @return The friend's username
+     * Get username of the friend.
+     * @return username of the friend.
      */
     public String getUserName() {
         return mUserName;
     }
 
     /**
-     * Gets the friend's first name.
-     * @return The friend's first name
+     * Get last name of the friend.
+     * @return last name of the friend.
      */
     public String getLastName() {
         return mLastName;

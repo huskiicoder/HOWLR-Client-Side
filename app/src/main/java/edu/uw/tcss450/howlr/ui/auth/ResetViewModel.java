@@ -22,18 +22,18 @@ import java.nio.charset.Charset;
 import java.util.Objects;
 
 /**
- * The ViewModel for the password resetting fragment for resetting the user's password.
+ * ViewModel class for Reset Password Fragment. Handles async operations.
+ *
+ * @author Edward Robinson
  */
 public class ResetViewModel extends AndroidViewModel {
-
-    /**
-     * The response of JSON objects for the live data.
-     */
+    /** Mutable live data to handle the JSON response for connectGet */
     private MutableLiveData<JSONObject> mResponse;
 
     /**
-     * Creates the ViewModel for the password resetting fragment given an application.
-     * @param application
+     * Public constructor to initialize the fields.
+     *
+     * @param application the application.
      */
     public ResetViewModel(@NonNull Application application) {
         super(application);
@@ -42,9 +42,10 @@ public class ResetViewModel extends AndroidViewModel {
     }
 
     /**
-     * Adds an observer to the password reset fragment for resetting the user's password.
-     * @param owner The owner of the fragment lifecycle
-     * @param observer The observer
+     * Response observer for async operations.
+     *
+     * @param owner the Lifecycle Owner
+     * @param observer the observer
      */
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
@@ -52,8 +53,9 @@ public class ResetViewModel extends AndroidViewModel {
     }
 
     /**
-     * Handles the error for the HTTP library Volley.
-     * @param error The error
+     * Handles errors on connectGet method.
+     *
+     * @param error the error that occurred
      */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
@@ -107,11 +109,4 @@ public class ResetViewModel extends AndroidViewModel {
                 .add(request);
     }
 
-    /**
-     * Handles the result from the JSON object
-     * @param jsonObject The JSON object
-     */
-    private void handleResult(JSONObject jsonObject) {
-
-    }
 }

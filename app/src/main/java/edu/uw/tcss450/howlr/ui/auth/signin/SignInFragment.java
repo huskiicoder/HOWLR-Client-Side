@@ -20,6 +20,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import com.auth0.android.jwt.JWT;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -120,19 +122,6 @@ public class SignInFragment extends Fragment {
                 ));
 
         binding.buttonSignIn.setOnClickListener(this::attemptSignIn);
-
-        // Handles pressing enter on keyboard after typing password to enter app right away
-        // without use of button
-        binding.editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView edit_password, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    Log.i("Note: ","Enter pressed");
-                    binding.buttonSignIn.performClick();
-                }
-                return false;
-            }
-        });
 
         binding.textForgotPassword.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
@@ -269,18 +258,18 @@ public class SignInFragment extends Fragment {
                 getActivity().getSharedPreferences(
                         getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
-//        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
-//            String token = prefs.getString(getString(R.string.keys_prefs_jwt), "");
-//            JWT jwt = new JWT(token);
-//            // Check to see if the web token is still valid or not. To make a JWT expire after a
-//            // longer or shorter time period, change the expiration time when the JWT is
-//            // created on the web service.
-//            if(!jwt.isExpired(0)) {
-//                String email = jwt.getClaim("email").asString();
-//                navigateToSuccess(email, mUserViewModel.getmMemberId(), token);
-//                return;
-//            }
-//        }
+        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
+            String token = prefs.getString(getString(R.string.keys_prefs_jwt), "");
+            JWT jwt = new JWT(token);
+            // Check to see if the web token is still valid or not. To make a JWT expire after a
+            // longer or shorter time period, change the expiration time when the JWT is
+            // created on the web service.
+            if(!jwt.isExpired(0)) {
+                String email = jwt.getClaim("email").asString();
+                navigateToSuccess(email, mUserViewModel.getMemberId(), token);
+                return;
+            }
+        }
     }
 
     /**

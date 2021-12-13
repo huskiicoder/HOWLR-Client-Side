@@ -19,6 +19,7 @@ import edu.uw.tcss450.howlr.databinding.FragmentSignInBinding;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.auth.register.RegisterViewModel;
 import edu.uw.tcss450.howlr.ui.auth.signin.SignInFragmentDirections;
+
 /**
  * The fragment for the resetting the user's password.
  */
@@ -74,18 +75,9 @@ public class ResetPasswordFragment extends Fragment {
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(getContext(), text, duration);
                 toast.show();
-                Navigation.findNavController(getView()).navigate(
-                        ResetPasswordFragmentDirections.actionResetPasswordFragmentToSignInFragment()
-                );
+                getActivity().onBackPressed();
             }
         });
     }
 
-    /**
-     * Confirms the password reset email was sent.
-     * @param email The entered email
-     */
-    private void confirmEmailSent(final String email) {
-
-    }
 }
