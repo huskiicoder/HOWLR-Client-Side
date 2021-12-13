@@ -14,9 +14,11 @@ import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.PopupWindow;
 
 import com.auth0.android.jwt.JWT;
@@ -80,6 +82,17 @@ public class SignInFragment extends Fragment {
                 ));
 
         binding.buttonSignIn.setOnClickListener(this::attemptSignIn);
+
+        // Enable enter button to sign in
+        binding.editPassword.setOnEditorActionListener((edit_password, actionId, event) -> {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                Log.i("Enter button to login","Enter pressed");
+                //View myView = findViewID(R.id.button_sign_in);
+                //myView.performClick();
+                binding.buttonSignIn.callOnClick();
+            }
+            return false;
+        });
 
         binding.textForgotPassword.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
