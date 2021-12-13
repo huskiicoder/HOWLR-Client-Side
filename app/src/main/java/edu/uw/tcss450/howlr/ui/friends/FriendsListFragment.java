@@ -14,22 +14,33 @@ import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.databinding.FragmentFriendsListBinding;
 
 /**
- * Implements FriendsListFragment to display a list of friends.
+ * The fragment for the friends list.
  * @author Natalie Nguyen Hong
  * @version TCSS 450 Fall 2021
  */
-
 public class FriendsListFragment extends Fragment {
+
+    /**
+     * The ViewModel for the friends list fragment.
+     */
     private FriendsListViewModel mFriendListModel;
+
+    /**
+     * The binding for the friends list fragment.
+     */
     private FragmentFriendsListBinding binding;
 
     /**
-     * An empty construct.
+     * Empty constructor for the friends list fragment.
      */
     public FriendsListFragment() {
 
     }
 
+    /**
+     * On the friend list fragment's creation.
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +52,13 @@ public class FriendsListFragment extends Fragment {
         mFriendListModel.connectGetAll();
     }
 
+    /**
+     * Creates the friend list fragment's view.
+     * @param inflater The inflater
+     * @param container The container
+     * @param savedInstanceState The saved instance state
+     * @return The View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,7 +68,11 @@ public class FriendsListFragment extends Fragment {
         return binding.getRoot();
     }
 
-
+    /**
+     * On the friend list fragment's view creation.
+     * @param view The View
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -71,12 +93,11 @@ public class FriendsListFragment extends Fragment {
                 binding.listRoot.setAdapter(new FriendsListRecyclerViewAdapter(friendsList, this));
             }
         });
-
     }
 
     /**
-     * Delete a friend in the friend list.
-     * @param memberId the member id.
+     * Deletes a friend using the friend's member ID.
+     * @param memberId The friend's member ID
      */
     public void deleteFriend(final int memberId) {
         mFriendListModel.connectDeleteContact(memberId);
