@@ -56,6 +56,7 @@ public class ResetPasswordFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+
     }
 
 }

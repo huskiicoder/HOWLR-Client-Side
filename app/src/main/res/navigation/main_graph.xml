@@ -118,8 +118,8 @@
     <fragment
         android:id="@+id/navigation_settings"
         android:name="edu.uw.tcss450.howlr.ui.settings.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_navigation_settings_to_resetPasswordFragment2"
             app:destination="@id/resetPasswordFragment2" />
@@ -146,5 +146,5 @@
     <fragment
         android:id="@+id/resetPasswordFragment2"
         android:name="edu.uw.tcss450.howlr.ui.auth.ResetPasswordFragment"
-        android:label="ResetPasswordFragment" />
+        android:label="Reset Password" />
 </navigation>

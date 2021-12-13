@@ -63,6 +63,7 @@
         <entry key="app/src/main/res/layout/fragment_friends_list.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_messages.xml" value="0.128125" />
+        <entry key="app/src/main/res/layout/fragment_messages_page.xml" value="0.1234375" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.335" />
