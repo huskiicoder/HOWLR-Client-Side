@@ -81,7 +81,7 @@ public class CreateChatViewModel extends AndroidViewModel {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + mUserModel.getmJwt());
+                headers.put("Authorization", "Bearer " + mUserModel.getJwt());
                 return headers;
             }
         };
@@ -107,7 +107,7 @@ public class CreateChatViewModel extends AndroidViewModel {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + mUserModel.getmJwt());
+                headers.put("Authorization", "Bearer " + mUserModel.getJwt());
                 return headers;
             }
         };

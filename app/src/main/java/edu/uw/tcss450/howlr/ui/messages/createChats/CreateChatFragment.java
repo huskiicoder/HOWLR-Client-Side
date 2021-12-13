@@ -122,7 +122,7 @@ public class CreateChatFragment extends Fragment {
                         mCreateChatConfirmButton.setImageResource(R.drawable.ic_create_chat_floatbutton_cancel_24);
                         mCreateChatConfirmButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
                     }
-                    System.out.println(mUserModel.getmMemberId() + " " + mFriendsAddToChatList);
+                    System.out.println(mUserModel.getMemberId() + " " + mFriendsAddToChatList);
                 });
             }
         });
@@ -141,7 +141,7 @@ public class CreateChatFragment extends Fragment {
      * Handles creating a chat room.
      */
     private void createChatRoom() {
-        mFriendsAddToChatList.add(mUserModel.getmMemberId());
+        mFriendsAddToChatList.add(mUserModel.getMemberId());
         JSONArray list = new JSONArray();
         for (int i = 0; i < mFriendsAddToChatList.size(); i++) {
             list.put(mFriendsAddToChatList.get(i));
@@ -164,7 +164,7 @@ public class CreateChatFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", mUserModel.getmJwt());
+                headers.put("Authorization", mUserModel.getJwt());
                 return headers;
             }
         };

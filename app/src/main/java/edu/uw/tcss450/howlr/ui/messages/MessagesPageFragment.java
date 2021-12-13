@@ -57,7 +57,7 @@ public class MessagesPageFragment extends Fragment {
             MainActivity activity = (MainActivity) getActivity();
             mModel.setUserInfoViewModel(activity.getUserInfoViewModel());
         }
-        mModel.connectGet(mUserModel.getmJwt(), mUserModel.getmMemberId());
+        mModel.connectGet(mUserModel.getJwt(), mUserModel.getMemberId());
     }
 
     @Override

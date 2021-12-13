@@ -58,7 +58,7 @@ public class ChatFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(requireActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
-        mChatModel.getFirstMessages(mUserModel.getChatRoom(), mUserModel.getmJwt());
+        mChatModel.getFirstMessages(mUserModel.getChatRoom(), mUserModel.getJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
         setHasOptionsMenu(true);
     }
@@ -90,7 +90,7 @@ public class ChatFragment extends Fragment {
         //When the user scrolls to the top of the RV, the swiper list will "refresh"
         //The user is out of messages, go out to the service and get more
         binding.swipeContainer.setOnRefreshListener(() ->
-                mChatModel.getNextMessages(mUserModel.getChatRoom(), mUserModel.getmJwt()));
+                mChatModel.getNextMessages(mUserModel.getChatRoom(), mUserModel.getJwt()));
 
         mChatModel.addMessageObserver(mUserModel.getChatRoom(), getViewLifecycleOwner(),
                 list -> {
@@ -109,7 +109,7 @@ public class ChatFragment extends Fragment {
         //Send button was clicked. Send the message via the SendViewModel
         binding.buttonSend.setOnClickListener(button ->
                 mSendModel.sendMessage(mUserModel.getChatRoom(),
-                mUserModel.getmJwt(),
+                mUserModel.getJwt(),
                 binding.editMessage.getText().toString()));
         //when we get the response back from the server, clear the edittext
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
@@ -165,7 +165,7 @@ public class ChatFragment extends Fragment {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", mUserModel.getmJwt());
+                headers.put("Authorization", mUserModel.getJwt());
                 return headers;
             }
         };
