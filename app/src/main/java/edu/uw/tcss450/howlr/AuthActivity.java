@@ -10,8 +10,15 @@ import android.os.Bundle;
 import edu.uw.tcss450.howlr.model.PushyTokenViewModel;
 import me.pushy.sdk.Pushy;
 
+/**
+ * The class used for authentication.
+ */
 public class AuthActivity extends AppCompatActivity {
 
+    /**
+     * On the authentication activity's creation.
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +34,9 @@ public class AuthActivity extends AppCompatActivity {
         Uri data = intent.getData();
     }
 
+    /**
+     * Initiates the pushy token request.
+     */
     private void initiatePushyTokenRequest() {
         new ViewModelProvider(this).get(PushyTokenViewModel.class).retrieveToken();
     }

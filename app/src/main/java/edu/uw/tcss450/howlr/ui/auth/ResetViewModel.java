@@ -21,20 +21,40 @@ import org.json.JSONObject;
 import java.nio.charset.Charset;
 import java.util.Objects;
 
+/**
+ * The ViewModel for the password resetting fragment for resetting the user's password.
+ */
 public class ResetViewModel extends AndroidViewModel {
+
+    /**
+     * The response of JSON objects for the live data.
+     */
     private MutableLiveData<JSONObject> mResponse;
 
+    /**
+     * Creates the ViewModel for the password resetting fragment given an application.
+     * @param application
+     */
     public ResetViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
     }
 
+    /**
+     * Adds an observer to the password reset fragment for resetting the user's password.
+     * @param owner The owner of the fragment lifecycle
+     * @param observer The observer
+     */
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
 
+    /**
+     * Handles the error for the HTTP library Volley.
+     * @param error The error
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -59,6 +79,10 @@ public class ResetViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Connects to the web service with the entered email.
+     * @param email The entered email
+     */
     public void connect(final String email) {
         String url = "http://howlr-server-side.herokuapp.com/reset";
 //        String url = "http://10.0.2.2:5000/reset";
@@ -83,6 +107,10 @@ public class ResetViewModel extends AndroidViewModel {
                 .add(request);
     }
 
+    /**
+     * Handles the result from the JSON object
+     * @param jsonObject The JSON object
+     */
     private void handleResult(JSONObject jsonObject) {
 
     }

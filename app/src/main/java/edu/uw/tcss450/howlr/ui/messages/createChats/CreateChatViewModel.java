@@ -23,13 +23,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.IntFunction;
 
-import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.friends.Friends;
-import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 
 public class CreateChatViewModel extends AndroidViewModel {
 
@@ -94,7 +91,7 @@ public class CreateChatViewModel extends AndroidViewModel {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", "Bearer " + mUserModel.getmJwt());
+                headers.put("Authorization", "Bearer " + mUserModel.getJwt());
                 return headers;
             }
         };
@@ -120,7 +117,7 @@ public class CreateChatViewModel extends AndroidViewModel {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", "Bearer " + mUserModel.getmJwt());
+                headers.put("Authorization", "Bearer " + mUserModel.getJwt());
                 return headers;
             }
         };

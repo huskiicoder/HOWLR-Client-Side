@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,9 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -32,11 +28,9 @@ import org.json.JSONObject;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
@@ -44,10 +38,6 @@ import edu.uw.tcss450.howlr.databinding.FragmentCreateChatBinding;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.friends.Friends;
-import edu.uw.tcss450.howlr.ui.friends.FriendsListRecyclerViewAdapter;
-import edu.uw.tcss450.howlr.ui.messages.MessageModel;
-import edu.uw.tcss450.howlr.ui.messages.MessagesPageFragmentDirections;
-import edu.uw.tcss450.howlr.ui.messages.chatsAddFriends.AddFriendsAdapter;
 
 /**
  * create an instance of this fragment.
@@ -133,7 +123,7 @@ public class CreateChatFragment extends Fragment {
                             mCreateChatConfirmButton.setImageResource(R.drawable.ic_create_chat_floatbutton_cancel_24);
                             mCreateChatConfirmButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
                         }
-                        System.out.println(mUserModel.getmMemberId() + " " + mFriendsAddToChatList);
+                        System.out.println(mUserModel.getMemberId() + " " + mFriendsAddToChatList);
                     }
                 });
             }
@@ -154,7 +144,7 @@ public class CreateChatFragment extends Fragment {
 
     private void createChatRoom() {
 
-        mFriendsAddToChatList.add(mUserModel.getmMemberId());
+        mFriendsAddToChatList.add(mUserModel.getMemberId());
         JSONArray list = new JSONArray();
         for (int i = 0; i < mFriendsAddToChatList.size(); i++) {
             list.put(mFriendsAddToChatList.get(i));
@@ -178,7 +168,7 @@ public class CreateChatFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", mUserModel.getmJwt());
+                headers.put("Authorization", mUserModel.getJwt());
                 return headers;
             }
         };

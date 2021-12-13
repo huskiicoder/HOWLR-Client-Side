@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,8 +23,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,15 +33,11 @@ import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentHomeBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
-import edu.uw.tcss450.howlr.ui.friends.FriendsListRecyclerViewAdapter;
 import edu.uw.tcss450.howlr.ui.friends.FriendsListViewModel;
 import edu.uw.tcss450.howlr.ui.friends.HomeFriendsAdapter;
-import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 import edu.uw.tcss450.howlr.ui.messages.MessagesListViewModel;
 import edu.uw.tcss450.howlr.ui.weather.Weather;
-import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterDaily;
-import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterHourly;
 import edu.uw.tcss450.howlr.ui.weather.WeatherViewModel;
 
 /**
@@ -99,7 +92,7 @@ public class HomeFragment extends Fragment {
         mModel = provider.get(LocationViewModel.class);
         mUserModel = provider.get(UserInfoViewModel.class);
         mMessagesModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
-        mMessagesModel.connectGet(mUserModel.getmJwt(), mUserModel.getmMemberId());
+        mMessagesModel.connectGet(mUserModel.getJwt(), mUserModel.getMemberId());
         // Initializing friends list stuff
         mFriendListModel = new ViewModelProvider(getActivity()).get(FriendsListViewModel.class);
         if (getActivity() instanceof MainActivity) {
@@ -116,7 +109,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        mWeatherModel.connectGet("47","-122", mUserModel.getmJwt());
+        mWeatherModel.connectGet("47","-122", mUserModel.getJwt());
 //        mWeatherModel.connectGet(Double.toString(mModel.getCurrentLocation().getLatitude()),
 //                Double.toString(mModel.getCurrentLocation().getLongitude()), mUserModel.getmJwt());
         // TESTING MESSAGES STUFF

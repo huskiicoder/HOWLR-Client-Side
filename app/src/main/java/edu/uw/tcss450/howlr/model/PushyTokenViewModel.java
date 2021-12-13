@@ -27,11 +27,25 @@ import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import me.pushy.sdk.Pushy;
 
-public class PushyTokenViewModel extends AndroidViewModel{
+/**
+ * The view model class for pushy tokens for notifications and sending messages.
+ */
+public class PushyTokenViewModel extends AndroidViewModel {
 
+    /**
+     * The pushy token.
+     */
     private final MutableLiveData<String> mPushyToken;
+
+    /**
+     * The response code.
+     */
     private final MutableLiveData<JSONObject> mResponse;
 
+    /**
+     * Creates a ViewModel for the pushy token using an application.
+     * @param application
+     */
     public PushyTokenViewModel(@NonNull Application application) {
         super(application);
         mPushyToken = new MutableLiveData<>();
@@ -41,20 +55,28 @@ public class PushyTokenViewModel extends AndroidViewModel{
     }
 
     /**
-     * Register as an observer to listen for the PushToken.
-     * @param owner the fragments lifecycle owner
-     * @param observer the observer
+     * Adds an observer to the pushy token for notifications and message sending.
+     * @param owner The owner of the fragment lifecycle
+     * @param observer The observer
      */
     public void addTokenObserver(@NonNull LifecycleOwner owner,
                                  @NonNull Observer<? super String> observer) {
         mPushyToken.observe(owner, observer);
     }
 
+    /**
+     * Adds an observer to response code.
+     * @param owner The owner of the fragment lifecycle
+     * @param observer The observer
+     */
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
 
+    /**
+     * Retrieves the pushy token.
+     */
     public void retrieveToken() {
         if (!Pushy.isRegistered(getApplication().getApplicationContext())) {
 
@@ -74,6 +96,12 @@ public class PushyTokenViewModel extends AndroidViewModel{
      * quarter. In your future Android development, look for an alternative solution.
      */
     private class RegisterForPushNotificationsAsync extends AsyncTask<Void, Void, String> {
+
+        /**
+         * Handles the push notifications for registering in the background.
+         * @param params The parameters
+         * @return The device's token
+         */
         protected String doInBackground(Void... params) {
             String deviceToken;
             try {
@@ -88,6 +116,10 @@ public class PushyTokenViewModel extends AndroidViewModel{
             return deviceToken;
         }
 
+        /**
+         * Sets the pushy token with the new token.
+         * @param token The new token
+         */
         @Override
         protected void onPostExecute(String token) {
             if (token.isEmpty()) {
@@ -100,9 +132,9 @@ public class PushyTokenViewModel extends AndroidViewModel{
     }
 
     /**
-     * Send this Pushy device token to the web service.
-     * @param jwt
-     * @throws IllegalStateException when this method is called before the token is retrieve
+     * Sends this Pushy device token to the web service.
+     * @param jwt The JSON web token
+     * @throws IllegalStateException When this method is called before the token is retrieved
      */
     public void sendTokenToWebservice(final String jwt) {
         if (mPushyToken.getValue().isEmpty()) {
@@ -144,6 +176,10 @@ public class PushyTokenViewModel extends AndroidViewModel{
                 .addToRequestQueue(request);
     }
 
+    /**
+     * Handles the error for the HTTP library Volley.
+     * @param error The error
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -167,6 +203,10 @@ public class PushyTokenViewModel extends AndroidViewModel{
         }
     }
 
+    /**
+     * Deletes the token from the web service.
+     * @param jwt The JSON web token
+     */
     public void deleteTokenFromWebservice(final String jwt) {
         String url = getApplication().getResources().getString(R.string.base_url) +
                 "auth";

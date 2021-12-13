@@ -1,6 +1,5 @@
 package edu.uw.tcss450.howlr.ui.messages.chats;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,9 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -35,7 +32,6 @@ import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentChatBinding;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
-import edu.uw.tcss450.howlr.ui.friends.Friends;
 import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatViewModel;
 
 /**
@@ -60,7 +56,7 @@ public class ChatFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
-        mChatModel.getFirstMessages(mUserModel.getChatRoom(), mUserModel.getmJwt());
+        mChatModel.getFirstMessages(mUserModel.getChatRoom(), mUserModel.getJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
         setHasOptionsMenu(true);
     }
@@ -92,7 +88,7 @@ public class ChatFragment extends Fragment {
         //When the user scrolls to the top of the RV, the swiper list will "refresh"
         //The user is out of messages, go out to the service and get more
         binding.swipeContainer.setOnRefreshListener(() -> {
-            mChatModel.getNextMessages(mUserModel.getChatRoom(), mUserModel.getmJwt());
+            mChatModel.getNextMessages(mUserModel.getChatRoom(), mUserModel.getJwt());
         });
 
         mChatModel.addMessageObserver(mUserModel.getChatRoom(), getViewLifecycleOwner(),
@@ -112,7 +108,7 @@ public class ChatFragment extends Fragment {
         //Send button was clicked. Send the message via the SendViewModel
         binding.buttonSend.setOnClickListener(button -> {
             mSendModel.sendMessage(mUserModel.getChatRoom(),
-                    mUserModel.getmJwt(),
+                    mUserModel.getJwt(),
                     binding.editMessage.getText().toString());
         });
         //when we get the response back from the server, clear the edittext
@@ -149,7 +145,7 @@ public class ChatFragment extends Fragment {
 
         JSONObject body = new JSONObject();
         try {
-            body.put("memberId", mUserModel.getmMemberId());
+            body.put("memberId", mUserModel.getMemberId());
             body.put("chatId", mUserModel.getChatRoom());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -167,7 +163,7 @@ public class ChatFragment extends Fragment {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", mUserModel.getmJwt());
+                headers.put("Authorization", mUserModel.getJwt());
                 return headers;
             }
         };

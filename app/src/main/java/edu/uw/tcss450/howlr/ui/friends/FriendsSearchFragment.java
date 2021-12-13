@@ -25,18 +25,39 @@ import edu.uw.tcss450.howlr.databinding.FragmentFriendsSearchListBinding;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 /**
- * Implements FriendsSearchFragment to search for an existing friend contact in the friend list.
+ * The fragment for the friend search page to search for an existing
+ * friend contact in the friend list.
  * @author Natalie Nguyen Hong
  * @version TCSS 450 Fall 2021
  */
 public class FriendsSearchFragment extends Fragment implements View.OnClickListener {
+
+    /**
+     * The ViewModel for the friends list fragment.
+     */
     private FriendsListViewModel mFriendModel;
+
+    /**
+     * The ViewModel for the user's information.
+     */
     private UserInfoViewModel mUserModel;
+
+    /**
+     * The binding for the search friends fragment.
+     */
     FragmentFriendsSearchListBinding binding;
 
+    /**
+     * Empty constructor for the friends search fragment.
+     */
     public FriendsSearchFragment() {
 
     }
+
+    /**
+     * On the friends search fragment's creation.
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,15 +69,25 @@ public class FriendsSearchFragment extends Fragment implements View.OnClickListe
         mUserModel = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
     }
 
+    /**
+     * Creates the friends search fragment's view.
+     * @param inflater The inflater
+     * @param container The container
+     * @param savedInstanceState The saved instance state
+     * @return The View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentFriendsSearchListBinding.inflate(inflater);
         return binding.getRoot();
-
     }
 
+    /**
+     * On the friends search fragment's view creation.
+     * @param view The View
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -104,12 +135,17 @@ public class FriendsSearchFragment extends Fragment implements View.OnClickListe
         });
     }
 
+    /**
+     * On click action for the View.
+     * @param v The View
+     */
     @Override
     public void onClick(View v) {
     }
+
     /**
-     * Delete a friend in the friend list.
-     * @param memberId the member id.
+     * Deletes a friend from the friend list.
+     * @param memberId The member ID of the friend.
      */
     public void deleteFriend(final int memberId) {
         mFriendModel.connectDeleteContact(memberId);

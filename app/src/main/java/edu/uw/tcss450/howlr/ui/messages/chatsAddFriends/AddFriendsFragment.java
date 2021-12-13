@@ -41,7 +41,6 @@ import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.friends.Friends;
 import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatAdapter;
-import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatFragment;
 import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatViewModel;
 
 public class AddFriendsFragment extends Fragment {
@@ -176,7 +175,7 @@ public class AddFriendsFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", mUserModel.getmJwt());
+                headers.put("Authorization", mUserModel.getJwt());
                 return headers;
             }
         };

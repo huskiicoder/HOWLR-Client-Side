@@ -21,16 +21,30 @@ import me.pushy.sdk.Pushy;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE;
 
+/**
+ * The class for receiving push notifications.
+ */
 public class PushReceiver extends BroadcastReceiver {
 
+    /**
+     * The notification for receiving a new message from Pushy.
+     */
     public static final String RECEIVED_NEW_MESSAGE = "new message from pushy";
 
+    /**
+     * The channel ID.
+     */
     private static final String CHANNEL_ID = "1";
 
+    /**
+     * The method for what happens when a pushy message is received.
+     * @param context The context
+     * @param intent The intent
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        //the following variables are used to store the information sent from Pushy
+        //The following variables are used to store the information sent from Pushy
         //In the WS, you define what gets sent. You can change it there to suit your needs
         //Then here on the Android side, decide what to do with the message you got
 
@@ -97,6 +111,5 @@ public class PushReceiver extends BroadcastReceiver {
             // Build the notification and display it
             notificationManager.notify(1, builder.build());
         }
-
     }
 }

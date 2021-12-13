@@ -1,7 +1,5 @@
 package edu.uw.tcss450.howlr.ui.messages;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,9 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +22,6 @@ import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
-import edu.uw.tcss450.howlr.ui.auth.signin.SignInFragmentDirections;
-import edu.uw.tcss450.howlr.ui.friends.Friends;
-import edu.uw.tcss450.howlr.ui.friends.FriendsListRecyclerViewAdapter;
-import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatAdapter;
 
 
 /**
@@ -66,7 +57,7 @@ public class MessagesPageFragment extends Fragment {
             MainActivity activity = (MainActivity) getActivity();
             mModel.setUserInfoViewModel(activity.getUserInfoViewModel());
         }
-        mModel.connectGet(mUserModel.getmJwt(), mUserModel.getmMemberId());
+        mModel.connectGet(mUserModel.getJwt(), mUserModel.getMemberId());
     }
 
     @Override

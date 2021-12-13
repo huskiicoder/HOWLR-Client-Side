@@ -19,51 +19,63 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.IntFunction;
 
-import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 /**
- * Implements FriendsListViewModel.
+ * The ViewModel for the register fragment for the friends list.
  * @author Natalie Nguyen Hong
  * @version TCSS 450 Fall 2021
  */
 public class FriendsListViewModel extends AndroidViewModel {
 
-    /** MutableLiveData of List<Friends>.*/
+    /**
+     * The liva data from a list of friends.
+     */
     private MutableLiveData<List<Friends>> mFriends;
 
-    /** MutableLiveData List of friend request. */
+    /**
+     * The liva data from a list of friend requests.
+     */
     private MutableLiveData<List<Friends>> mRequestList;
 
-    /** MutableLiveData List of Json object. */
+    /**
+     * The response of JSON objects for the live data.
+     */
     private final MutableLiveData<JSONObject> mResponse;
 
-    /** UserInfoViewModel object. */
+    /**
+     * The ViewModel of the user's information.
+     */
     private UserInfoViewModel userInfoViewModel;
 
-    /** MutableLiveData List of friend search in the friend list. */
+    /**
+     * The liva data from a list of users on a search results.
+     */
     private MutableLiveData<List<Friends>> searchResult;
 
-    /** MutableLiveData List of user from searching. */
+    /**
+     * The liva data from a list of friends on a search request.
+     */
     private MutableLiveData<List<Friends>> searchFriends;
 
+    /**
+     * The liva data from a list of usernames.
+     */
     private MutableLiveData<List<String>> mUsername;
 
     /**
-     * Constructs FriendsListViewModel.
-     * @param application
+     * Creates the ViewModel for the friends list fragment given an application.
+     * @param application The application
      */
-    public  FriendsListViewModel(@NonNull Application application) {
+    public FriendsListViewModel(@NonNull Application application) {
         super(application);
 
         mFriends = new MutableLiveData<>();
@@ -86,19 +98,19 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Add friend list observer.
-     * @param owner
-     * @param observer
+     * Adds an observer to the friends list fragment for adding friends.
+     * @param owner The owner of the fragment lifecycle
+     * @param observer The observer
      */
-    public  void addFriendObserver(@NonNull LifecycleOwner owner,
+    public void addFriendObserver(@NonNull LifecycleOwner owner,
                                    @NonNull Observer<? super  List<Friends>> observer) {
         mFriends.observe(owner, observer);
     }
 
     /**
-     * Add friend request observer.
-     * @param owner
-     * @param observer
+     * Adds an observer to the friends list fragment for incoming friend requests.
+     * @param owner The owner of the fragment lifecycle
+     * @param observer The observer
      */
     public void addRequestListObserver(@NonNull LifecycleOwner owner,
                                        @NonNull Observer<? super List<Friends>> observer) {
@@ -106,8 +118,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Handles result for list of existing friends and invitation.
-     * @param result
+     * Handles the result from successfully adding friends and getting friend requests.
+     * @param result The result.
      */
     private void handleResult(final JSONObject result) {
         try {
@@ -157,8 +169,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Handles error.
-     * @param error
+     * Handles the error for the HTTP library Volley.
+     * @param error The error
      */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
@@ -174,7 +186,7 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Connect to webserver for getting contact list
+     * Connects to the web server for getting the friends list.
      */
     public void connectGetAll() {
         if (userInfoViewModel == null) {
@@ -188,7 +200,7 @@ public class FriendsListViewModel extends AndroidViewModel {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", "Bearer " + userInfoViewModel.getmJwt());
+                headers.put("Authorization", "Bearer " + userInfoViewModel.getJwt());
                 return headers;
             }
         };
@@ -199,10 +211,11 @@ public class FriendsListViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
 
+
     /**
-     * Add searched friend list observer.
-     * @param owner
-     * @param observer
+     * Adds an observer to the search results.
+     * @param owner The owner
+     * @param observer The observer
      */
     public void addSearchResultObserver(@NonNull LifecycleOwner owner,
                                   @NonNull Observer<? super List<Friends>> observer) {
@@ -210,9 +223,9 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Add searched user list observer.
-     * @param owner
-     * @param observer
+     * Adds an observer to the results.
+     * @param owner The owner
+     * @param observer The observer
      */
     public void addResultObserver(@NonNull LifecycleOwner owner,
                                   @NonNull Observer<? super List<Friends>> observer) {
@@ -220,8 +233,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Handles the result of search an existing friend in the friend list.
-     * @param result
+     * Handles the search result list from the JSON object.
+     * @param result The result
      */
     private void handleSearchListResult(final JSONObject result) {
         try {
@@ -252,8 +265,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Handles result of search an user.
-     * @param result
+     * Handles the add to the search result list from the JSON object.
+     * @param result The result
      */
     private void handleAddSearchListResult(final JSONObject result) {
         try {
@@ -286,8 +299,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Connect to webserver for searching an existing friend in the friend list.
-     * @param searchString
+     * Connects to the web server for searching existing friends in the friends list.
+     * @param searchString The search string
      */
     public void connectSearchFriendsGet(String searchString) {
         String url = "https://howlr-server-side.herokuapp.com/contacts/searchContact/" + userInfoViewModel.getEmail()
@@ -301,7 +314,7 @@ public class FriendsListViewModel extends AndroidViewModel {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", "Bearer " + userInfoViewModel.getmJwt());
+                headers.put("Authorization", "Bearer " + userInfoViewModel.getJwt());
                 return headers;
             }
         };
@@ -313,8 +326,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Connect to webserver for searching an user.
-     * @param searchString
+     * Connects to the web server for searching existing friends in the friends list.
+     * @param searchString The search string
      */
     public void connectSearchFriendsListGet(String searchString) {
         String url = "https://howlr-server-side.herokuapp.com/contacts/search/"
@@ -328,7 +341,7 @@ public class FriendsListViewModel extends AndroidViewModel {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", "Bearer " + userInfoViewModel.getmJwt());
+                headers.put("Authorization", "Bearer " + userInfoViewModel.getJwt());
                 return headers;
             }
         };
@@ -342,8 +355,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Connect to webserver for sending a friend request.
-     * @param email email of receiver
+     * Connects to the web server for sending a friend request.
+     * @param email The email of the friend that you want to add
      */
     public void connectAddFriendsPost(String email) {
         String url = "https://howlr-server-side.herokuapp.com/contacts/";
@@ -368,7 +381,7 @@ public class FriendsListViewModel extends AndroidViewModel {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", "Bearer " + userInfoViewModel.getmJwt());
+                headers.put("Authorization", "Bearer " + userInfoViewModel.getJwt());
                 return headers;
             }
         };
@@ -383,8 +396,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Connect to webserver for accepting a friend request.
-     * @param memberId memberid of the sender.
+     * Connects to the web server for accepting incoming friend requests.
+     * @param memberId The member ID of the friend that is adding you
      */
     public void connectAcceptFriends(final int memberId) {
         if (userInfoViewModel == null) {
@@ -399,7 +412,7 @@ public class FriendsListViewModel extends AndroidViewModel {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", userInfoViewModel.getmJwt());
+                headers.put("Authorization", userInfoViewModel.getJwt());
 
                 return headers;
             }
@@ -410,8 +423,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Handles result when deleting a friend contact.
-     * @param result
+     * Handles the delete result from deleting friends.
+     * @param result The result
      */
     private void handleDeleteResult(JSONObject result) {
         try {
@@ -423,8 +436,8 @@ public class FriendsListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Connect to webserver for deleting a friend contact.
-     * @param memberId memberid of the friend contact.
+     * Connects to the web server for deleting a friend from the friends list.
+     * @param memberId The member ID of the friend to be deleted from the friends list
      */
     public void connectDeleteContact(final int memberId) {
         String url = "https://howlr-server-side.herokuapp.com/contacts/"
@@ -435,7 +448,7 @@ public class FriendsListViewModel extends AndroidViewModel {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", userInfoViewModel.getmJwt());
+                headers.put("Authorization", userInfoViewModel.getJwt());
                 return headers;
             }
         };
@@ -444,7 +457,9 @@ public class FriendsListViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
 
-    // THIS IS JUST TO GET THE CURRENT USERS FIRST AND LAST NAME
+    /**
+     * Gets the first name and last name of the current users.
+     */
     public void connectGetFirstLast() {
         if (userInfoViewModel == null) {
             throw new IllegalArgumentException("No UserInfoViewModel is assigned");
@@ -460,7 +475,7 @@ public class FriendsListViewModel extends AndroidViewModel {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", "Bearer " + userInfoViewModel.getmJwt());
+                headers.put("Authorization", "Bearer " + userInfoViewModel.getJwt());
                 return headers;
             }
         };
@@ -471,6 +486,10 @@ public class FriendsListViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
 
+    /**
+     * Handles the result of getting the first name and last name of the users.
+     * @param result The result.
+     */
     private void handleFirstLastResult(final JSONObject result) {
         try {
             JSONObject root = result;
@@ -495,13 +514,21 @@ public class FriendsListViewModel extends AndroidViewModel {
         mUsername.setValue(mUsername.getValue());
     }
 
-    public  void addFirstLastObserver(@NonNull LifecycleOwner owner,
+    /**
+     * Adds an observer to the first name and last name of a user.
+     * @param owner The owner
+     * @param observer The observer
+     */
+    public void addFirstLastObserver(@NonNull LifecycleOwner owner,
                                    @NonNull Observer<? super  List<String>> observer) {
         mUsername.observe(owner, observer);
     }
 
+    /**
+     * Sets the ViewModel for a user's information.
+     * @param viewModel The ViewModel
+     */
     public void setUserInfoViewModel(UserInfoViewModel viewModel) {
         userInfoViewModel = viewModel;
     }
-
 }

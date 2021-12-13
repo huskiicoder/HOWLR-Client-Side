@@ -7,24 +7,44 @@ import java.io.Serializable;
 import edu.uw.tcss450.howlr.R;
 
 /**
- * Implements Friends with memberId, username, lastname, firstname.
+ * Implements friends with their memberID, username, first name, and last name.
  * @author Natalie Nguyen Hong
  * @version TCSS 450 Fall 2021
  */
 public class Friends implements Serializable {
+
+    /**
+     * Profile picture of the friend.
+     */
     private int mPicture;
-    /** Member id of this friend. */
+
+    /**
+     * The member ID of the friend.
+     */
     private final int mMemberId;
 
-    /** Username of this friend. */
+    /**
+     * The username of the friend.
+     */
     private final String mUserName;
 
-    /** First name of this friend. */
+    /**
+     * The first name of the friend.
+     */
     private final String mFirstName;
 
-    /** Last name of this friend. */
+    /**
+     * The last name of the friend.
+     */
     private final String mLastName;
 
+    /**
+     * Creates a friend with the friend's information.
+     * @param memberId The friend's member ID
+     * @param userName The friend's username
+     * @param firstName The friend's first name
+     * @param lastName The friend's last name
+     */
     public Friends(int memberId, String userName, String firstName, String lastName) {
         this.mPicture = R.drawable.shibaheart;
         this.mMemberId = memberId;
@@ -48,9 +68,9 @@ public class Friends implements Serializable {
 //    }
 
     /**
-     * Constructs a friend from JSONobject.
-     * @param json a json object
-     * @throws Exception
+     * Constructs a friend from the JSON object.
+     * @param json The JSON object
+     * @throws Exception The exception
      */
     public Friends(JSONObject json) throws Exception {
         mMemberId = json.getInt("memberid");
@@ -59,13 +79,17 @@ public class Friends implements Serializable {
         mLastName = json.getString("lastname");
     }
 
+    /**
+     * Gets the friend's profile picture.
+     * @return The friend's profile picture
+     */
     public int getPicture() {
         return mPicture;
     }
 
     /**
-     * Get memberid of the friend.
-     * @return memberid of the friend.
+     * Gets the friend's member ID.
+     * @return The friend's member ID
      */
     public int getMemberId()
     {
@@ -73,8 +97,8 @@ public class Friends implements Serializable {
     }
 
     /**
-     * Get first name of the friend.
-     * @return first name of the friend.
+     * Gets the friend's first name.
+     * @return The friend's first name
      */
     public String getFirstName()
     {
@@ -82,21 +106,25 @@ public class Friends implements Serializable {
     }
 
     /**
-     * Get username of the friend.
-     * @return username of the friend.
+     * Gets the friend's username.
+     * @return The friend's username
      */
     public String getUserName() {
         return mUserName;
     }
 
     /**
-     * Get last name of the friend.
-     * @return last name of the friend.
+     * Gets the friend's first name.
+     * @return The friend's first name
      */
     public String getLastName() {
         return mLastName;
     }
 
+    /**
+     * Returns the String object of the Friends object.
+     * @return The String object of the Friends object
+     */
     @Override
     public String toString() {
         return "Friends{" +

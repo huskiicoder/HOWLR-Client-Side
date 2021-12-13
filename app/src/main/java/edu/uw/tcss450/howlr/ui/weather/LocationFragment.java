@@ -32,15 +32,40 @@ import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentMapsBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
 
+/**
+ * Class for the location fragment for the Google map inside of the weather fragment.
+ */
 public class LocationFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapClickListener{
 
+    /**
+     * The Google map.
+     */
     private GoogleMap mMap;
+
+    /**
+     * The ViewModel for the location fragment.
+     */
     private LocationViewModel mModel;
+
+    /**
+     * The latitude/longitude.
+     */
     private LatLng mLatLng;
+
+    /**
+     * Empty constructor for the location fragment.
+     */
     public LocationFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Creates the location fragment's view.
+     * @param inflater The inflater
+     * @param container The container
+     * @param savedInstanceState The saved instance state
+     * @return The View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +73,11 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
+    /**
+     * On the location fragment's view creation.
+     * @param view The View
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -66,6 +96,10 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         binding.buttonSearch.setOnClickListener(this::setLocation);
     }
 
+    /**
+     * Sets the location using the view.
+     * @param view The View
+     */
     private void setLocation(View view) {
         LocationFragmentDirections.ActionNavigationMapToNavigationWeather location =
                 LocationFragmentDirections.actionNavigationMapToNavigationWeather();
@@ -73,6 +107,11 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         location.setLng(Double.toString(mLatLng.longitude));
         Navigation.findNavController(getView()).navigate(location);
     }
+
+    /**
+     * When the map is ready to display.
+     * @param googleMap The Google map
+     */
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -95,6 +134,10 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         mMap.setOnMapClickListener(this);
     }
 
+    /**
+     * On map click action.
+     * @param latLng The latitude/longitude of the location clicked
+     */
     @Override
     public void onMapClick(@NonNull LatLng latLng) {
         Log.d("LAT/LONG", latLng.toString());
