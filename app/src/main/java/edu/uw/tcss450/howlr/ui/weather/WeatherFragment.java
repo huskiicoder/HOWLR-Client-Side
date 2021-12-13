@@ -106,7 +106,7 @@ public class WeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mWeatherModel.connectGet("47","-122", mUserModel.getJwt());
+        mWeatherModel.connectGet("37.4217934","-122.0845296", mUserModel.getJwt());
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }
 

@@ -143,7 +143,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        mWeatherModel.connectGet("47","-122", mUserModel.getJwt());
+        mWeatherModel.connectGet("37.4217934","-122.0845296", mUserModel.getJwt());
 //        mWeatherModel.connectGet(Double.toString(mModel.getCurrentLocation().getLatitude()),
 //                Double.toString(mModel.getCurrentLocation().getLongitude()), mUserModel.getmJwt());
         // TESTING MESSAGES STUFF
