@@ -1,10 +1,16 @@
 package edu.uw.tcss450.howlr.ui.auth.signin;
 
-import static edu.uw.tcss450.howlr.utils.PasswordValidator.*;
+import static edu.uw.tcss450.howlr.utils.PasswordValidator.checkExcludeWhiteSpace;
+import static edu.uw.tcss450.howlr.utils.PasswordValidator.checkPwdLength;
+import static edu.uw.tcss450.howlr.utils.PasswordValidator.checkPwdSpecialChar;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,19 +18,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
-
 import com.auth0.android.jwt.JWT;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentSignInBinding;
@@ -51,7 +48,7 @@ public class SignInFragment extends Fragment {
      * Email validation for signing in.
      * Checks if the email length is >= 2 characters and contains an "@" symbol.
      */
-    private PasswordValidator mEmailValidator = checkPwdLength(2)
+    private final PasswordValidator mEmailValidator = checkPwdLength(2)
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
 
@@ -59,7 +56,7 @@ public class SignInFragment extends Fragment {
      * Password validation for signing in.
      * Checks if the length is >= 1 character and contains no white spaces.
      */
-    private PasswordValidator mPassWordValidator = checkPwdLength(1)
+    private final PasswordValidator mPassWordValidator = checkPwdLength(1)
             .and(checkExcludeWhiteSpace());
 
     /**
@@ -86,9 +83,9 @@ public class SignInFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSignInModel = new ViewModelProvider(getActivity())
+        mSignInModel = new ViewModelProvider(requireActivity())
                 .get(SignInViewModel.class);
-        mPushyTokenViewModel = new ViewModelProvider(getActivity())
+        mPushyTokenViewModel = new ViewModelProvider(requireActivity())
                 .get(PushyTokenViewModel.class);
     }
 
@@ -100,7 +97,7 @@ public class SignInFragment extends Fragment {
      * @return The View
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSignInBinding.inflate(inflater);
         // Inflate the layout for this fragment
@@ -117,14 +114,14 @@ public class SignInFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonToRegister.setOnClickListener(button ->
-                Navigation.findNavController(getView()).navigate(
+                Navigation.findNavController(requireView()).navigate(
                         SignInFragmentDirections.actionLoginFragmentToRegisterFragment()
                 ));
 
         binding.buttonSignIn.setOnClickListener(this::attemptSignIn);
 
         binding.textForgotPassword.setOnClickListener(button ->
-                Navigation.findNavController(getView()).navigate(
+                Navigation.findNavController(requireView()).navigate(
                         SignInFragmentDirections.actionSignInFragmentToResetPasswordFragment()
                 ));
 
@@ -258,7 +255,7 @@ public class SignInFragment extends Fragment {
                 getActivity().getSharedPreferences(
                         getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
-/*        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
+        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
             String token = prefs.getString(getString(R.string.keys_prefs_jwt), "");
             JWT jwt = new JWT(token);
             // Check to see if the web token is still valid or not. To make a JWT expire after a
@@ -266,10 +263,11 @@ public class SignInFragment extends Fragment {
             // created on the web service.
             if(!jwt.isExpired(0)) {
                 String email = jwt.getClaim("email").asString();
-                navigateToSuccess(email, mUserViewModel.getMemberId(), token);
+                int memberid = jwt.getClaim("memberid").asInt();
+                navigateToSuccess(email, memberid, token);
                 return;
             }
-        }*/
+        }
     }
 
     /**
