@@ -258,7 +258,7 @@ public class SignInFragment extends Fragment {
                 getActivity().getSharedPreferences(
                         getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
-        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
+/*        if (prefs.contains(getString(R.string.keys_prefs_jwt))) {
             String token = prefs.getString(getString(R.string.keys_prefs_jwt), "");
             JWT jwt = new JWT(token);
             // Check to see if the web token is still valid or not. To make a JWT expire after a
@@ -269,7 +269,7 @@ public class SignInFragment extends Fragment {
                 navigateToSuccess(email, mUserViewModel.getMemberId(), token);
                 return;
             }
-        }
+        }*/
     }
 
     /**

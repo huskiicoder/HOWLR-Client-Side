@@ -372,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
         model.deleteTokenFromWebservice(
                 new ViewModelProvider(this)
                         .get(UserInfoViewModel.class)
-                        .getmJwt());
+                        .getJwt());
     }
 
 

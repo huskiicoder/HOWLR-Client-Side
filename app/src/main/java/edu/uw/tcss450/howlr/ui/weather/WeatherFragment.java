@@ -149,7 +149,7 @@ public class WeatherFragment extends Fragment {
                 List<Weather> hourly_list = list.subList(1,25);
                 List<Weather> daily_list = list.subList(26,33);
                 binding.textCurrentTemp.setText(Math.round(Float.parseFloat(String.valueOf(list.get(0).getCurrentTemp()))) + "°");
-                binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurentWeather()));
+                binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurrentWeather()));
                 binding.textViewHumidity.setText("Humidity " + String.valueOf(list.get(0).getHumidity()) + "%");
 
                 String a = "a" + list.get(0).getIcon();

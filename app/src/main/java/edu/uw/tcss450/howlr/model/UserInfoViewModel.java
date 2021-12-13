@@ -17,7 +17,7 @@ public class UserInfoViewModel extends ViewModel {
     /**
      * The user's member ID.
      */
-    private int mMemberId;
+    public int mMemberId;
 
     /**
      * The user's JSON web token.
@@ -57,64 +57,26 @@ public class UserInfoViewModel extends ViewModel {
         return mJwt;
     }
 
-    /**
-     * Gets the user's member ID.
-     * @return The user's member ID
-     */
     public int getMemberId() {
         return mMemberId;
     }
 
-    /**
-     * Sets the chatroom.
-     * @param newRoom The new chatroom ID.
-     */
     public void setChatRoom(int newRoom) { chatRoom = newRoom; }
 
-    /**
-     * Gets the chatroom ID.
-     * @return The chatroom ID
-     */
     public int getChatRoom() { return chatRoom; }
 
-    /**
-     * The factory class for the ViewModel of the user.
-     */
     public static class UserInfoViewModelFactory implements ViewModelProvider.Factory {
 
-        /**
-         * The user's email.
-         */
         private final String email;
-
-        /**
-         * The user's member ID.
-         */
         private final int memberId;
-
-        /**
-         * The user's JSON web token.
-         */
         private final String jwt;
 
-        /**
-         * Creates a ViewModel for the user using a factory.
-         * @param email The user's email
-         * @param memberId The user's member ID
-         * @param jwt The user's JSON web token
-         */
         public UserInfoViewModelFactory(String email, int memberId, String jwt) {
             this.memberId = memberId;
             this.email = email;
             this.jwt = jwt;
         }
 
-        /**
-         * Creates a ViewModel of type T using a model class.
-         * @param modelClass The model class
-         * @param <T> The type T
-         * @return The ViewModel of type T
-         */
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
@@ -125,4 +87,7 @@ public class UserInfoViewModel extends ViewModel {
                     "Argument must be: " + UserInfoViewModel.class);
         }
     }
+
+
 }
+
