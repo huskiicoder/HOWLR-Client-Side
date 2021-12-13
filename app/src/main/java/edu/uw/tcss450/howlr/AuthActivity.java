@@ -32,6 +32,8 @@ public class AuthActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String action = intent.getAction();
         Uri data = intent.getData();
+
+        getSupportActionBar().hide();
     }
 
     /**

@@ -475,7 +475,7 @@ public class MainActivity extends AppCompatActivity {
 
         registerReceiver(mPushFriendReceiver, iFilterFriend);
 
-        startLocationUpdates();
+        //startLocationUpdates();
     }
 
     /**
