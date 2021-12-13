@@ -12,11 +12,25 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import edu.uw.tcss450.howlr.databinding.ActivityMapsBinding;
 
+/**
+ * Class for the Google map view on the weather page.
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    /**
+     * The Google map.
+     */
     private GoogleMap mMap;
+
+    /**
+     * The binding for the Google map.
+     */
     private ActivityMapsBinding binding;
 
+    /**
+     * On the Google map activity's creation.
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

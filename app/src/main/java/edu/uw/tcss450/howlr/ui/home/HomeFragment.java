@@ -22,6 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,12 +48,10 @@ import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterHourly;
 import edu.uw.tcss450.howlr.ui.weather.WeatherViewModel;
 
 /**
- * A Fragment that holds all the content for the Home page of the HOWLR app.
- *
- * @author Edward Robinson
+ * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
-    /** Binding for Home page, to be able to access elements of the layout */
+
     private FragmentHomeBinding mBinding;
 
     /** Weather ViewModel used to populate the weather card */
@@ -82,7 +84,8 @@ public class HomeFragment extends Fragment {
     /** ViewModel for populating friends list card */
     private FriendsListViewModel mFriendListModel;
 
-    /** Calendar object used for populating date on weather card */
+    private TextView dateTimeDisplay;
+
     private Calendar calendar;
 
     /** Used to format the Calendar object */
@@ -115,7 +118,7 @@ public class HomeFragment extends Fragment {
         mModel = provider.get(LocationViewModel.class);
         mUserModel = provider.get(UserInfoViewModel.class);
         mMessagesModel = new ViewModelProvider(getActivity()).get(MessagesListViewModel.class);
-        mMessagesModel.connectGet(mUserModel.getmJwt(), mUserModel.getmMemberId());
+        mMessagesModel.connectGet(mUserModel.getJwt(), mUserModel.getMemberId());
         // Initializing friends list stuff
         mFriendListModel = new ViewModelProvider(getActivity()).get(FriendsListViewModel.class);
         if (getActivity() instanceof MainActivity) {
@@ -140,9 +143,10 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        mWeatherModel.connectGet("47","-122", mUserModel.getmJwt());
+        mWeatherModel.connectGet("47","-122", mUserModel.getJwt());
 //        mWeatherModel.connectGet(Double.toString(mModel.getCurrentLocation().getLatitude()),
 //                Double.toString(mModel.getCurrentLocation().getLongitude()), mUserModel.getmJwt());
+        // TESTING MESSAGES STUFF
         myBinding = inflater.inflate(R.layout.fragment_home, container, false);
         return myBinding;
     }
@@ -171,6 +175,7 @@ public class HomeFragment extends Fragment {
         });
 
         // weather card building
+
         calendar = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
         date = dateFormat.format(calendar.getTime());
@@ -194,6 +199,24 @@ public class HomeFragment extends Fragment {
                 recyclerViewWeather.setAdapter(new HomeWeatherAdapter(daily_list));
             }
         });
+
+        mMessagesModel.addMessagesObserver(getViewLifecycleOwner(), messagesList -> {
+            if (!messagesList.isEmpty()) {
+                mAdapterMessages = new HomeMessagesAdapter(messagesList);
+                mAdapterMessages.notifyDataSetChanged();
+                binding.recyclerViewMessages.setAdapter(mAdapterMessages);
+
+                /* Click listener for navigating to chat from recycler view item. */
+                mAdapterMessages.setOnItemClickListener(itemClicked -> {
+                    mUserModel.setChatRoom(messagesList.get(itemClicked).getChatId());
+                    Navigation.findNavController(requireView())
+                            .navigate(HomeFragmentDirections
+                                    .actionNavigationHomeToNavigationChat(messagesList.get(itemClicked).getChatId()));
+                });
+            }
+        });
+
+        // END MESSAGES IMPLEMENTATION
 
         // FOR FRIENDS RECYCLERVIEW
         RecyclerView recyclerViewFriends = myBinding.findViewById(recycler_view_friends);

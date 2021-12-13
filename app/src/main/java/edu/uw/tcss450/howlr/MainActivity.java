@@ -39,8 +39,11 @@ import edu.uw.tcss450.howlr.databinding.ActivityMainBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.NewFriendCountViewModel;
 import edu.uw.tcss450.howlr.model.NewMessageCountViewModel;
+import edu.uw.tcss450.howlr.model.PushyTokenViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.services.PushReceiver;
+import edu.uw.tcss450.howlr.ui.friends.Friends;
+import edu.uw.tcss450.howlr.ui.friends.FriendsListViewModel;
 import edu.uw.tcss450.howlr.ui.messages.chats.ChatMessage;
 import edu.uw.tcss450.howlr.ui.messages.chats.ChatViewModel;
 
@@ -80,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
 
     /** Push message receiver */
     private MainPushMessageReceiver mPushMessageReceiver;
+
+    /** Push contact receiver */
+    private MainPushFriendReceiver mPushFriendReceiver;
 
     /** ViewModel to keep track of new messages */
     private NewMessageCountViewModel mNewMessageModel;
@@ -357,7 +363,17 @@ public class MainActivity extends AppCompatActivity {
         prefs.edit().remove(getString(R.string.keys_prefs_jwt)).apply();
 
         //End the app completely
-        finishAndRemoveTask();
+//        finishAndRemoveTask();
+
+        //Stop the notification after signing out
+        PushyTokenViewModel model = new ViewModelProvider(this)
+                .get(PushyTokenViewModel.class);
+        //when we hear back from the web service quit
+        model.addResponseObserver(this, result -> finishAndRemoveTask());
+        model.deleteTokenFromWebservice(
+                new ViewModelProvider(this)
+                        .get(UserInfoViewModel.class)
+                        .getJwt());
     }
 
 
@@ -370,12 +386,16 @@ public class MainActivity extends AppCompatActivity {
                 new ViewModelProvider(MainActivity.this)
                         .get(ChatViewModel.class);
 
+        private FriendsListViewModel mFriendsModel =
+                new ViewModelProvider(MainActivity.this).get(FriendsListViewModel.class);
+
         /**
          * Determines the actions to be taken upon receiving a message.
          *
          * @param context context of the app
          * @param intent intent for the push message
          */
+
         @Override
         public void onReceive(Context context, Intent intent) {
             NavController nc =
@@ -395,6 +415,42 @@ public class MainActivity extends AppCompatActivity {
                 //Inform the view model holding chatroom messages of the new
                 //message.
                 mModel.addMessage(intent.getIntExtra("chatid", -1), cm);
+            } else if (intent.hasExtra("friends")) {
+
+                Friends mFriends = (Friends) intent.getSerializableExtra("friends");
+
+                mFriends.setmUserName(intent.getStringExtra("username"));
+
+                if (nd.getId() != R.id.navigation_friends_request) {
+                    mNewFriendModel.increment();
+                }
+                mFriendsModel.connectGetAll();
+            }
+        }
+    }
+
+    /**
+     * A BroadcastReceiver that listens for messages sent from PushReceiver
+     */
+    private class MainPushFriendReceiver extends BroadcastReceiver {
+
+        private FriendsListViewModel mFriendsModel =
+                new ViewModelProvider(MainActivity.this).get(FriendsListViewModel.class);
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            NavController nc =
+                    Navigation.findNavController(
+                            MainActivity.this, R.id.nav_host_fragment);
+            NavDestination nd = nc.getCurrentDestination();
+
+            if (intent.hasExtra("friends")) {
+                Friends mFriends = (Friends) intent.getSerializableExtra("friends");
+                mFriends.setmUserName(intent.getStringExtra("username"));
+                if (nd.getId() != R.id.navigation_friends_request) {
+                    mNewFriendModel.increment();
+                }
+                mFriendsModel.connectGetAll();
             }
         }
     }
@@ -408,8 +464,17 @@ public class MainActivity extends AppCompatActivity {
         if (mPushMessageReceiver == null) {
             mPushMessageReceiver = new MainPushMessageReceiver();
         }
+        if (mPushFriendReceiver == null) {
+            mPushMessageReceiver = new MainPushMessageReceiver();
+        }
         IntentFilter iFilter = new IntentFilter(PushReceiver.RECEIVED_NEW_MESSAGE);
+
+        IntentFilter iFilterFriend = new IntentFilter(PushReceiver.RECEIVED_NEW_FRIEND);
+
         registerReceiver(mPushMessageReceiver, iFilter);
+
+        registerReceiver(mPushFriendReceiver, iFilterFriend);
+
         startLocationUpdates();
     }
 
@@ -422,6 +487,11 @@ public class MainActivity extends AppCompatActivity {
         if (mPushMessageReceiver != null){
             unregisterReceiver(mPushMessageReceiver);
         }
+
+        if (mPushFriendReceiver != null){
+            unregisterReceiver(mPushFriendReceiver);
+        }
+
         stopLocationUpdates();
     }
 

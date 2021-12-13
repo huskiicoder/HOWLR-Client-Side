@@ -20,14 +20,24 @@ import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.auth.register.RegisterViewModel;
 import edu.uw.tcss450.howlr.ui.auth.signin.SignInFragmentDirections;
 
+/**
+ * The fragment for the resetting the user's password.
+ */
 public class ResetPasswordFragment extends Fragment {
     private FragmentResetPasswordBinding binding;
     private ResetViewModel mModel;
 
+    /**
+     * Empty constructor for the password reset fragment.
+     */
     public ResetPasswordFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * On the password reset fragment's creation.
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +45,13 @@ public class ResetPasswordFragment extends Fragment {
                 .get(ResetViewModel.class);
     }
 
+    /**
+     * Creates the password reset's fragment view.
+     * @param inflater The inflater
+     * @param container The container
+     * @param savedInstanceState The saved instance state
+     * @return The View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,6 +60,11 @@ public class ResetPasswordFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * On the password reset's fragment view creation.
+     * @param view The View
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -56,7 +78,6 @@ public class ResetPasswordFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-
     }
 
 }

@@ -21,21 +21,40 @@ import org.json.JSONObject;
 import java.nio.charset.Charset;
 import java.util.Objects;
 
+/**
+ * The ViewModel for the register fragment for registering users.
+ */
 public class RegisterViewModel extends AndroidViewModel {
 
+    /**
+     * The response of JSON objects for the live data.
+     */
     private MutableLiveData<JSONObject> mResponse;
 
+    /**
+     * Creates the ViewModel for the register fragment given an application.
+     * @param application The application
+     */
     public RegisterViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
     }
 
+    /**
+     * Adds an observer to the register fragment for registering users.
+     * @param owner The owner of the fragment lifecycle
+     * @param observer The observer
+     */
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
 
+    /**
+     * Handles the error for the HTTP library Volley.
+     * @param error The error
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -59,6 +78,14 @@ public class RegisterViewModel extends AndroidViewModel {
             }
         }
     }
+
+    /**
+     * Connects to the web service with the user's credentials.
+     * @param first The user's first name
+     * @param last The user's last name
+     * @param email The user's email
+     * @param password The user's password
+     */
     public void connect(final String first,
                         final String last,
                         final String email,

@@ -7,15 +7,20 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 /**
- * Implement a viewmodel when a new friend is added or request.
+ * Implements a ViewModel for when a new friend is added or requested.
  * @author Natalie Nguyen Hong
  * @version TCSS 450 Fall 2021
  */
 public class NewFriendCountViewModel extends ViewModel {
+
+    /**
+     * Live data for the number of new friends.
+     */
     private MutableLiveData<Integer> mNewFriendCount;
 
     /**
-     * Constructs a NewFriendCountViewModel.
+     * Creates a ViewModel for the number of new friends,
+     * initially set to 0.
      */
     public NewFriendCountViewModel() {
         mNewFriendCount = new MutableLiveData<>();
@@ -23,9 +28,9 @@ public class NewFriendCountViewModel extends ViewModel {
     }
 
     /**
-     * Implements a method to add new friend observer.
-     * @param owner
-     * @param observer
+     * Adds an observer to the counter for the number of new friends.
+     * @param owner The owner of the fragment lifecycle
+     * @param observer The observer
      */
     public void addFriendCountObserver(@NonNull LifecycleOwner owner,
                                         @NonNull Observer<? super Integer> observer) {
@@ -33,14 +38,14 @@ public class NewFriendCountViewModel extends ViewModel {
     }
 
     /**
-     * Implements a method to increase the number of new friends.
+     * Increments the counter for the number of new friends.
      */
     public void increment() {
         mNewFriendCount.setValue(mNewFriendCount.getValue() + 1);
     }
 
     /**
-     * Resets the number of new friend requested.
+     * Resets the number of new friend requests to 0.
      */
     public void reset() {
         mNewFriendCount.setValue(0);

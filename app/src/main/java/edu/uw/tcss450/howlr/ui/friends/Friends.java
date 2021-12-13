@@ -1,5 +1,6 @@
 package edu.uw.tcss450.howlr.ui.friends;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -17,7 +18,7 @@ public class Friends implements Serializable {
     private final int mMemberId;
 
     /** Username of this friend. */
-    private final String mUserName;
+    private String mUserName;
 
     /** First name of this friend. */
     private final String mFirstName;
@@ -25,6 +26,13 @@ public class Friends implements Serializable {
     /** Last name of this friend. */
     private final String mLastName;
 
+    /**
+     * Creates a friend with the friend's information.
+     * @param memberId The friend's member ID
+     * @param userName The friend's username
+     * @param firstName The friend's first name
+     * @param lastName The friend's last name
+     */
     public Friends(int memberId, String userName, String firstName, String lastName) {
         this.mPicture = R.drawable.shibaheart;
         this.mMemberId = memberId;
@@ -33,19 +41,17 @@ public class Friends implements Serializable {
         this.mLastName = lastName;
     }
 
-//    /**
-//     * Constructs a friend object.
-//     * @param memberId member id of the friend.
-//     * @param userName username of the friend.
-//     * @param firstName first name of the friend.
-//     * @param lastName last name of the friend.
-//     */
-//    public Friends(int memberId, String userName, String firstName, String lastName) {
-//        this.mMemberId = memberId;
-//        this.mUserName = userName;
-//        this.mFirstName = firstName;
-//        this.mLastName = lastName;
-//    }
+    public void setmUserName(String userName) {
+        this.mUserName = userName;
+    }
+
+    public static Friends createFromJsonString(final String json) throws JSONException {
+        final JSONObject msg = new JSONObject(json);
+        return new Friends(msg.getInt("memberid"),
+                msg.getString("firstname"),
+                msg.getString("lastname"),
+                msg.getString("username"));
+    }
 
     /**
      * Constructs a friend from JSONobject.
@@ -59,6 +65,10 @@ public class Friends implements Serializable {
         mLastName = json.getString("lastname");
     }
 
+    /**
+     * Gets the friend's profile picture.
+     * @return The friend's profile picture
+     */
     public int getPicture() {
         return mPicture;
     }
@@ -97,6 +107,10 @@ public class Friends implements Serializable {
         return mLastName;
     }
 
+    /**
+     * Returns the String object of the Friends object.
+     * @return The String object of the Friends object
+     */
     @Override
     public String toString() {
         return "Friends{" +

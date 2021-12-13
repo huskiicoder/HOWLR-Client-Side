@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -26,24 +25,45 @@ import org.json.JSONObject;
 import edu.uw.tcss450.howlr.databinding.FragmentRegisterBinding;
 import edu.uw.tcss450.howlr.utils.PasswordValidator;
 
-
 /**
- * Simple fragment allowing for initial user registration.
- * @author Amir Almemar
- * @version TCSS 450 Fall 2021
+ * The fragment for the register page.
  */
 public class RegisterFragment extends Fragment {
 
+    /**
+     * The binding for the register fragment.
+     */
     private FragmentRegisterBinding binding;
 
+    /**
+     * The ViewModel for the register fragment.
+     */
     private RegisterViewModel mRegisterModel;
 
+    /**
+     * Name validation for registering an account.
+     * Checks if the name length is >= 1 character.
+     */
     private PasswordValidator mNameValidator = checkPwdLength(1);
 
+    /**
+     * Email validation for registering an account.
+     * Checks if the email length is >= 2 characters and contains an "@" symbol.
+     */
     private PasswordValidator mEmailValidator = checkPwdLength(2)
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
 
+    /**
+     * Password validation for registering an account.
+     * Checks if the password:
+     * - Length is >= 7 characters
+     * - Contains at least 1 special character "@#$%&*!?"
+     * - Excludes any white space characters
+     * - Contains at least 1 digit character
+     * - Contains at least 1 lowercase character
+     * - Contains at least 1 uppercase character
+     */
     private PasswordValidator mPassWordValidator =
             checkClientPredicate(pwd -> pwd.equals(binding.editPassword2.getText().toString()))
                     .and(checkPwdLength(7))
@@ -52,10 +72,17 @@ public class RegisterFragment extends Fragment {
                     .and(checkPwdDigit())
                     .and(checkPwdLowerCase().or(checkPwdUpperCase()));
 
+    /**
+     * Empty constructor for the register fragment.
+     */
     public RegisterFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * On the register fragment's creation.
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +90,13 @@ public class RegisterFragment extends Fragment {
                 .get(RegisterViewModel.class);
     }
 
+    /**
+     * Creates the register fragment's view.
+     * @param inflater The inflater
+     * @param container The container
+     * @param savedInstanceState The saved instance state
+     * @return The View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,6 +104,11 @@ public class RegisterFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * On the register fragment's view creation.
+     * @param view The View
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -93,10 +132,17 @@ public class RegisterFragment extends Fragment {
                 this::observeResponse);
     }
 
+    /**
+     * Attempts the register the user's account.
+     * @param button The register button
+     */
     private void attemptRegister(final View button) {
         validateFirst();
     }
 
+    /**
+     * The validation for the first name.
+     */
     private void validateFirst() {
         mNameValidator.processResult(
                 mNameValidator.apply(binding.editFirst.getText().toString().trim()),
@@ -104,6 +150,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.editFirst.setError("Please enter a first name."));
     }
 
+    /**
+     * The validation for the last name.
+     */
     private void validateLast() {
         mNameValidator.processResult(
                 mNameValidator.apply(binding.editLast.getText().toString().trim()),
@@ -111,6 +160,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.editLast.setError("Please enter a last name."));
     }
 
+    /**
+     * The validation for the email.
+     */
     private void validateEmail() {
         mEmailValidator.processResult(
                 mEmailValidator.apply(binding.editEmail.getText().toString().trim()),
@@ -118,6 +170,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.editEmail.setError("Please enter a valid Email address."));
     }
 
+    /**
+     * The validation for the passwords matching.
+     */
     private void validatePasswordsMatch() {
         PasswordValidator matchValidator =
                 checkClientPredicate(
@@ -129,6 +184,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.editPassword1.setError("Passwords must match."));
     }
 
+    /**
+     * The validation for the password.
+     */
     private void validatePassword() {
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.editPassword1.getText().toString()),
@@ -136,6 +194,9 @@ public class RegisterFragment extends Fragment {
                 result -> binding.editPassword1.setError("Please enter a valid Password."));
     }
 
+    /**
+     * The validation for authentication with the server.
+     */
     private void verifyAuthWithServer() {
         mRegisterModel.connect(
                 binding.editFirst.getText().toString(),
@@ -146,6 +207,9 @@ public class RegisterFragment extends Fragment {
         //result of connect().
     }
 
+    /**
+     * The navigation to the login screen using the email and password from the registration page.
+     */
     private void navigateToLogin() {
         RegisterFragmentDirections.ActionRegisterFragmentToLoginFragment directions =
                 RegisterFragmentDirections.actionRegisterFragmentToLoginFragment();
@@ -153,15 +217,14 @@ public class RegisterFragment extends Fragment {
         directions.setEmail(binding.editEmail.getText().toString());
         directions.setPassword(binding.editPassword1.getText().toString());
 
-        Navigation.findNavController(getView()).navigate((NavDirections) directions);
+        Navigation.findNavController(getView()).navigate(directions);
 
     }
 
     /**
-     * An observer on the HTTP Response from the web server. This observer should be
-     * attached to SignInViewModel.
-     *
-     * @param response the Response from the server
+     * An observer on the HTTP Response from the web server.
+     * This observer should be attached to SignInViewModel.
+     * @param response The Response from the server
      */
     private void observeResponse(final JSONObject response) {
         if (response.length() > 0) {

@@ -7,7 +7,7 @@ import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 
 /**
- *
+ * The interface for password validation for registering users.
  * @author Charles Bryan
  * @version April 2020
  */
@@ -276,4 +276,3 @@ public interface PasswordValidator
         PWD_CLIENT_ERROR
     }
 }
-

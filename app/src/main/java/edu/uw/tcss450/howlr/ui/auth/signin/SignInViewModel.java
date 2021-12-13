@@ -25,21 +25,40 @@ import java.util.Objects;
 
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 
+/**
+ * The ViewModel for the sign in fragment for signing in.
+ */
 public class SignInViewModel extends AndroidViewModel {
 
+    /**
+     * The response of JSON objects for the live data.
+     */
     private MutableLiveData<JSONObject> mResponse;
 
+    /**
+     * Creates the ViewModel for the sign in fragment given an application.
+     * @param application The application
+     */
     public SignInViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
     }
 
+    /**
+     * Adds an observer to the sign in fragment for signing in.
+     * @param owner The owner of the fragment lifecycle
+     * @param observer The observer
+     */
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
 
+    /**
+     * Handles the error for the HTTP library Volley.
+     * @param error The error
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -64,6 +83,11 @@ public class SignInViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * onnects to the web service with the user's credentials.
+     * @param email The user's email
+     * @param password The user's password
+     */
     public void connect(final String email, final String password) {
         String url = "https://howlr-server-side.herokuapp.com/auth";
         Request request = new JsonObjectRequest(

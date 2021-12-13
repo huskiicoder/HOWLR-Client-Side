@@ -1,6 +1,5 @@
 package edu.uw.tcss450.howlr.ui.messages.chats;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,9 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -35,32 +32,33 @@ import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentChatBinding;
 import edu.uw.tcss450.howlr.io.RequestQueueSingleton;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
-import edu.uw.tcss450.howlr.ui.friends.Friends;
-import edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Host for all components inside of the chat page.
  */
 public class ChatFragment extends Fragment {
 
+    /** The chat view model. */
     private ChatViewModel mChatModel;
+
+    /** The user model */
     private UserInfoViewModel mUserModel;
 
-    private CreateChatViewModel mFriendsModel;
-
+    /** The chat send view model */
     private ChatSendViewModel mSendModel;
 
-    public ChatFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Empty constructor.
+     */
+    public ChatFragment() {}
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ViewModelProvider provider = new ViewModelProvider(getActivity());
+        ViewModelProvider provider = new ViewModelProvider(requireActivity());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
-        mChatModel.getFirstMessages(mUserModel.getChatRoom(), mUserModel.getmJwt());
+        mChatModel.getFirstMessages(mUserModel.getChatRoom(), mUserModel.getJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
         setHasOptionsMenu(true);
     }
@@ -76,7 +74,7 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentChatBinding binding = FragmentChatBinding.bind(getView());
+        FragmentChatBinding binding = FragmentChatBinding.bind(requireView());
 
         //SetRefreshing shows the internal Swiper view progress bar. Show this until messages load
         binding.swipeContainer.setRefreshing(true);
@@ -91,9 +89,8 @@ public class ChatFragment extends Fragment {
 
         //When the user scrolls to the top of the RV, the swiper list will "refresh"
         //The user is out of messages, go out to the service and get more
-        binding.swipeContainer.setOnRefreshListener(() -> {
-            mChatModel.getNextMessages(mUserModel.getChatRoom(), mUserModel.getmJwt());
-        });
+        binding.swipeContainer.setOnRefreshListener(() ->
+                mChatModel.getNextMessages(mUserModel.getChatRoom(), mUserModel.getJwt()));
 
         mChatModel.addMessageObserver(mUserModel.getChatRoom(), getViewLifecycleOwner(),
                 list -> {
@@ -104,22 +101,25 @@ public class ChatFragment extends Fragment {
                      * solution for when the keyboard is on the screen.
                      */
                     //inform the RV that the underlying list has (possibly) changed
-                    rv.getAdapter().notifyDataSetChanged();
+                    Objects.requireNonNull(rv.getAdapter()).notifyDataSetChanged();
                     rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
                     binding.swipeContainer.setRefreshing(false);
                 });
 
         //Send button was clicked. Send the message via the SendViewModel
-        binding.buttonSend.setOnClickListener(button -> {
-            mSendModel.sendMessage(mUserModel.getChatRoom(),
-                    mUserModel.getmJwt(),
-                    binding.editMessage.getText().toString());
-        });
+        binding.buttonSend.setOnClickListener(button ->
+                mSendModel.sendMessage(mUserModel.getChatRoom(),
+                mUserModel.getJwt(),
+                binding.editMessage.getText().toString()));
         //when we get the response back from the server, clear the edittext
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
                 binding.editMessage.setText(""));
     }
 
+    /**
+     * Sets up the invite friend button and leave chat button.
+     * @param menu The menu that holds the buttons.
+     */
     @Override
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
         menu.findItem(R.id.action_invite_friend_button).setVisible(true);
@@ -127,39 +127,37 @@ public class ChatFragment extends Fragment {
         super.onPrepareOptionsMenu(menu);
     }
 
+    /**
+     * Performs certain actions depending on which button was selected.
+     * @param item The item that was selected.
+     * @return The item selected to the super method.
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_invite_friend_button) {
-            Navigation.findNavController(getView())
+            Navigation.findNavController(requireView())
                     .navigate(ChatFragmentDirections
                         .actionNavigationChatToAddFriendsFragment(mUserModel.getChatRoom()));
         } else if (item.getItemId() == R.id.action_leave_chat) {
             leaveChat();
-            Navigation.findNavController(getView())
+            Navigation.findNavController(requireView())
                     .navigate(ChatFragmentDirections
                         .actionNavigationChatToNavigationMessages());
         }
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Handles the action to leave a chat.
+     */
     public void leaveChat () {
-        String url = "https://howlr-server-side.herokuapp.com/messages/leave";
-//        String url = getApplication().getResources().getString(R.string.base_url) +
-//                "messages/leave";
-
-        JSONObject body = new JSONObject();
-        try {
-            body.put("memberId", mUserModel.getmMemberId());
-            body.put("chatId", mUserModel.getChatRoom());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        System.out.println("LEFT");
+        String url = "https://howlr-server-side.herokuapp.com/chats/"
+                + mUserModel.getChatRoom() + "/" + mUserModel.getEmail();
 
         Request request = new JsonObjectRequest(
-                Request.Method.POST,
+                Request.Method.DELETE,
                 url,
-                body,
+                null,
                 null,
                 this::handleError) {
 
@@ -167,7 +165,7 @@ public class ChatFragment extends Fragment {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 // add headers <key,value>
-                headers.put("Authorization", mUserModel.getmJwt());
+                headers.put("Authorization", mUserModel.getJwt());
                 return headers;
             }
         };
@@ -177,12 +175,14 @@ public class ChatFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         //Instantiate the RequestQueue and add the request to the queue
-        RequestQueueSingleton.getInstance(getActivity().getApplicationContext())
+        RequestQueueSingleton.getInstance(requireActivity().getApplicationContext())
                 .addToRequestQueue(request);
     }
 
-
-
+    /**
+     * Handles errors associated with leaving a chat.
+     * @param error The volley error.
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             Log.e("NETWORK ERROR", error.getMessage());

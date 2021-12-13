@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_weather"
             app:destination="@id/navigation_weather" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
     </fragment>
     <fragment
         android:id="@+id/navigation_friends_list"
@@ -30,6 +33,9 @@
             app:destination="@id/navigation_friends_search" />
         <action
             android:id="@+id/action_navigation_friends_list_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
+        <action
+            android:id="@+id/action_navigation_friends_list_to_navigation_chat2"
             app:destination="@id/navigation_chat" />
     </fragment>
     <fragment
@@ -96,6 +102,9 @@
         <action
             android:id="@+id/action_navigation_friends_add_to_navigation_friends_list"
             app:destination="@id/navigation_friends_list" />
+        <action
+            android:id="@+id/action_navigation_friends_add_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
     </fragment>
     <fragment
         android:id="@+id/navigation_friends_search"
@@ -105,6 +114,9 @@
         <action
             android:id="@+id/action_navigation_friends_search_to_navigation_friends_list"
             app:destination="@id/navigation_friends_list" />
+        <action
+            android:id="@+id/action_navigation_friends_search_to_navigation_chat"
+            app:destination="@id/navigation_chat" />
     </fragment>
     <fragment
         android:id="@+id/navigation_map"
@@ -127,7 +139,7 @@
     <fragment
         android:id="@+id/navigation_create_chat"
         android:name="edu.uw.tcss450.howlr.ui.messages.createChats.CreateChatFragment"
-        android:label="CreateChatFragment" >
+        android:label="Create a Chatroom" >
         <action
             android:id="@+id/action_navigation_create_chat_to_navigation_chat"
             app:destination="@id/navigation_chat" />
@@ -135,7 +147,7 @@
     <fragment
         android:id="@+id/navigation_add_friends"
         android:name="edu.uw.tcss450.howlr.ui.messages.chatsAddFriends.AddFriendsFragment"
-        android:label="AddFriendsFragment" >
+        android:label="Add Friends To Chatroom" >
         <action
             android:id="@+id/action_addFriendsFragment_to_navigation_chat"
             app:destination="@id/navigation_chat" />

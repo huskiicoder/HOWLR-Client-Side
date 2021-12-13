@@ -4,8 +4,6 @@ import androidx.annotation.Nullable;
 
 import java.io.Serializable;
 
-import edu.uw.tcss450.howlr.ui.messages.chats.ChatMessage;
-
 /**
  * The model of each message card in the messages page.
  * @author Daniel Jiang
@@ -13,19 +11,19 @@ import edu.uw.tcss450.howlr.ui.messages.chats.ChatMessage;
 public class MessageModel implements Serializable {
 
     /** Profile picture. */
-    private int mPicture;
+    private final int mPicture;
 
     /** Chat ID */
-    private int mChatId;
+    private final int mChatId;
 
     /** Recent Name. */
-    private String mRecentName;
+    private final String mRecentName;
 
     /** Message content. */
-    private String mMessageContent;
+    private final String mMessageContent;
 
     /** Message time. */
-    private String mMessageTime;
+    private final String mMessageTime;
 
     /**
      * Constructor for the message card in the messages page.
@@ -75,13 +73,6 @@ public class MessageModel implements Serializable {
      */
     public String getMessageContent() {
         return mMessageContent;
-    }
-
-    /**
-     * Setter for the recent message content.
-     */
-    public void setMessageContent(String newMessage) {
-        mMessageContent = newMessage;
     }
 
     /**

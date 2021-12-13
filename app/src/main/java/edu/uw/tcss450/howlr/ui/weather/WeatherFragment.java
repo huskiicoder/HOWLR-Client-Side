@@ -39,18 +39,48 @@ import edu.uw.tcss450.howlr.model.UserInfoViewModel;
  * @version TCSS 450 Fall 2021
  */
 public class WeatherFragment extends Fragment {
-    private UserInfoViewModel mUserModel;
-    private WeatherViewModel mWeatherModel;
-    private LocationViewModel mModel;
-    private FragmentWeatherBinding binding;
-    private static boolean mDefault = true;
-    private Geocoder mGeocoder;
+
     /**
-     * Blank Constructor
+     * The ViewModel for the user's information.
+     */
+    private UserInfoViewModel mUserModel;
+
+    /**
+     * The ViewModel for the weather.
+     */
+    private WeatherViewModel mWeatherModel;
+
+    /**
+     * The ViewModel for the location.
+     */
+    private LocationViewModel mModel;
+
+    /**
+     * The binding for the weather fragment.
+     */
+    private FragmentWeatherBinding binding;
+
+    /**
+     * Default value.
+     */
+    private static boolean mDefault = true;
+
+    /**
+     * The geocoder.
+     */
+    private Geocoder mGeocoder;
+
+    /**
+     * Empty constructor for the weather fragment.
      */
     public WeatherFragment() {
         // Required empty public constructor
     }
+
+    /**
+     * On the weather fragment's creation.
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,19 +96,25 @@ public class WeatherFragment extends Fragment {
         mGeocoder = new Geocoder(getActivity());
     }
 
+    /**
+     * Creates the weather fragment's view.
+     * @param inflater The inflater
+     * @param container The container
+     * @param savedInstanceState The saved instance state
+     * @return The View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        if(mDefault){
-//            mWeatherModel.connectGet(Double.toString(mModel.getCurrentLocation().getLatitude()),
-//                    Double.toString(mModel.getCurrentLocation().getLongitude()), mUserModel.getmJwt());
-//            mDefault = false;
-//        }
-        mWeatherModel.connectGet("47","-122", mUserModel.getmJwt());
+        mWeatherModel.connectGet("47","-122", mUserModel.getJwt());
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }
 
+    /**
+     * On the weather fragment's view creation.
+     * @param view The View
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -92,7 +128,7 @@ public class WeatherFragment extends Fragment {
 
         WeatherFragmentArgs args = WeatherFragmentArgs.fromBundle(getArguments());
         if (!args.getLat().equals("default") && !args.getLng().equals("default")){
-            mWeatherModel.connectGet(args.getLat(),args.getLng(), mUserModel.getmJwt());
+            mWeatherModel.connectGet(args.getLat(),args.getLng(), mUserModel.getJwt());
             String address = getAddress(Double.parseDouble(args.getLat()), Double.parseDouble(args.getLng()));
             binding.textViewLocation.setText(address);
         }
@@ -113,7 +149,7 @@ public class WeatherFragment extends Fragment {
                 List<Weather> hourly_list = list.subList(1,25);
                 List<Weather> daily_list = list.subList(26,33);
                 binding.textCurrentTemp.setText(Math.round(Float.parseFloat(String.valueOf(list.get(0).getCurrentTemp()))) + "°");
-                binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurentWeather()));
+                binding.textViewWeatherCondition.setText(String.valueOf(list.get(0).getCurrentWeather()));
                 binding.textViewHumidity.setText("Humidity " + String.valueOf(list.get(0).getHumidity()) + "%");
 
                 String a = "a" + list.get(0).getIcon();
@@ -128,6 +164,12 @@ public class WeatherFragment extends Fragment {
 
     }
 
+    /**
+     * Gets the address from the latitude and longitude coordinates.
+     * @param lat The latitude coordinates
+     * @param lon The longitude coordinates
+     * @return The address
+     */
     public String getAddress(Double lat, Double lon) {
         Geocoder geocoder = new Geocoder(getActivity());
         List<Address> results = null;
@@ -143,6 +185,10 @@ public class WeatherFragment extends Fragment {
         return address;
     }
 
+    /**
+     * Searches the location using the zipcode.
+     * @param view The View
+     */
     private void searchZipcode(View view) {
         EditText text = getView().findViewById(R.id.textView_zipcode_search);
 
@@ -165,7 +211,7 @@ public class WeatherFragment extends Fragment {
                 Address address = addressList.get(0);
                 //get lat long coordinates
                 LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                mWeatherModel.connectGet(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude),mUserModel.getmJwt());
+                mWeatherModel.connectGet(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude),mUserModel.getJwt());
                 if (addressList.get(0).getLocality() != null){
                     mCity = addressList.get(0).getLocality();
                 } else {

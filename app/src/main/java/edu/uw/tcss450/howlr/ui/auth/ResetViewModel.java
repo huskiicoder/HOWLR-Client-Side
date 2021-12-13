@@ -81,6 +81,10 @@ public class ResetViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Connects to the web service with the entered email.
+     * @param email The entered email
+     */
     public void connect(final String email) {
         String url = "http://howlr-server-side.herokuapp.com/reset";
 //        String url = "http://10.0.2.2:5000/reset";
@@ -104,4 +108,5 @@ public class ResetViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext())
                 .add(request);
     }
+
 }
