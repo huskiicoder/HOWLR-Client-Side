@@ -123,7 +123,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                                 .toBuilder()
                                 .setTopLeftCorner(CornerFamily.ROUNDED,standard * 2)
                                 .setBottomLeftCorner(CornerFamily.ROUNDED,standard * 2)
-                                .setBottomRightCornerSize(0)
+                                .setBottomRightCorner(CornerFamily.ROUNDED, standard * 2)
                                 .setTopRightCornerSize(0)
                                 .build());
 
@@ -158,7 +158,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                                 .toBuilder()
                                 .setTopRightCorner(CornerFamily.ROUNDED,standard * 2)
                                 .setBottomRightCorner(CornerFamily.ROUNDED,standard * 2)
-                                .setBottomLeftCornerSize(0)
+                                .setBottomLeftCorner(CornerFamily.ROUNDED, standard * 2)
                                 .setTopLeftCornerSize(0)
                                 .build());
                 card.requestLayout();

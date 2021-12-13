@@ -151,20 +151,13 @@ public class ChatFragment extends Fragment {
      * Handles the action to leave a chat.
      */
     public void leaveChat () {
-        String url = "https://howlr-server-side.herokuapp.com/messages/leave";
-
-        JSONObject body = new JSONObject();
-        try {
-            body.put("memberId", mUserModel.getmMemberId());
-            body.put("chatId", mUserModel.getChatRoom());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String url = "https://howlr-server-side.herokuapp.com/chats/"
+                + mUserModel.getChatRoom() + "/" + mUserModel.getEmail();
 
         Request request = new JsonObjectRequest(
-                Request.Method.POST,
+                Request.Method.DELETE,
                 url,
-                body,
+                null,
                 null,
                 this::handleError) {
 

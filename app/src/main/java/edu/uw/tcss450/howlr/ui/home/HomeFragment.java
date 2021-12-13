@@ -34,6 +34,7 @@ import java.util.List;
 import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentHomeBinding;
+import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
 import edu.uw.tcss450.howlr.model.LocationViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 import edu.uw.tcss450.howlr.ui.friends.FriendsListRecyclerViewAdapter;
@@ -42,6 +43,7 @@ import edu.uw.tcss450.howlr.ui.friends.HomeFriendsAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 import edu.uw.tcss450.howlr.ui.messages.MessagesListViewModel;
+import edu.uw.tcss450.howlr.ui.messages.MessagesPageFragmentDirections;
 import edu.uw.tcss450.howlr.ui.weather.Weather;
 import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterDaily;
 import edu.uw.tcss450.howlr.ui.weather.WeatherRecyclerViewAdapterHourly;
@@ -165,6 +167,22 @@ public class HomeFragment extends Fragment {
                 int id = context.getResources().getIdentifier(a, "drawable", context.getPackageName());
                 binding.imageHomeCurrWeather.setImageResource(id);
                 recyclerViewWeather.setAdapter(new HomeWeatherAdapter(daily_list));
+            }
+        });
+
+        mMessagesModel.addMessagesObserver(getViewLifecycleOwner(), messagesList -> {
+            if (!messagesList.isEmpty()) {
+                mAdapterMessages = new HomeMessagesAdapter(messagesList);
+                mAdapterMessages.notifyDataSetChanged();
+                binding.recyclerViewMessages.setAdapter(mAdapterMessages);
+
+                /* Click listener for navigating to chat from recycler view item. */
+                mAdapterMessages.setOnItemClickListener(itemClicked -> {
+                    mUserModel.setChatRoom(messagesList.get(itemClicked).getChatId());
+                    Navigation.findNavController(requireView())
+                            .navigate(HomeFragmentDirections
+                                    .actionNavigationHomeToNavigationChat(messagesList.get(itemClicked).getChatId()));
+                });
             }
         });
 

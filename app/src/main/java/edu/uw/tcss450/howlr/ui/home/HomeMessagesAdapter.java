@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 import edu.uw.tcss450.howlr.R;
+import edu.uw.tcss450.howlr.ui.messages.MessageAdapter;
 import edu.uw.tcss450.howlr.ui.messages.MessageModel;
 
 /**
@@ -29,6 +30,9 @@ public class HomeMessagesAdapter extends RecyclerView.Adapter<HomeMessagesAdapte
      * The list of people who the user is messaging with.
      */
     private List<MessageModel> mUserList;
+
+    /** The adapter click listener. */
+    private OnItemClickListener mListener;
 
     /**
      * Constructor for the message adapter.
@@ -48,7 +52,7 @@ public class HomeMessagesAdapter extends RecyclerView.Adapter<HomeMessagesAdapte
     @Override
     public HomeMessagesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_messages_item_design, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mListener);
     }
 
     /**
@@ -92,6 +96,14 @@ public class HomeMessagesAdapter extends RecyclerView.Adapter<HomeMessagesAdapte
         return mUserList.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int itemClicked);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
     /**
      * ViewHolder class.
      */
@@ -113,13 +125,22 @@ public class HomeMessagesAdapter extends RecyclerView.Adapter<HomeMessagesAdapte
          * The view holder constructor.
          * @param itemView The item view
          */
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
             mPicture = itemView.findViewById(R.id.picture);
             mDisplayName = itemView.findViewById(R.id.display_name);
             mMessageTime = itemView.findViewById(R.id.message_time);
             mMessageContent = itemView.findViewById(R.id.message_content);
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAbsoluteAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
+                    }
+                }
+            });
         }
 
         /**

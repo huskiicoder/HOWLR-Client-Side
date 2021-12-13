@@ -20,6 +20,7 @@ import java.util.Objects;
 import edu.uw.tcss450.howlr.MainActivity;
 import edu.uw.tcss450.howlr.R;
 import edu.uw.tcss450.howlr.databinding.FragmentMessagesPageBinding;
+import edu.uw.tcss450.howlr.model.PushyTokenViewModel;
 import edu.uw.tcss450.howlr.model.UserInfoViewModel;
 
 
@@ -79,6 +80,7 @@ public class MessagesPageFragment extends Fragment {
         mModel.addMessagesObserver(getViewLifecycleOwner(), messagesList -> {
             if (!messagesList.isEmpty()) {
                 mAdapter = new MessageAdapter(messagesList);
+                mAdapter.notifyDataSetChanged();
                 binding.messagesPageRecyclerView.setAdapter(mAdapter);
 
                 /* Click listener for navigating to chat from recycler view item. */

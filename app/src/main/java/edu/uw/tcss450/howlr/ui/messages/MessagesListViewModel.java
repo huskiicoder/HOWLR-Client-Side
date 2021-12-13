@@ -96,8 +96,11 @@ public class MessagesListViewModel extends AndroidViewModel  {
      */
     private void handleResult(final JSONObject result) {
         try {
+            if (!mMessagesList.getValue().isEmpty()) {
+                mMessagesList.getValue().clear();
+            }
             JSONArray messages = result.getJSONArray("rows");
-            for (int i = 0; i < messages.length(); i++) {
+            for (int i = messages.length() - 1; i >= 0; i--) {
                 JSONObject jsonMessage = messages.getJSONObject(i);
                 MessageModel cm = new MessageModel(
                         R.drawable.shibabone,

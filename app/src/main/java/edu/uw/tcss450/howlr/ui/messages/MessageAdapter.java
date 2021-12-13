@@ -54,7 +54,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
      * @param position The position
      */
     @Override
-    public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int picture = mUserList.get(position).getPicture();
         String displayName = mUserList.get(position).getRecentName();
         String messageTime = mUserList.get(position).getMessageTime();
